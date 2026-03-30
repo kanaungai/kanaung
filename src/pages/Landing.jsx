@@ -17,10 +17,10 @@ export default function Landing() {
     <div className="min-h-screen bg-background font-inter antialiased">
       <Navbar />
       <Hero />
+      <ControlLayer />
       <CostSection />
       <HowItWorks />
       <WhyDifferent />
-      <ControlLayer />
       <ChatDemo />
       <ProblemSection />
       <UseCases />

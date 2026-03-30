@@ -427,7 +427,7 @@ export default function ControlLayer() {
           <div className="w-full h-px bg-foreground/8 mb-10" />
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
             <h2 className="font-sora text-[36px] md:text-[44px] xl:text-[50px] font-bold tracking-[-0.03em] leading-[1.06] text-foreground">
-              Full visibility over every customer conversation.
+              The control layer behind every conversation.
             </h2>
             <p className="text-[16px] text-muted-foreground leading-[1.8] md:pt-2 max-w-md font-inter">
               Monitor AI-handled conversations, review auto-generated replies, and manage human escalations — all from one operations dashboard built for Myanmar businesses.
