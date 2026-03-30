@@ -3,19 +3,19 @@ import { motion } from "framer-motion";
 
 const STATS = [
   {
-    title: "Leads Go Cold",
-    stat: "< 5 min",
-    body: "Businesses are far more likely to convert inbound enquiries when they reply within minutes. Every hour of delay reduces intent — and revenue.",
+    label: "01 — Lost Qualification",
+    stat: "21×",
+    body: "Responding to a lead within 5 minutes instead of 30 can make the odds of qualification 21 times higher. Delay kills intent before it converts.",
   },
   {
-    title: "After-Hours Demand",
-    stat: "24 / 7",
-    body: "Customer questions do not stop after working hours. Without automation, valuable enquiries go unanswered overnight and on weekends.",
+    label: "02 — Expected Immediacy",
+    stat: "77%",
+    body: "Most customers expect to interact with someone immediately when they contact a company. Anything slower signals disorganisation.",
   },
   {
-    title: "Repeat Questions",
-    stat: "70%+",
-    body: "The majority of inbound messages are repetitive — pricing, availability, location, hours, and delivery. Answering them manually is expensive.",
+    label: "03 — Experience Drives Revenue",
+    stat: "80%",
+    body: "Customers say the experience a company provides is as important as its products and services. Service quality is now a commercial variable.",
   },
 ];
 
@@ -49,7 +49,7 @@ export default function CostSection() {
               The hidden cost of missed customer messages.
             </h2>
             <p className="text-[16px] text-muted-foreground leading-[1.8] md:pt-2 max-w-md font-inter">
-              In Myanmar's fast-moving, chat-first market, slow replies and missed messages are not just an inconvenience — they are a direct cost to revenue, trust, and growth.
+              In fast-moving, chat-first markets, slow replies and missed messages are not just an inconvenience — they directly reduce conversion, trust, and customer lifetime value.
             </p>
           </div>
         </motion.div>
@@ -67,7 +67,7 @@ export default function CostSection() {
             >
               {/* Card number label */}
               <p className="text-[11px] font-semibold tracking-[0.1em] uppercase text-muted-foreground/60 mb-5">
-                0{i + 1} — {item.title}
+                {item.label}
               </p>
 
               {/* Large stat */}
