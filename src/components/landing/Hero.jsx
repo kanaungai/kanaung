@@ -1,99 +1,117 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import LiveCallPanel from "./LiveCallPanel";
 
 export default function Hero() {
   return (
-    <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
-      {/* Background gradient blobs */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-primary/[0.04] rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-[100px] pointer-events-none" />
+    <section className="relative min-h-screen flex flex-col justify-center pt-20 pb-16 overflow-hidden">
 
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      {/* ── Premium background atmosphere ── */}
+      {/* Base radial: warm cream center fading to cool grey */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,hsl(30_40%_96%)_0%,hsl(220_22%_97%)_60%,hsl(222_24%_95%)_100%)] pointer-events-none" />
+      {/* Soft primary crimson bloom — top right */}
+      <div className="absolute -top-32 right-0 w-[700px] h-[700px] bg-primary/[0.045] rounded-full blur-[140px] pointer-events-none" />
+      {/* Subtle cool tint — bottom left */}
+      <div className="absolute bottom-0 -left-40 w-[600px] h-[500px] bg-blue-500/[0.025] rounded-full blur-[120px] pointer-events-none" />
+      {/* Barely-there noise texture for depth */}
+      <div
+        className="absolute inset-0 opacity-[0.018] pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          backgroundRepeat: "repeat",
+          backgroundSize: "128px 128px",
+        }}
+      />
 
-          {/* LEFT COLUMN */}
+      <div className="relative max-w-[1200px] mx-auto px-8 w-full">
+        <div className="grid lg:grid-cols-[1fr_1.15fr] gap-10 xl:gap-16 items-center">
+
+          {/* ── LEFT COLUMN ── */}
           <motion.div
-            initial={{ opacity: 0, y: 28 }}
+            initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col"
           >
-            {/* Eyebrow pill */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/[0.06] text-[11px] font-semibold text-primary tracking-widest uppercase mb-7">
+            {/* Eyebrow */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+              className="inline-flex items-center self-start gap-2 px-3.5 py-1.5 rounded-full border border-primary/15 bg-primary/[0.05] mb-8"
+            >
               <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              Enterprise AI, built for Myanmar
-            </div>
+              <span className="text-[11px] font-semibold text-primary tracking-[0.08em] uppercase">
+                Enterprise AI · Myanmar
+              </span>
+            </motion.div>
 
             {/* Headline */}
-            <h1 className="text-4xl md:text-5xl lg:text-[52px] font-extrabold tracking-tight leading-[1.08] text-foreground">
-              Never miss a{" "}
-              <br className="hidden sm:block" />
-              customer message{" "}
-              <span className="text-primary">again.</span>
+            <h1 className="font-sora text-[44px] md:text-[52px] xl:text-[60px] font-bold tracking-[-0.03em] leading-[1.04] text-foreground">
+              Never miss a<br />
+              customer<br />
+              <span className="text-primary">conversation.</span>
             </h1>
 
-            {/* Supporting copy */}
-            <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed max-w-md">
-              Kanaung handles customer conversations in Burmese — across web,
-              Messenger, and Viber — using your own business data. 24/7.
-              Instant. Intelligent.
+            {/* Subtext */}
+            <p className="mt-7 text-[16px] md:text-[17px] text-muted-foreground leading-[1.75] max-w-[400px] font-inter font-normal">
+              Kanaung handles customer messages in Burmese — across web,
+              Messenger, and Viber — using your own business data.{" "}
+              <span className="text-foreground/70 font-medium">24/7. Instant. Intelligent.</span>
             </p>
 
             {/* CTAs */}
-            <div className="mt-9 flex flex-col sm:flex-row gap-3">
-              <Button
-                size="lg"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-7 text-sm font-semibold shadow-lg shadow-primary/25 h-11"
-                onClick={() =>
-                  document.getElementById("final-cta")?.scrollIntoView({ behavior: "smooth" })
-                }
+            <div className="mt-10 flex flex-col sm:flex-row gap-3">
+              <button
+                onClick={() => document.getElementById("final-cta")?.scrollIntoView({ behavior: "smooth" })}
+                className="inline-flex items-center justify-center gap-2 bg-foreground text-background text-[14px] font-semibold px-7 h-[50px] rounded-full hover:bg-foreground/88 transition-all duration-200 shadow-lg shadow-foreground/10 tracking-[-0.01em]"
               >
-                Book Demo
-                <ArrowRight className="w-4 h-4 ml-1.5" />
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="rounded-full px-7 text-sm font-semibold border-border hover:bg-secondary h-11"
-                onClick={() =>
-                  document.getElementById("demo")?.scrollIntoView({ behavior: "smooth" })
-                }
+                Book a Demo
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => document.getElementById("demo")?.scrollIntoView({ behavior: "smooth" })}
+                className="inline-flex items-center justify-center gap-2 bg-transparent text-foreground text-[14px] font-semibold px-7 h-[50px] rounded-full border border-foreground/12 hover:bg-foreground/[0.04] transition-all duration-200 tracking-[-0.01em]"
               >
-                <Play className="w-3.5 h-3.5 mr-1.5 fill-current" />
-                Try Demo
-              </Button>
+                Try the Demo
+              </button>
             </div>
 
             {/* Trust stats */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.5 }}
-              className="mt-12 flex items-center gap-8"
+              transition={{ duration: 0.8, delay: 0.55 }}
+              className="mt-14 flex items-center gap-10"
             >
               {[
                 { value: "< 2s", label: "Response time" },
-                { value: "24/7", label: "Always on" },
+                { value: "24 / 7", label: "Always on" },
                 { value: "Burmese", label: "Native language" },
               ].map((stat) => (
-                <div key={stat.label} className="flex flex-col">
-                  <span className="text-xl font-bold text-foreground">{stat.value}</span>
-                  <span className="text-xs text-muted-foreground mt-0.5">{stat.label}</span>
+                <div key={stat.label} className="flex flex-col gap-0.5">
+                  <span className="font-sora text-[22px] font-bold text-foreground tracking-[-0.02em]">
+                    {stat.value}
+                  </span>
+                  <span className="text-[12px] text-muted-foreground font-medium tracking-wide">
+                    {stat.label}
+                  </span>
                 </div>
               ))}
             </motion.div>
           </motion.div>
 
-          {/* RIGHT COLUMN — Live Call Panel */}
+          {/* ── RIGHT COLUMN — Flagship Live Call Panel ── */}
           <motion.div
-            initial={{ opacity: 0, x: 32 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.25, ease: "easeOut" }}
+            initial={{ opacity: 0, y: 40, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full"
           >
             <LiveCallPanel />
           </motion.div>
+
         </div>
       </div>
     </section>

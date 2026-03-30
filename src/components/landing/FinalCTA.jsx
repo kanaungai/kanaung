@@ -18,7 +18,7 @@ export default function FinalCTA() {
           <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
 
           <div className="relative px-8 py-16 md:px-16 md:py-20 text-center">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-background max-w-2xl mx-auto leading-tight">
+            <h2 className="font-sora text-3xl md:text-4xl lg:text-5xl font-bold tracking-[-0.03em] text-background max-w-2xl mx-auto leading-[1.06]">
               Ready to transform your customer communication?
             </h2>
             <p className="mt-5 text-background/70 max-w-lg mx-auto text-lg">

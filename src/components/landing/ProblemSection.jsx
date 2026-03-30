@@ -40,7 +40,7 @@ export default function ProblemSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-14"
         >
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+          <h2 className="font-sora text-3xl md:text-4xl font-bold tracking-[-0.025em] text-foreground">
             The problem every Myanmar business faces
           </h2>
           <p className="mt-3 text-muted-foreground max-w-lg mx-auto">
