@@ -93,13 +93,18 @@ export default function LiveCallPanel() {
         {/* Panel header */}
         <div className="px-5 pt-5 pb-4 border-b border-white/[0.06] flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-primary/15 border border-primary/20 flex items-center justify-center">
-              <span className="text-primary font-bold text-sm">K</span>
-            </div>
-            <div>
-              <div className="text-sm font-semibold text-white leading-tight">Kanaung AI</div>
-              <div className="text-[11px] text-white/40 mt-0.5">ရွှေကြယ် စက်ပစ္စည်း</div>
-            </div>
+          <div className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden p-1.5">
+            <img
+              src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
+              alt="Kanaung"
+              className="w-full h-full object-contain"
+              style={{ filter: "brightness(0) invert(1) opacity(0.85)" }}
+            />
+          </div>
+          <div>
+            <div className="text-sm font-semibold text-white leading-tight">Kanaung AI</div>
+            <div className="text-[11px] text-white/40 mt-0.5">ရွှေကြယ် စက်ပစ္စည်း</div>
+          </div>
           </div>
 
           {/* Live indicator */}
