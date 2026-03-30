@@ -29,13 +29,14 @@ export default function Navbar() {
     >
       <div className="max-w-6xl mx-auto px-6 h-[68px] flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="flex items-center flex-shrink-0">
+        <a href="#" className="flex items-center gap-2 flex-shrink-0">
           <img
-            src="https://media.base44.com/images/public/69cae07a199d96c3df465260/a1a835598_1.png"
+            src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
             alt="Kanaung AI"
-            className="h-8 w-auto"
-            style={{ filter: "brightness(0) invert(1)" }}
+            className="h-7 w-7 object-contain"
+            style={{ filter: "brightness(0) saturate(100%) invert(16%) sepia(80%) saturate(900%) hue-rotate(330deg) brightness(80%)" }}
           />
+          <span className="font-bold text-[15px] tracking-tight text-foreground">kanaung <span className="text-primary">AI</span></span>
         </a>
 
         {/* Center links */}
