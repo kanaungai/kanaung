@@ -13,52 +13,60 @@ export default function Navbar() {
   }, []);
 
   const links = [
-    { label: "Demo", href: "#demo" },
-    { label: "How it works", href: "#how-it-works" },
-    { label: "Use cases", href: "#use-cases" },
+    { label: "Problem", href: "#problem" },
+    { label: "Industries", href: "#use-cases" },
+    { label: "Solutions", href: "#how-it-works" },
+    { label: "Blog", href: "#" },
   ];
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-background/80 backdrop-blur-xl border-b border-border shadow-sm"
+          ? "bg-background/75 backdrop-blur-2xl border-b border-white/[0.06] shadow-lg shadow-black/10"
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="#" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-sm">K</span>
+      <div className="max-w-6xl mx-auto px-6 h-[68px] flex items-center justify-between">
+        {/* Logo */}
+        <a href="#" className="flex items-center gap-2.5 flex-shrink-0">
+          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shadow-md shadow-primary/30">
+            <span className="text-primary-foreground font-bold text-sm tracking-tight">K</span>
           </div>
-          <span className="font-bold text-lg tracking-tight text-foreground">
+          <span className="font-bold text-[15px] tracking-tight text-foreground">
             Kanaung
           </span>
         </a>
 
-        <div className="hidden md:flex items-center gap-8">
+        {/* Center links */}
+        <div className="hidden md:flex items-center gap-1">
           {links.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-white/5"
             >
               {link.label}
             </a>
           ))}
+        </div>
+
+        {/* Right CTA */}
+        <div className="hidden md:flex items-center">
           <Button
             size="sm"
-            className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-5"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-5 h-9 text-sm font-semibold shadow-md shadow-primary/20"
             onClick={() =>
               document.getElementById("final-cta")?.scrollIntoView({ behavior: "smooth" })
             }
           >
-            Request early access
+            Book Demo
           </Button>
         </div>
 
+        {/* Mobile toggle */}
         <button
-          className="md:hidden text-foreground"
+          className="md:hidden text-foreground p-1"
           onClick={() => setMobileOpen(!mobileOpen)}
         >
           {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -66,27 +74,29 @@ export default function Navbar() {
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border px-6 pb-4 space-y-3">
+        <div className="md:hidden bg-background/95 backdrop-blur-2xl border-b border-white/[0.06] px-6 pb-5 space-y-1">
           {links.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="block text-sm text-muted-foreground hover:text-foreground py-1"
+              className="block text-sm text-muted-foreground hover:text-foreground py-2.5 px-3 rounded-lg hover:bg-white/5 transition-colors"
               onClick={() => setMobileOpen(false)}
             >
               {link.label}
             </a>
           ))}
-          <Button
-            size="sm"
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-full"
-            onClick={() => {
-              setMobileOpen(false);
-              document.getElementById("final-cta")?.scrollIntoView({ behavior: "smooth" });
-            }}
-          >
-            Request early access
-          </Button>
+          <div className="pt-3">
+            <Button
+              size="sm"
+              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-full"
+              onClick={() => {
+                setMobileOpen(false);
+                document.getElementById("final-cta")?.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              Book Demo
+            </Button>
+          </div>
         </div>
       )}
     </nav>
