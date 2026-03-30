@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../components/landing/Navbar";
 import Hero from "../components/landing/Hero";
+import CostSection from "../components/landing/CostSection";
 import ChatDemo from "../components/landing/ChatDemo";
 import ProblemSection from "../components/landing/ProblemSection";
 import HowItWorks from "../components/landing/HowItWorks";
@@ -14,6 +15,7 @@ export default function Landing() {
     <div className="min-h-screen bg-background font-inter antialiased">
       <Navbar />
       <Hero />
+      <CostSection />
       <ChatDemo />
       <ProblemSection />
       <HowItWorks />
