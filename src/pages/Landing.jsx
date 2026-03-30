@@ -6,6 +6,7 @@ import ChatDemo from "../components/landing/ChatDemo";
 import ProblemSection from "../components/landing/ProblemSection";
 import HowItWorks from "../components/landing/HowItWorks";
 import WhyDifferent from "../components/landing/WhyDifferent";
+import ControlLayer from "../components/landing/ControlLayer";
 import UseCases from "../components/landing/UseCases";
 import TrustSection from "../components/landing/TrustSection";
 import FinalCTA from "../components/landing/FinalCTA";
@@ -19,6 +20,7 @@ export default function Landing() {
       <CostSection />
       <HowItWorks />
       <WhyDifferent />
+      <ControlLayer />
       <ChatDemo />
       <ProblemSection />
       <UseCases />
