@@ -16,9 +16,9 @@ export default function Landing() {
       <Navbar />
       <Hero />
       <CostSection />
+      <HowItWorks />
       <ChatDemo />
       <ProblemSection />
-      <HowItWorks />
       <UseCases />
       <TrustSection />
       <FinalCTA />
