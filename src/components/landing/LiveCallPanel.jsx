@@ -15,11 +15,10 @@ const CONVERSATION = [
 function WaveBar({ delay, height }) {
   return (
     <motion.div
-      className="w-[2.5px] rounded-full flex-shrink-0"
-      style={{ background: "linear-gradient(to top, hsl(352 72% 48% / 0.4), hsl(352 72% 60% / 0.85))" }}
+      className="w-[3px] rounded-full flex-shrink-0"
       animate={{
         height: [height * 0.25, height, height * 0.35, height * 0.75, height * 0.15, height * 0.9],
-        opacity: [0.35, 1, 0.45, 0.8, 0.25, 0.9],
+        opacity: [0.4, 1, 0.5, 0.85, 0.3, 0.95],
       }}
       transition={{
         duration: 1.8,
@@ -27,15 +26,18 @@ function WaveBar({ delay, height }) {
         delay,
         ease: "easeInOut",
       }}
-      style={{ minHeight: 3 }}
+      style={{
+        minHeight: 3,
+        background: "linear-gradient(to top, hsl(352 72% 48% / 0.5), hsl(352 65% 62% / 0.9))",
+      }}
     />
   );
 }
 
 function Waveform() {
-  const heights = [6, 12, 20, 16, 28, 18, 12, 24, 16, 8, 22, 14, 28, 10, 18, 22, 14, 26, 8, 20, 16, 24, 12, 18, 14, 22, 10, 16, 20, 24, 8, 18, 14, 26, 12, 20];
+  const heights = [8, 16, 28, 20, 36, 24, 16, 32, 20, 10, 28, 18, 36, 14, 24, 30, 18, 34, 10, 26, 20, 30, 16, 24, 18, 28, 12, 20, 26, 32, 10, 22, 18, 34, 14, 24];
   return (
-    <div className="flex items-center justify-center gap-[3px] h-10">
+    <div className="flex items-center justify-center gap-[3px] h-12">
       {heights.map((h, i) => (
         <WaveBar key={i} delay={i * 0.048} height={h} />
       ))}
@@ -254,10 +256,10 @@ export default function LiveCallPanel() {
         {/* ── Waveform ── */}
         <div className="px-6 pb-4">
           <div
-            className="rounded-2xl px-4 py-3"
+            className="rounded-2xl px-5 py-4"
             style={{
-              background: "rgba(255,255,255,0.025)",
-              border: "1px solid rgba(255,255,255,0.04)",
+              background: "rgba(255,255,255,0.03)",
+              border: "1px solid rgba(255,255,255,0.06)",
             }}
           >
             <Waveform />

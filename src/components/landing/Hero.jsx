@@ -39,10 +39,10 @@ export default function Hero() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="inline-flex items-center self-start gap-2 px-3.5 py-1.5 rounded-full border border-primary/15 bg-primary/[0.05] mb-8"
+              className="inline-flex items-center self-start gap-2 px-4 py-2 rounded-full bg-foreground mb-8"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              <span className="text-[11px] font-semibold text-primary tracking-[0.08em] uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-white/50" />
+              <span className="text-[11px] font-semibold text-background/90 tracking-[0.07em] uppercase">
                 Enterprise AI · Myanmar
               </span>
             </motion.div>
