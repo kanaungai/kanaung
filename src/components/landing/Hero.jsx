@@ -43,7 +43,7 @@ export default function Hero() {
             >
               <span className="w-1.5 h-1.5 rounded-full bg-white/50" />
               <span className="text-[11px] font-semibold text-background/90 tracking-[0.07em] uppercase">
-                Enterprise AI · Myanmar
+                LLM-Powered · Burmese-First
               </span>
             </motion.div>
 
@@ -56,9 +56,8 @@ export default function Hero() {
 
             {/* Subtext */}
             <p className="mt-7 text-[16px] md:text-[17px] text-muted-foreground leading-[1.75] max-w-[400px] font-inter font-normal">
-              Kanaung handles customer messages in Burmese — across web,
-              Messenger, and Viber — using your own business data.{" "}
-              <span className="text-foreground/70 font-medium">24/7. Instant. Intelligent.</span>
+              Kanaung is an LLM-powered Burmese customer service assistant that handles natural customer conversations across web, Messenger, and Viber —{" "}
+              <span className="text-foreground/70 font-medium">using your business's own data.</span>
             </p>
 
             {/* CTAs */}
@@ -86,7 +85,7 @@ export default function Hero() {
               className="mt-14 flex items-center gap-10"
             >
               {[
-                { value: "< 2s", label: "Response time" },
+                { value: "LLM", label: "Not rule-based" },
                 { value: "24 / 7", label: "Always on" },
                 { value: "Burmese", label: "Native language" },
               ].map((stat) => (

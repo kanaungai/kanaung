@@ -11,13 +11,13 @@ import {
 } from "lucide-react";
 
 const CASES = [
-  { icon: Car, label: "Car dealerships", description: "Model availability, pricing, test drives" },
-  { icon: Wrench, label: "Machinery & equipment", description: "Specs, stock, delivery, spare parts" },
-  { icon: Stethoscope, label: "Clinics & hospitals", description: "Services, hours, appointment booking" },
-  { icon: GraduationCap, label: "Education centers", description: "Courses, schedules, enrollment" },
-  { icon: Building2, label: "Real estate", description: "Listings, pricing, viewing requests" },
-  { icon: Hotel, label: "Hotels & travel", description: "Room availability, rates, amenities" },
-  { icon: ShoppingBag, label: "Retail & distribution", description: "Product catalog, orders, delivery" },
+  { icon: Car, label: "Car dealerships", description: "Handle high volumes of model, pricing, and test drive enquiries in natural Burmese." },
+  { icon: Wrench, label: "Machinery & equipment", description: "Answer spec, stock, and delivery questions without tying up your sales team." },
+  { icon: Stethoscope, label: "Clinics & hospitals", description: "Respond to service, availability, and appointment queries around the clock." },
+  { icon: GraduationCap, label: "Education centers", description: "Let prospective students ask about courses, fees, and schedules naturally." },
+  { icon: Building2, label: "Real estate", description: "Qualify leads and answer listing and pricing questions before human follow-up." },
+  { icon: Hotel, label: "Hotels & travel", description: "Handle room availability, pricing, and amenity questions instantly." },
+  { icon: ShoppingBag, label: "Retail & distribution", description: "Answer product, order, and delivery questions at scale, in Burmese." },
 ];
 
 export default function UseCases() {
@@ -32,10 +32,10 @@ export default function UseCases() {
           className="text-center mb-14"
         >
           <h2 className="font-sora text-3xl md:text-4xl font-bold tracking-[-0.025em] text-foreground">
-            Built for Myanmar businesses
+            Built for high-inquiry Myanmar businesses
           </h2>
           <p className="mt-3 text-muted-foreground max-w-lg mx-auto">
-            Any business that answers customer questions can use Kanaung.
+            Kanaung is most valuable where customer conversations are frequent, repetitive, and happen in Burmese.
           </p>
         </motion.div>
 

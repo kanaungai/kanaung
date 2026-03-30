@@ -12,33 +12,33 @@ import {
 const CAPABILITIES = [
   {
     icon: Languages,
-    title: "Burmese-first AI",
-    description: "Purpose-built for natural Burmese conversation, not a translated English bot.",
+    title: "LLM-powered, not scripted",
+    description: "Kanaung uses large language models to generate natural Burmese replies — not keyword rules or fixed decision trees.",
   },
   {
     icon: Database,
-    title: "Your business data",
-    description: "Trained on your specific products, services, pricing, and policies.",
+    title: "Trained on your business",
+    description: "Answers are grounded in your products, pricing, policies, and FAQs — not generic responses.",
   },
   {
     icon: ArrowRightLeft,
-    title: "Human handoff",
-    description: "Seamlessly routes complex or sensitive queries to your human team.",
+    title: "Human-in-the-loop",
+    description: "Complex or high-value conversations are routed to your team with full context, so nothing important gets missed.",
   },
   {
     icon: Globe,
-    title: "Multi-channel",
-    description: "Deploy on your website, Facebook Messenger, and Viber — all from one place.",
+    title: "Multi-channel deployment",
+    description: "Go live on your website, Facebook Messenger, and Viber from a single setup.",
   },
   {
     icon: Zap,
-    title: "Instant replies",
-    description: "Responds in seconds, 24/7. No more missed messages or delayed replies.",
+    title: "Burmese-first",
+    description: "Purpose-built for natural Burmese conversation — not a translated English bot layered on top.",
   },
   {
     icon: Shield,
-    title: "Built for Myanmar",
-    description: "Designed for how Myanmar businesses actually communicate with customers.",
+    title: "Operationally safe",
+    description: "Designed for businesses that need reliability. Your team stays in control of every sensitive or complex interaction.",
   },
 ];
 
@@ -54,10 +54,10 @@ export default function TrustSection() {
           className="text-center mb-14"
         >
           <h2 className="font-sora text-3xl md:text-4xl font-bold tracking-[-0.025em] text-foreground">
-            Why Kanaung
+            Built differently
           </h2>
           <p className="mt-3 text-muted-foreground max-w-lg mx-auto">
-            Practical AI built for how Myanmar businesses actually work.
+            LLM-powered customer service that uses your business knowledge to handle real conversations — not scripted flows.
           </p>
         </motion.div>
 

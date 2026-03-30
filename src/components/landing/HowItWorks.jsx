@@ -11,9 +11,9 @@ const STEPS = [
   },
   {
     number: "02",
-    title: "Kanaung answers customer messages",
+    title: "Kanaung generates natural Burmese replies",
     description:
-      "Kanaung handles repetitive customer questions in Burmese instantly across web, Messenger, and Viber.",
+      "Using your business knowledge, Kanaung handles real customer questions in natural Burmese — across web, Messenger, and Viber — without rigid scripts or fixed flows.",
     label: "24/7 automated replies",
   },
   {
@@ -47,7 +47,7 @@ export default function HowItWorks() {
               Launch Burmese AI customer service in three steps.
             </h2>
             <p className="text-[16px] text-muted-foreground leading-[1.8] md:pt-2 max-w-md font-inter">
-              Kanaung turns your business information into a live Burmese customer service assistant across web, Messenger, and Viber — with human handoff when needed.
+              Kanaung turns your business knowledge into an LLM-powered Burmese customer service assistant — more natural than scripted bots, deployed across web, Messenger, and Viber, with human handoff when needed.
             </p>
           </div>
         </motion.div>

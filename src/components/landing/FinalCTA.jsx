@@ -19,11 +19,10 @@ export default function FinalCTA() {
 
           <div className="relative px-8 py-16 md:px-16 md:py-20 text-center">
             <h2 className="font-sora text-3xl md:text-4xl lg:text-5xl font-bold tracking-[-0.03em] text-background max-w-2xl mx-auto leading-[1.06]">
-              Ready to transform your customer communication?
+              Bring LLM-powered Burmese customer service to your business.
             </h2>
             <p className="mt-5 text-background/70 max-w-lg mx-auto text-lg">
-              We're working with a small group of Myanmar businesses to shape the
-              future of AI customer service. Let's talk.
+              We're working with a select group of Myanmar businesses to replace rigid bots with smarter, more natural customer service automation. Let's talk.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
               <Button
