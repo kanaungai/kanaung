@@ -2,8 +2,9 @@ import React from "react";
 import BusinessContextCard from "./BusinessContextCard";
 import KnowledgeBasePanel from "./KnowledgeBasePanel";
 import AIRulesPanel from "./AIRulesPanel";
+import InventoryPanel from "./InventoryPanel";
 
-export default function ControlLayer({ context, setContext }) {
+export default function ControlLayer({ context, setContext, inventory, setInventory }) {
   const update = (section, key, value) => {
     setContext((prev) => ({
       ...prev,
@@ -27,6 +28,7 @@ export default function ControlLayer({ context, setContext }) {
       </div>
 
       <BusinessContextCard context={context} update={update} />
+      <InventoryPanel inventory={inventory} setInventory={setInventory} />
       <KnowledgeBasePanel context={context} update={update} />
       <AIRulesPanel context={context} update={update} />
     </div>

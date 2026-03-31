@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import { INITIAL_CONTEXT } from "../data/showroomData";
+import { INITIAL_CONTEXT, INITIAL_INVENTORY } from "../data/showroomData";
 import ControlLayer from "../components/demo/ControlLayer";
 import ConversationPanel from "../components/demo/ConversationPanel";
 
 export default function Demo() {
   const [context, setContext] = useState(INITIAL_CONTEXT);
+  const [inventory, setInventory] = useState(INITIAL_INVENTORY);
 
   return (
     <div className="min-h-screen bg-[hsl(220_22%_97%)] flex flex-col font-inter">
@@ -48,12 +49,12 @@ export default function Demo() {
           className="w-[38%] flex-shrink-0 border-r overflow-y-auto"
           style={{ borderColor: "hsl(220 16% 88%)", background: "hsl(220 20% 98%)" }}
         >
-          <ControlLayer context={context} setContext={setContext} />
+          <ControlLayer context={context} setContext={setContext} inventory={inventory} setInventory={setInventory} />
         </div>
 
         {/* Right: Conversation */}
         <div className="flex-1 flex flex-col overflow-hidden">
-          <ConversationPanel context={context} />
+          <ConversationPanel context={context} inventory={inventory} />
         </div>
       </div>
     </div>

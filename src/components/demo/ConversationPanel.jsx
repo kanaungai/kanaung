@@ -4,7 +4,7 @@ import ConversationHeader from "./ConversationHeader";
 import MessageThread from "./MessageThread";
 import DraftComposer from "./DraftComposer";
 
-export default function ConversationPanel({ context }) {
+export default function ConversationPanel({ context, inventory }) {
   const [messages, setMessages] = useState(INITIAL_MESSAGES);
   const [draft, setDraft] = useState(null);
 
@@ -22,7 +22,7 @@ export default function ConversationPanel({ context }) {
 
     // Generate AI draft
     setTimeout(() => {
-      const reply = generateReply(text, context);
+      const reply = generateReply(text, context, inventory);
       setDraft({ ...reply, id: Date.now() + 1 });
     }, 600);
   };
