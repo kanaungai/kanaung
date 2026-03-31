@@ -1,8 +1,7 @@
 /**
- * Base44 backend function template for `showroomAssistantChat`.
+ * Base44 app backend function for `showroomAssistantChat`.
  *
- * Deploy this in Base44 as a server-side function named `showroomAssistantChat`
- * and store `DEEPSEEK_API_KEY` in Base44 secrets, not in the frontend repo.
+ * Store `DEEPSEEK_API_KEY` in Base44 secrets, not in the frontend repo.
  */
 
 const DEEPSEEK_URL = "https://api.deepseek.com/chat/completions";
