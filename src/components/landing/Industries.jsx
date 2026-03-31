@@ -14,7 +14,7 @@ const INDUSTRIES = [
 
 export default function Industries() {
   return (
-    <section id="industries" className="py-24 md:py-32">
+    <section id="industries" className="py-24 md:py-32 bg-[hsl(220_25%_6%)]">
       <div className="max-w-[1200px] mx-auto px-8">
 
         {/* ── Header ── */}
@@ -25,24 +25,24 @@ export default function Industries() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16 md:mb-20"
         >
-          <p className="text-[11px] font-semibold tracking-[0.12em] uppercase text-muted-foreground mb-6">
+          <p className="text-[11px] font-semibold tracking-[0.12em] uppercase text-white/30 mb-6">
             Industries
           </p>
-          <div className="w-full h-px bg-foreground/8 mb-10" />
+          <div className="w-full h-px bg-white/8 mb-10" />
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
-            <h2 className="font-sora text-[36px] md:text-[44px] xl:text-[50px] font-bold tracking-[-0.03em] leading-[1.06] text-foreground">
+            <h2 className="font-sora text-[36px] md:text-[44px] xl:text-[50px] font-bold tracking-[-0.03em] leading-[1.06] text-white">
               Built for high-inquiry businesses.
             </h2>
-            <p className="text-[16px] text-muted-foreground leading-[1.8] md:pt-2 max-w-md font-inter">
+            <p className="text-[16px] text-white/50 leading-[1.8] md:pt-2 max-w-md font-inter">
               Kanaung is built for businesses that handle constant customer questions across chat, messaging apps, and web — where fast, natural Burmese replies make a real difference.
             </p>
           </div>
         </motion.div>
 
         {/* ── Industry grid ── */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-0 rounded-2xl border border-foreground/[0.07] overflow-hidden"
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-0 rounded-2xl border border-white/[0.07] overflow-hidden"
           style={{
-            background: "linear-gradient(160deg, hsl(220 22% 98.5%) 0%, hsl(220 16% 96%) 100%)",
+            background: "linear-gradient(160deg, hsl(220 22% 10%) 0%, hsl(220 22% 8%) 100%)",
           }}
         >
           {INDUSTRIES.map((item, i) => {
@@ -68,10 +68,10 @@ export default function Industries() {
                 }}
               >
                 <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-foreground/8 to-transparent pointer-events-none" />
-                <h3 className="font-sora text-[16px] md:text-[17px] font-semibold tracking-[-0.02em] text-foreground leading-snug mb-2.5">
+                <h3 className="font-sora text-[16px] md:text-[17px] font-semibold tracking-[-0.02em] text-white/80 leading-snug mb-2.5">
                   {item.name}
                 </h3>
-                <p className="text-[13px] text-muted-foreground leading-[1.7] font-inter">
+                <p className="text-[13px] text-white/35 leading-[1.7] font-inter">
                   {item.detail}
                 </p>
               </motion.div>
@@ -85,7 +85,7 @@ export default function Industries() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="w-full h-px bg-foreground/8 mt-16 md:mt-20"
+          className="w-full h-px bg-white/8 mt-16 md:mt-20"
         />
 
       </div>
