@@ -2,64 +2,68 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { openCalendly } from "./CalendlyPopup";
-
-const PLANS = [
-  {
-    name: "Starter",
-    tagline: "For small businesses getting started",
-    price: "$99",
-    period: "/ month",
-    features: [
-      "1 channel (Messenger or Viber)",
-      "500 conversations / month",
-      "Business knowledge base",
-      "Burmese AI responses",
-      "Basic analytics",
-    ],
-    cta: "Get Started",
-    highlighted: false,
-  },
-  {
-    name: "Growth",
-    tagline: "For businesses ready to scale",
-    price: "$199",
-    period: "/ month",
-    badge: "Most Popular",
-    features: [
-      "Everything in Starter, plus:",
-      "3 channels (Messenger, Viber, Web)",
-      "2,000 conversations / month",
-      "Operations dashboard",
-      "Escalation & human handoff",
-      "Conversation analytics & export",
-    ],
-    cta: "Get Started",
-    highlighted: true,
-  },
-  {
-    name: "Enterprise",
-    tagline: "For large teams and custom needs",
-    price: "Custom",
-    period: "",
-    features: [
-      "Everything in Growth, plus:",
-      "Unlimited conversations",
-      "Multiple locations",
-      "Custom integrations",
-      "Dedicated onboarding",
-      "Priority support",
-    ],
-    cta: "Book a Demo",
-    highlighted: false,
-  },
-];
+import { useLang } from "../../lib/LanguageContext";
+import { t } from "../../lib/translations";
 
 export default function Pricing() {
+  const { lang } = useLang();
+  const tx = t[lang];
+
+  const PLANS = [
+    {
+      name: tx.price_p1_name,
+      tagline: tx.price_p1_tag,
+      price: "$99",
+      period: "/ month",
+      features: [
+        "1 channel (Messenger or Viber)",
+        "500 conversations / month",
+        "Business knowledge base",
+        "Burmese AI responses",
+        "Basic analytics",
+      ],
+      cta: tx.price_cta1,
+      highlighted: false,
+    },
+    {
+      name: tx.price_p2_name,
+      tagline: tx.price_p2_tag,
+      price: "$199",
+      period: "/ month",
+      badge: tx.price_p2_badge,
+      features: [
+        "Everything in Starter, plus:",
+        "3 channels (Messenger, Viber, Web)",
+        "2,000 conversations / month",
+        "Operations dashboard",
+        "Escalation & human handoff",
+        "Conversation analytics & export",
+      ],
+      cta: tx.price_cta1,
+      highlighted: true,
+    },
+    {
+      name: tx.price_p3_name,
+      tagline: tx.price_p3_tag,
+      price: "Custom",
+      period: "",
+      features: [
+        "Everything in Growth, plus:",
+        "Unlimited conversations",
+        "Multiple locations",
+        "Custom integrations",
+        "Dedicated onboarding",
+        "Priority support",
+      ],
+      cta: tx.price_cta2,
+      highlighted: false,
+    },
+  ];
+
   return (
     <section id="pricing" className="py-24 md:py-32">
       <div className="max-w-[1200px] mx-auto px-8">
 
-        {/* ── Header ── */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -68,20 +72,19 @@ export default function Pricing() {
           className="mb-16 md:mb-20"
         >
           <p className="text-[11px] font-semibold tracking-[0.12em] uppercase text-muted-foreground mb-6">
-            Pricing
+            {tx.price_eyebrow}
           </p>
           <div className="w-full h-px bg-foreground/8 mb-10" />
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
             <h2 className="font-sora text-[36px] md:text-[44px] xl:text-[50px] font-bold tracking-[-0.03em] leading-[1.06] text-foreground">
-              Simple pricing that scales with you.
+              {tx.price_h2}
             </h2>
             <p className="text-[16px] text-muted-foreground leading-[1.8] md:pt-2 max-w-md font-inter">
-              No per-message fees. No hidden costs. Just one plan that fits.
+              {tx.price_sub}
             </p>
           </div>
         </motion.div>
 
-        {/* ── Cards ── */}
         <div className="grid md:grid-cols-3 gap-5">
           {PLANS.map((plan, i) => (
             <motion.div
@@ -104,12 +107,10 @@ export default function Pricing() {
                     }
               }
             >
-              {/* Top highlight line on featured card */}
               {plan.highlighted && (
                 <div className="absolute top-0 left-8 right-8 h-px bg-primary/30 pointer-events-none" />
               )}
 
-              {/* Badge */}
               {plan.badge && (
                 <div className="mb-5 self-start">
                   <span
@@ -125,7 +126,6 @@ export default function Pricing() {
                 </div>
               )}
 
-              {/* Plan name + tagline */}
               <div className={plan.badge ? "" : "mt-0"}>
                 <h3 className="font-sora text-[20px] font-bold tracking-[-0.02em] text-foreground">
                   {plan.name}
@@ -135,7 +135,6 @@ export default function Pricing() {
                 </p>
               </div>
 
-              {/* Price */}
               <div className="mt-8 mb-8 pb-8 border-b border-foreground/[0.07]">
                 <div className="flex items-end gap-1.5">
                   <span className="font-sora text-[40px] font-bold tracking-[-0.04em] leading-none text-foreground">
@@ -149,7 +148,6 @@ export default function Pricing() {
                 </div>
               </div>
 
-              {/* Features */}
               <ul className="space-y-3 flex-1 mb-10">
                 {plan.features.map((f, j) => (
                   <li key={j} className="flex items-start gap-2.5">
@@ -179,21 +177,13 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              {/* CTA */}
               <button
                 onClick={openCalendly}
                 className="w-full py-3 rounded-xl text-[13.5px] font-semibold tracking-[-0.01em] transition-all duration-200"
                 style={
                   plan.highlighted
-                    ? {
-                        background: "hsl(220 25% 11%)",
-                        color: "white",
-                      }
-                    : {
-                        background: "transparent",
-                        color: "hsl(220 25% 18%)",
-                        border: "1.5px solid hsl(220 16% 82%)",
-                      }
+                    ? { background: "hsl(220 25% 11%)", color: "white" }
+                    : { background: "transparent", color: "hsl(220 25% 18%)", border: "1.5px solid hsl(220 16% 82%)" }
                 }
               >
                 {plan.cta}
@@ -202,7 +192,6 @@ export default function Pricing() {
           ))}
         </div>
 
-        {/* ── Trial note ── */}
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -210,10 +199,9 @@ export default function Pricing() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="text-center text-[13px] text-muted-foreground mt-10 font-inter"
         >
-          All plans include a 14-day free trial. No credit card required.
+          {tx.price_trial}
         </motion.p>
 
-        {/* Bottom rule */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -221,7 +209,6 @@ export default function Pricing() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="w-full h-px bg-foreground/8 mt-16 md:mt-20"
         />
-
       </div>
     </section>
   );

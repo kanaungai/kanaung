@@ -1,23 +1,27 @@
 import React from "react";
 import { motion } from "framer-motion";
-
-const INDUSTRIES = [
-  { name: "Restaurants", detail: "Bookings, menu questions, opening hours" },
-  { name: "Car Showrooms", detail: "Model availability, pricing, test drives" },
-  { name: "Clinics", detail: "Appointments, doctors, opening hours" },
-  { name: "Education Centers", detail: "Course info, fees, intake dates" },
-  { name: "Real Estate", detail: "Listings, viewings, pricing enquiries" },
-  { name: "Hotels", detail: "Room availability, rates, check-in details" },
-  { name: "Retail Stores", detail: "Stock, locations, delivery" },
-  { name: "Travel & Ticketing", detail: "Schedules, pricing, booking questions" },
-];
+import { useLang } from "../../lib/LanguageContext";
+import { t } from "../../lib/translations";
 
 export default function Industries() {
+  const { lang } = useLang();
+  const tx = t[lang];
+
+  const INDUSTRIES = [
+    { name: tx.ind_1_name, detail: tx.ind_1_detail },
+    { name: tx.ind_2_name, detail: tx.ind_2_detail },
+    { name: tx.ind_3_name, detail: tx.ind_3_detail },
+    { name: tx.ind_4_name, detail: tx.ind_4_detail },
+    { name: tx.ind_5_name, detail: tx.ind_5_detail },
+    { name: tx.ind_6_name, detail: tx.ind_6_detail },
+    { name: tx.ind_7_name, detail: tx.ind_7_detail },
+    { name: tx.ind_8_name, detail: tx.ind_8_detail },
+  ];
+
   return (
     <section id="industries" className="py-24 md:py-32 bg-[hsl(220_25%_6%)]">
       <div className="max-w-[1200px] mx-auto px-8">
 
-        {/* ── Header ── */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -26,21 +30,21 @@ export default function Industries() {
           className="mb-16 md:mb-20"
         >
           <p className="text-[11px] font-semibold tracking-[0.12em] uppercase text-white/30 mb-6">
-            Industries
+            {tx.ind_eyebrow}
           </p>
           <div className="w-full h-px bg-white/8 mb-10" />
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
             <h2 className="font-sora text-[36px] md:text-[44px] xl:text-[50px] font-bold tracking-[-0.03em] leading-[1.06] text-white">
-              Built for high-inquiry businesses.
+              {tx.ind_h2}
             </h2>
             <p className="text-[16px] text-white/50 leading-[1.8] md:pt-2 max-w-md font-inter">
-              Kanaung is built for businesses that handle constant customer questions across chat, messaging apps, and web — where fast, natural Burmese replies make a real difference.
+              {tx.ind_sub}
             </p>
           </div>
         </motion.div>
 
-        {/* ── Industry grid ── */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-0 rounded-2xl border border-white/[0.07] overflow-hidden"
+        <div
+          className="grid grid-cols-2 md:grid-cols-4 gap-0 rounded-2xl border border-white/[0.07] overflow-hidden"
           style={{
             background: "linear-gradient(160deg, hsl(220 22% 10%) 0%, hsl(220 22% 8%) 100%)",
           }}
@@ -51,8 +55,6 @@ export default function Industries() {
             const totalRows = Math.ceil(INDUSTRIES.length / 4);
             const isLastRow = row === totalRows - 1;
             const isLastCol = col === 3;
-            const isLastColMobile = i % 2 === 1;
-            const isLastRowMobile = i >= INDUSTRIES.length - 2;
 
             return (
               <motion.div
@@ -79,7 +81,6 @@ export default function Industries() {
           })}
         </div>
 
-        {/* Bottom rule */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -87,7 +88,6 @@ export default function Industries() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="w-full h-px bg-white/8 mt-16 md:mt-20"
         />
-
       </div>
     </section>
   );

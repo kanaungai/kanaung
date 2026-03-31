@@ -3,8 +3,13 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { openCalendly } from "./CalendlyPopup";
+import { useLang } from "../../lib/LanguageContext";
+import { t } from "../../lib/translations";
 
 export default function FinalCTA() {
+  const { lang } = useLang();
+  const tx = t[lang];
+
   return (
     <section id="final-cta" className="py-20 md:py-28">
       <div className="max-w-6xl mx-auto px-6">
@@ -15,15 +20,14 @@ export default function FinalCTA() {
           transition={{ duration: 0.6 }}
           className="relative rounded-3xl bg-foreground overflow-hidden"
         >
-          {/* Subtle accent glow */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
 
           <div className="relative px-8 py-16 md:px-16 md:py-20 text-center">
             <h2 className="font-sora text-3xl md:text-4xl lg:text-5xl font-bold tracking-[-0.03em] text-background max-w-2xl mx-auto leading-[1.06]">
-              Bring LLM-powered Burmese customer service to your business.
+              {tx.cta_h2}
             </h2>
             <p className="mt-5 text-background/70 max-w-lg mx-auto text-lg">
-              We're working with a select group of Myanmar businesses to replace rigid bots with smarter, more natural customer service automation. Let's talk.
+              {tx.cta_sub}
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
               <Button
@@ -31,7 +35,7 @@ export default function FinalCTA() {
                 onClick={openCalendly}
                 className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 text-base font-semibold shadow-lg shadow-primary/30"
               >
-                Book a pilot
+                {tx.cta_btn1}
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
               <Button
@@ -40,11 +44,11 @@ export default function FinalCTA() {
                 onClick={openCalendly}
                 className="rounded-full px-8 text-base font-semibold border-background/20 text-background hover:bg-background/10 hover:text-background"
               >
-                Request early access
+                {tx.cta_btn2}
               </Button>
             </div>
             <p className="mt-8 text-xs text-background/40">
-              No commitment required · Founder-led onboarding
+              {tx.cta_note}
             </p>
           </div>
         </motion.div>

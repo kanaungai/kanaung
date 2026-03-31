@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { openCalendly } from "./CalendlyPopup";
+import { useLang } from "../../lib/LanguageContext";
+import { t } from "../../lib/translations";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { lang, toggle } = useLang();
+  const tx = t[lang];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -17,10 +21,10 @@ export default function Navbar() {
   };
 
   const links = [
-    { label: "How It Works", id: "how-it-works" },
-    { label: "Industries", id: "industries" },
-    { label: "Pricing", id: "pricing" },
-    { label: "Demo", id: "demo" },
+    { label: tx.nav_how, id: "how-it-works" },
+    { label: tx.nav_industries, id: "industries" },
+    { label: tx.nav_pricing, id: "pricing" },
+    { label: tx.nav_demo, id: "demo" },
   ];
 
   return (
@@ -60,27 +64,45 @@ export default function Navbar() {
 
         {/* Right CTA */}
         <div className="hidden md:flex items-center gap-3">
+          {/* Language toggle */}
+          <button
+            onClick={toggle}
+            className="flex items-center gap-1.5 px-3 h-[34px] rounded-full border border-foreground/12 hover:bg-foreground/[0.04] transition-all duration-200 text-[12px] font-semibold text-muted-foreground hover:text-foreground tracking-wide"
+            title="Switch language"
+          >
+            <span className="text-base leading-none">{lang === "en" ? "🇲🇲" : "🇬🇧"}</span>
+            <span>{lang === "en" ? "မြန်မာ" : "EN"}</span>
+          </button>
           <a
             href="#"
             className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors tracking-[-0.01em]"
           >
-            Sign in
+            {tx.nav_signin}
           </a>
           <button
             onClick={openCalendly}
             className="inline-flex items-center gap-2 bg-foreground text-background text-[13px] font-semibold px-5 h-[38px] rounded-full hover:bg-foreground/90 transition-all duration-200 tracking-[-0.01em] shadow-sm"
           >
-            Book Demo
+            {tx.nav_book}
           </button>
         </div>
 
         {/* Mobile toggle */}
-        <button
-          className="md:hidden text-foreground p-1.5 rounded-lg hover:bg-foreground/5 transition-colors"
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
+        <div className="md:hidden flex items-center gap-2">
+          <button
+            onClick={toggle}
+            className="flex items-center gap-1 px-2.5 h-[32px] rounded-full border border-foreground/12 text-[11px] font-semibold text-muted-foreground"
+          >
+            <span>{lang === "en" ? "🇲🇲" : "🇬🇧"}</span>
+            <span>{lang === "en" ? "မြန်မာ" : "EN"}</span>
+          </button>
+          <button
+            className="text-foreground p-1.5 rounded-lg hover:bg-foreground/5 transition-colors"
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
 
       {mobileOpen && (
@@ -99,7 +121,7 @@ export default function Navbar() {
               className="w-full bg-foreground text-background text-sm font-semibold py-2.5 rounded-full hover:bg-foreground/90 transition-colors"
               onClick={() => { setMobileOpen(false); openCalendly(); }}
             >
-              Book Demo
+              {tx.nav_book}
             </button>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { LanguageProvider } from "../lib/LanguageContext";
 import Navbar from "../components/landing/Navbar";
 import Hero from "../components/landing/Hero";
 import CostSection from "../components/landing/CostSection";
@@ -16,6 +17,7 @@ import ChannelsBar from "../components/landing/ChannelsBar";
 
 export default function Landing() {
   return (
+    <LanguageProvider>
     <div className="min-h-screen bg-background font-inter antialiased">
       <Navbar />
       <Hero />
@@ -30,5 +32,6 @@ export default function Landing() {
       <Footer />
       <CalendlyPopup />
     </div>
+    </LanguageProvider>
   );
 }

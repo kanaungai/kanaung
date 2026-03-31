@@ -1,4 +1,6 @@
 import React from "react";
+import { useLang } from "../../lib/LanguageContext";
+import { t } from "../../lib/translations";
 
 const CHANNELS = [
   {
@@ -126,13 +128,16 @@ function Pill({ channel }) {
 }
 
 export default function ChannelsBar() {
+  const { lang } = useLang();
+  const tx = t[lang];
+
   return (
     <section className="py-16 md:py-20">
       <div className="max-w-[1200px] mx-auto px-8">
 
         {/* Overline */}
         <p className="text-center text-[10px] font-semibold tracking-[0.16em] uppercase text-muted-foreground/40 mb-10">
-          Integrations
+          {tx.channels_label}
         </p>
 
         {/* Constrained logo rail */}
