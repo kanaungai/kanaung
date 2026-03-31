@@ -21,9 +21,9 @@ export default function Hero() {
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
           backgroundRepeat: "repeat",
-          backgroundSize: "128px 128px",
-        }}
-      />
+          backgroundSize: "128px 128px"
+        }} />
+      
 
       <div className="relative max-w-[1200px] mx-auto px-8 w-full">
         <div className="grid lg:grid-cols-[1fr_1.15fr] gap-10 xl:gap-16 items-center">
@@ -33,15 +33,15 @@ export default function Hero() {
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col"
-          >
+            className="flex flex-col">
+            
             {/* Eyebrow */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="inline-flex items-center self-start gap-2 px-4 py-2 rounded-full bg-foreground mb-8"
-            >
+              className="inline-flex items-center self-start gap-2 px-4 py-2 rounded-full bg-foreground mb-8">
+              
               <span className="w-1.5 h-1.5 rounded-full bg-white/50" />
               <span className="text-[11px] font-semibold text-background/90 tracking-[0.07em] uppercase">
                 LLM-Powered · Burmese-First
@@ -52,7 +52,7 @@ export default function Hero() {
             <h1 className="font-sora text-[44px] md:text-[52px] xl:text-[60px] font-bold tracking-[-0.03em] leading-[1.04] text-foreground">
               Never miss a<br />
               customer<br />
-              <span className="text-primary">conversation.</span>
+              <span className="text-[hsl(var(--foreground))]">conversation.</span>
             </h1>
 
             {/* Subtext */}
@@ -65,15 +65,15 @@ export default function Hero() {
             <div className="mt-10 flex flex-col sm:flex-row gap-3">
               <button
                 onClick={openCalendly}
-                className="inline-flex items-center justify-center gap-2 bg-foreground text-background text-[14px] font-semibold px-7 h-[50px] rounded-full hover:bg-foreground/88 transition-all duration-200 shadow-lg shadow-foreground/10 tracking-[-0.01em]"
-              >
+                className="inline-flex items-center justify-center gap-2 bg-foreground text-background text-[14px] font-semibold px-7 h-[50px] rounded-full hover:bg-foreground/88 transition-all duration-200 shadow-lg shadow-foreground/10 tracking-[-0.01em]">
+                
                 Book a Demo
                 <ArrowRight className="w-4 h-4" />
               </button>
               <button
                 onClick={() => document.getElementById("demo")?.scrollIntoView({ behavior: "smooth" })}
-                className="inline-flex items-center justify-center gap-2 bg-transparent text-foreground text-[14px] font-semibold px-7 h-[50px] rounded-full border border-foreground/12 hover:bg-foreground/[0.04] transition-all duration-200 tracking-[-0.01em]"
-              >
+                className="inline-flex items-center justify-center gap-2 bg-transparent text-foreground text-[14px] font-semibold px-7 h-[50px] rounded-full border border-foreground/12 hover:bg-foreground/[0.04] transition-all duration-200 tracking-[-0.01em]">
+                
                 Try the Demo
               </button>
             </div>
@@ -83,14 +83,14 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.55 }}
-              className="mt-14 flex items-center gap-10"
-            >
+              className="mt-14 flex items-center gap-10">
+              
               {[
-                { value: "LLM", label: "Not rule-based" },
-                { value: "24 / 7", label: "Always on" },
-                { value: "Burmese", label: "Native language" },
-              ].map((stat) => (
-                <div key={stat.label} className="flex flex-col gap-0.5">
+              { value: "LLM", label: "Not rule-based" },
+              { value: "24 / 7", label: "Always on" },
+              { value: "Burmese", label: "Native language" }].
+              map((stat) =>
+              <div key={stat.label} className="flex flex-col gap-0.5">
                   <span className="font-sora text-[22px] font-bold text-foreground tracking-[-0.02em]">
                     {stat.value}
                   </span>
@@ -98,7 +98,7 @@ export default function Hero() {
                     {stat.label}
                   </span>
                 </div>
-              ))}
+              )}
             </motion.div>
           </motion.div>
 
@@ -107,13 +107,13 @@ export default function Hero() {
             initial={{ opacity: 0, y: 40, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full"
-          >
+            className="w-full">
+            
             <LiveCallPanel />
           </motion.div>
 
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 }
