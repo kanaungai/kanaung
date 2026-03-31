@@ -1,121 +1,118 @@
 import React, { useState, useEffect } from "react";
-import { Send, Pencil, AlertCircle, ChevronUp, ChevronDown } from "lucide-react";
+import { Send, Pencil, AlertCircle, Zap, ChevronUp, ChevronDown } from "lucide-react";
 
-export default function DraftComposer({ draft, signals }) {
-  const [text, setText] = useState(draft);
+export default function DraftComposer({ draft, setDraft, onSend, onEscalate, onCustomerSend, context }) {
+  const [customerInput, setCustomerInput] = useState("");
+  const [draftText, setDraftText] = useState("");
+  const [editingDraft, setEditingDraft] = useState(false);
   const [sent, setSent] = useState(false);
-  const [expanded, setExpanded] = useState(true);
 
-  // Reset when draft prop changes (scenario switch)
   useEffect(() => {
-    setText(draft);
-    setSent(false);
+    if (draft) {
+      setDraftText(draft.content);
+      setEditingDraft(false);
+      setSent(false);
+    }
   }, [draft]);
 
   const handleSend = () => {
-    if (!text.trim()) return;
+    if (editingDraft && draft) {
+      setDraft({ ...draft, content: draftText });
+    }
     setSent(true);
-    setTimeout(() => setSent(false), 2500);
+    setTimeout(() => {
+      onSend();
+      setSent(false);
+    }, 400);
+  };
+
+  const handleCustomerSubmit = (e) => {
+    e.preventDefault();
+    if (!customerInput.trim()) return;
+    onCustomerSend(customerInput);
+    setCustomerInput("");
   };
 
   return (
-    <div
-      className="flex-shrink-0 border-t"
-      style={{ borderColor: "hsl(220 16% 89%)", background: "hsl(220 18% 98.5%)" }}
-    >
-      {/* Draft header */}
-      <button
-        className="w-full flex items-center justify-between px-5 py-3 hover:bg-foreground/[0.02] transition-colors"
-        onClick={() => setExpanded((v) => !v)}
-      >
-        <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-          <p className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground/50">
-            AI Draft Response
-          </p>
-          <span
-            className="text-[8px] font-semibold px-1.5 py-0.5 rounded"
-            style={{ background: "hsl(220 16% 91%)", color: "hsl(220 12% 50%)" }}
-          >
-            Auto-drafted
-          </span>
-        </div>
-        {expanded
-          ? <ChevronDown className="w-3.5 h-3.5 text-muted-foreground/30" />
-          : <ChevronUp className="w-3.5 h-3.5 text-muted-foreground/30" />
-        }
-      </button>
+    <div className="flex-shrink-0 border-t" style={{ borderColor: "hsl(220 16% 89%)" }}>
 
-      {expanded && (
-        <div className="px-5 pb-5 space-y-3">
-          {/* Signal chips */}
-          {signals && signals.length > 0 && (
-            <div className="flex flex-wrap gap-1.5">
-              {signals.map((sig, i) => (
+      {/* AI Draft */}
+      {draft && (
+        <div
+          className="border-b px-4 py-3"
+          style={{ background: "hsl(220 18% 98%)", borderColor: "hsl(220 16% 89%)" }}
+        >
+          <div className="flex items-center gap-2 mb-2">
+            <Zap className="w-3 h-3" style={{ color: "hsl(220 20% 40%)" }} />
+            <p className="text-[9px] font-bold tracking-[0.1em] uppercase" style={{ color: "hsl(220 12% 54%)" }}>
+              AI Draft Response
+            </p>
+            <div className="flex gap-1 ml-1 flex-wrap">
+              {draft.signals?.map((s) => (
                 <span
-                  key={i}
-                  className="text-[9.5px] font-medium px-2.5 py-1 rounded-full"
-                  style={{
-                    background: "hsl(220 16% 93%)",
-                    color: "hsl(220 12% 50%)",
-                    border: "1px solid hsl(220 16% 88%)",
-                  }}
+                  key={s}
+                  className="text-[8px] font-semibold px-1.5 py-0.5 rounded"
+                  style={{ background: "hsl(220 16% 93%)", color: "hsl(220 18% 42%)" }}
                 >
-                  {sig}
+                  {s}
                 </span>
               ))}
             </div>
-          )}
+          </div>
 
-          {/* Text area */}
-          <textarea
-            value={sent ? "✓  Message sent" : text}
-            onChange={(e) => !sent && setText(e.target.value)}
-            rows={3}
-            readOnly={sent}
-            className="w-full text-[13px] leading-[1.7] resize-none rounded-xl px-4 py-3 outline-none transition-all"
-            style={{
-              background: sent ? "hsl(142 50% 97%)" : "white",
-              border: `1px solid ${sent ? "hsl(142 45% 82%)" : "hsl(220 16% 87%)"}`,
-              color: sent ? "hsl(142 55% 32%)" : "hsl(220 18% 16%)",
-              boxShadow: "0 1px 4px hsl(220 16% 88% / 0.4)",
-            }}
-          />
-
-          {/* Action buttons */}
-          <div className="flex items-center gap-2.5">
-            <button
-              onClick={handleSend}
-              disabled={sent}
-              className="inline-flex items-center gap-2 text-[12px] font-semibold px-5 py-2 rounded-full transition-all duration-150"
+          {editingDraft ? (
+            <textarea
+              value={draftText}
+              onChange={(e) => setDraftText(e.target.value)}
+              rows={3}
+              className="w-full text-[12px] leading-relaxed bg-white border rounded-lg px-3 py-2 focus:outline-none resize-none"
+              style={{ borderColor: "hsl(220 16% 88%)", color: "hsl(220 18% 18%)" }}
+            />
+          ) : (
+            <p
+              className="text-[12px] leading-relaxed rounded-lg px-3 py-2 whitespace-pre-line"
               style={{
-                background: sent ? "hsl(142 50% 94%)" : "hsl(220 25% 11%)",
-                color: sent ? "hsl(142 55% 33%)" : "white",
-                opacity: sent ? 1 : 1,
+                background: "white",
+                border: "1px solid hsl(220 16% 89%)",
+                color: "hsl(220 18% 18%)",
               }}
             >
-              <Send className="w-3.5 h-3.5" />
-              {sent ? "Sent" : "Send reply"}
+              {draftText}
+            </p>
+          )}
+
+          <div className="flex items-center gap-2 mt-2.5">
+            <button
+              onClick={handleSend}
+              className="flex items-center gap-1.5 text-[11px] font-semibold px-3.5 py-1.5 rounded-lg transition-all"
+              style={
+                sent
+                  ? { background: "hsl(142 55% 46%)", color: "white" }
+                  : { background: "hsl(220 25% 11%)", color: "white" }
+              }
+            >
+              <Send className="w-3 h-3" />
+              {sent ? "Sent" : "Send"}
             </button>
             <button
-              disabled={sent}
-              className="inline-flex items-center gap-1.5 text-[12px] font-semibold px-4 py-2 rounded-full transition-all duration-150"
+              onClick={() => setEditingDraft((p) => !p)}
+              className="flex items-center gap-1.5 text-[11px] font-semibold px-3.5 py-1.5 rounded-lg transition-all"
               style={{
-                background: "transparent",
-                color: "hsl(220 18% 36%)",
-                border: "1px solid hsl(220 16% 84%)",
+                background: "hsl(220 16% 93%)",
+                color: "hsl(220 18% 24%)",
+                border: "1px solid hsl(220 16% 87%)",
               }}
             >
               <Pencil className="w-3 h-3" />
               Edit
             </button>
             <button
-              disabled={sent}
-              className="inline-flex items-center gap-1.5 text-[12px] font-semibold px-4 py-2 rounded-full transition-all duration-150 ml-auto"
+              onClick={onEscalate}
+              className="flex items-center gap-1.5 text-[11px] font-semibold px-3.5 py-1.5 rounded-lg transition-all ml-auto"
               style={{
-                background: "hsl(38 80% 97%)",
-                color: "hsl(38 65% 36%)",
-                border: "1px solid hsl(38 60% 86%)",
+                background: "hsl(38 80% 96%)",
+                color: "hsl(38 60% 34%)",
+                border: "1px solid hsl(38 65% 86%)",
               }}
             >
               <AlertCircle className="w-3 h-3" />
@@ -124,6 +121,31 @@ export default function DraftComposer({ draft, signals }) {
           </div>
         </div>
       )}
+
+      {/* Simulate customer input */}
+      <div className="px-4 py-3" style={{ background: "white" }}>
+        <p className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">
+          Simulate Customer Message
+        </p>
+        <form onSubmit={handleCustomerSubmit} className="flex gap-2">
+          <input
+            type="text"
+            value={customerInput}
+            onChange={(e) => setCustomerInput(e.target.value)}
+            placeholder="Type a customer message..."
+            className="flex-1 text-[12px] bg-secondary/50 border rounded-lg px-3 py-2 focus:outline-none focus:ring-1 transition-all"
+            style={{ borderColor: "hsl(220 16% 88%)", color: "hsl(220 18% 18%)" }}
+          />
+          <button
+            type="submit"
+            disabled={!customerInput.trim()}
+            className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors disabled:opacity-40"
+            style={{ background: "hsl(220 25% 11%)", color: "white" }}
+          >
+            <Send className="w-3.5 h-3.5" />
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

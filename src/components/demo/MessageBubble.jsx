@@ -1,62 +1,88 @@
 import React from "react";
-import { User } from "lucide-react";
+import { AlertCircle } from "lucide-react";
+
+function SignalChips({ signals }) {
+  if (!signals || signals.length === 0) return null;
+  return (
+    <div className="flex flex-wrap gap-1 mt-2">
+      {signals.map((s) => {
+        const isEscalate = s.toLowerCase().includes("escalat");
+        return (
+          <span
+            key={s}
+            className="flex items-center gap-1 text-[9px] font-semibold px-2 py-0.5 rounded-full"
+            style={
+              isEscalate
+                ? { background: "hsl(38 80% 95%)", color: "hsl(38 60% 38%)", border: "1px solid hsl(38 65% 86%)" }
+                : { background: "hsl(220 16% 93%)", color: "hsl(220 18% 38%)", border: "1px solid hsl(220 16% 87%)" }
+            }
+          >
+            {isEscalate && <AlertCircle className="w-2.5 h-2.5" />}
+            {s}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
 
 export default function MessageBubble({ message }) {
+  if (message.role === "system") {
+    return (
+      <div className="flex justify-center">
+        <span
+          className="text-[10px] px-3 py-1 rounded-full"
+          style={{ background: "hsl(38 80% 95%)", color: "hsl(38 60% 36%)", border: "1px solid hsl(38 60% 86%)" }}
+        >
+          {message.content}
+        </span>
+      </div>
+    );
+  }
+
   const isCustomer = message.role === "customer";
 
   return (
-    <div className={`flex items-end gap-2.5 mb-3 ${isCustomer ? "justify-start" : "justify-end"}`}>
+    <div className={`flex flex-col ${isCustomer ? "items-end" : "items-start"} gap-1`}>
       {isCustomer && (
-        <div
-          className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mb-0.5"
-          style={{ background: "hsl(220 16% 91%)" }}
-        >
-          <User className="w-3 h-3 text-muted-foreground" />
+        <div className="flex items-center gap-1.5 mb-0.5">
+          <span className="text-[10px] text-muted-foreground">{message.name}</span>
+          {message.channel && (
+            <span
+              className="text-[9px] font-semibold px-1.5 py-0.5 rounded"
+              style={{ background: "hsl(214 80% 94%)", color: "hsl(214 72% 38%)" }}
+            >
+              {message.channel}
+            </span>
+          )}
         </div>
       )}
 
-      <div className="flex flex-col gap-1 max-w-[68%]">
+      <div className={`max-w-[78%] ${isCustomer ? "items-end" : "items-start"} flex flex-col`}>
         <div
-          className="px-4 py-3 rounded-2xl text-[13.5px] leading-[1.65]"
+          className="rounded-2xl px-4 py-2.5 text-[13px] leading-relaxed whitespace-pre-line"
           style={
             isCustomer
               ? {
-                  background: "white",
-                  border: "1px solid hsl(220 16% 89%)",
-                  color: "hsl(220 18% 18%)",
-                  borderRadius: "18px 18px 18px 4px",
-                  boxShadow: "0 1px 3px hsl(220 16% 88% / 0.5)",
+                  background: "hsl(220 25% 11%)",
+                  color: "white",
+                  borderRadius: "16px 16px 4px 16px",
                 }
               : {
-                  background: "hsl(220 25% 12%)",
-                  color: "rgba(255,255,255,0.88)",
-                  borderRadius: "18px 18px 4px 18px",
-                  boxShadow: "0 2px 8px hsl(220 25% 10% / 0.15)",
+                  background: "hsl(220 18% 96%)",
+                  color: "hsl(220 18% 16%)",
+                  border: "1px solid hsl(220 16% 90%)",
+                  borderRadius: "16px 16px 16px 4px",
                 }
           }
         >
-          {message.text}
+          {message.content}
         </div>
-        <span
-          className={`text-[10px] text-muted-foreground/50 px-1 ${isCustomer ? "text-left" : "text-right"}`}
-        >
-          {message.time}
-        </span>
-      </div>
 
-      {!isCustomer && (
-        <div
-          className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mb-5"
-          style={{ background: "hsl(220 25% 12%)" }}
-        >
-          <img
-            src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
-            alt="AI"
-            className="w-4 h-4 object-contain"
-            style={{ filter: "brightness(0) invert(1) opacity(0.85)" }}
-          />
-        </div>
-      )}
+        {!isCustomer && <SignalChips signals={message.signals} />}
+
+        <p className="text-[9px] text-muted-foreground mt-1 px-1">{message.time}</p>
+      </div>
     </div>
   );
 }
