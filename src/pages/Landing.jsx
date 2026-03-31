@@ -7,6 +7,7 @@ import ProblemSection from "../components/landing/ProblemSection";
 import HowItWorks from "../components/landing/HowItWorks";
 import WhyDifferent from "../components/landing/WhyDifferent";
 import ControlLayer from "../components/landing/ControlLayer";
+import Industries from "../components/landing/Industries";
 import UseCases from "../components/landing/UseCases";
 import TrustSection from "../components/landing/TrustSection";
 import FinalCTA from "../components/landing/FinalCTA";
@@ -20,6 +21,7 @@ export default function Landing() {
       <ControlLayer />
       <CostSection />
       <HowItWorks />
+      <Industries />
       <WhyDifferent />
       <ChatDemo />
       <ProblemSection />
