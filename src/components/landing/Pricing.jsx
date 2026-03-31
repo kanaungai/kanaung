@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
+import { openCalendly } from "./CalendlyPopup";
 
 const PLANS = [
   {
@@ -180,7 +181,7 @@ export default function Pricing() {
 
               {/* CTA */}
               <button
-                onClick={() => document.getElementById("final-cta")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={openCalendly}
                 className="w-full py-3 rounded-xl text-[13.5px] font-semibold tracking-[-0.01em] transition-all duration-200"
                 style={
                   plan.highlighted

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import { openCalendly } from "./CalendlyPopup";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -66,7 +67,7 @@ export default function Navbar() {
             Sign in
           </a>
           <button
-            onClick={() => document.getElementById("final-cta")?.scrollIntoView({ behavior: "smooth" })}
+            onClick={openCalendly}
             className="inline-flex items-center gap-2 bg-foreground text-background text-[13px] font-semibold px-5 h-[38px] rounded-full hover:bg-foreground/90 transition-all duration-200 tracking-[-0.01em] shadow-sm"
           >
             Book Demo
@@ -96,10 +97,7 @@ export default function Navbar() {
           <div className="pt-4">
             <button
               className="w-full bg-foreground text-background text-sm font-semibold py-2.5 rounded-full hover:bg-foreground/90 transition-colors"
-              onClick={() => {
-                setMobileOpen(false);
-                document.getElementById("final-cta")?.scrollIntoView({ behavior: "smooth" });
-              }}
+              onClick={() => { setMobileOpen(false); openCalendly(); }}
             >
               Book Demo
             </button>

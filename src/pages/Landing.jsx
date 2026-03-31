@@ -9,9 +9,9 @@ import WhyDifferent from "../components/landing/WhyDifferent";
 import ControlLayer from "../components/landing/ControlLayer";
 import Industries from "../components/landing/Industries";
 import Pricing from "../components/landing/Pricing";
-import TrustSection from "../components/landing/TrustSection";
 import FinalCTA from "../components/landing/FinalCTA";
 import Footer from "../components/landing/Footer";
+import CalendlyPopup from "../components/landing/CalendlyPopup";
 
 export default function Landing() {
   return (
@@ -24,9 +24,9 @@ export default function Landing() {
       <WhyDifferent />
       <Industries />
       <Pricing />
-      <TrustSection />
       <FinalCTA />
       <Footer />
+      <CalendlyPopup />
     </div>
   );
 }

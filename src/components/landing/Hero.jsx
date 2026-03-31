@@ -2,6 +2,7 @@ import React from "react";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import LiveCallPanel from "./LiveCallPanel";
+import { openCalendly } from "./CalendlyPopup";
 
 export default function Hero() {
   return (
@@ -63,7 +64,7 @@ export default function Hero() {
             {/* CTAs */}
             <div className="mt-10 flex flex-col sm:flex-row gap-3">
               <button
-                onClick={() => document.getElementById("final-cta")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={openCalendly}
                 className="inline-flex items-center justify-center gap-2 bg-foreground text-background text-[14px] font-semibold px-7 h-[50px] rounded-full hover:bg-foreground/88 transition-all duration-200 shadow-lg shadow-foreground/10 tracking-[-0.01em]"
               >
                 Book a Demo

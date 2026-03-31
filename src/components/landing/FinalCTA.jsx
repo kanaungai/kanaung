@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { openCalendly } from "./CalendlyPopup";
 
 export default function FinalCTA() {
   return (
@@ -27,6 +28,7 @@ export default function FinalCTA() {
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"
+                onClick={openCalendly}
                 className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 text-base font-semibold shadow-lg shadow-primary/30"
               >
                 Book a pilot
@@ -35,6 +37,7 @@ export default function FinalCTA() {
               <Button
                 variant="outline"
                 size="lg"
+                onClick={openCalendly}
                 className="rounded-full px-8 text-base font-semibold border-background/20 text-background hover:bg-background/10 hover:text-background"
               >
                 Request early access
