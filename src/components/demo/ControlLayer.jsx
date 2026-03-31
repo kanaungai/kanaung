@@ -1,10 +1,10 @@
 import React from "react";
 import BusinessContextCard from "./BusinessContextCard";
-import KnowledgeBasePanel from "./KnowledgeBasePanel";
-import AIRulesPanel from "./AIRulesPanel";
 import InventoryPanel from "./InventoryPanel";
+import ShowroomPanel from "./ShowroomPanel";
+import KnowledgeBasePanel from "./KnowledgeBasePanel";
 
-export default function ControlLayer({ context, setContext, inventory, setInventory }) {
+export default function ControlLayer({ context, setContext, inventory, setInventory, showroom, setShowroom, kb, setKb }) {
   const update = (section, key, value) => {
     setContext((prev) => ({
       ...prev,
@@ -28,9 +28,25 @@ export default function ControlLayer({ context, setContext, inventory, setInvent
       </div>
 
       <BusinessContextCard context={context} update={update} />
-      <InventoryPanel inventory={inventory} setInventory={setInventory} />
-      <KnowledgeBasePanel context={context} update={update} />
-      <AIRulesPanel context={context} update={update} />
+
+      {/* Part 1: Structured facts */}
+      <div>
+        <p className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2 px-1">
+          Part 1 — Structured Data
+        </p>
+        <InventoryPanel inventory={inventory} setInventory={setInventory} />
+        <div className="mt-3">
+          <ShowroomPanel showroom={showroom} setShowroom={setShowroom} />
+        </div>
+      </div>
+
+      {/* Part 2: Knowledge base / policy */}
+      <div>
+        <p className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2 px-1">
+          Part 2 — Knowledge Base &amp; Policy
+        </p>
+        <KnowledgeBasePanel kb={kb} setKb={setKb} />
+      </div>
     </div>
   );
 }
