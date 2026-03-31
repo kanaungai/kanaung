@@ -8,6 +8,7 @@ import HowItWorks from "../components/landing/HowItWorks";
 import WhyDifferent from "../components/landing/WhyDifferent";
 import ControlLayer from "../components/landing/ControlLayer";
 import Industries from "../components/landing/Industries";
+import Pricing from "../components/landing/Pricing";
 import TrustSection from "../components/landing/TrustSection";
 import FinalCTA from "../components/landing/FinalCTA";
 import Footer from "../components/landing/Footer";
@@ -20,9 +21,9 @@ export default function Landing() {
       <ControlLayer />
       <CostSection />
       <HowItWorks />
-      <Industries />
       <WhyDifferent />
       <Industries />
+      <Pricing />
       <TrustSection />
       <FinalCTA />
       <Footer />
