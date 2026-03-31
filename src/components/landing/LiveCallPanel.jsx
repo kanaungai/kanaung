@@ -68,13 +68,13 @@ export default function LiveCallPanel() {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    const delays = [1800, 3500, 3000, 3000, 3800, 3000, 3500];
+    const delays = [1200, 2800, 2400, 2600, 3200, 2600, 2800];
 
     if (currentIndex >= CONVERSATION.length) {
       timeoutRef.current = setTimeout(() => {
         setVisibleMessages([]);
         setCurrentIndex(0);
-      }, 6000);
+      }, 5000);
       return () => clearTimeout(timeoutRef.current);
     }
 
@@ -89,7 +89,7 @@ export default function LiveCallPanel() {
 
   useEffect(() => {
     if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+      containerRef.current.scrollTo({ top: containerRef.current.scrollHeight, behavior: "smooth" });
     }
   }, [visibleMessages]);
 
@@ -153,11 +153,11 @@ export default function LiveCallPanel() {
           <AnimatePresence initial={false}>
             {visibleMessages.map((msg, i) => (
               <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 14, scale: 0.97 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                className={`flex items-end gap-2.5 ${msg.role === "ai" ? "justify-start" : "justify-end"}`}
+               key={i}
+               initial={{ opacity: 0, y: 8, scale: 0.96 }}
+               animate={{ opacity: 1, y: 0, scale: 1 }}
+               transition={{ duration: 0.32, ease: [0.25, 1, 0.4, 1] }}
+               className={`flex items-end gap-2.5 ${msg.role === "ai" ? "justify-start" : "justify-end"}`}
               >
                 {msg.role === "ai" && (
                   <div className="w-7 h-7 rounded-xl bg-primary/20 border border-primary/20 flex items-center justify-center flex-shrink-0 mb-0.5">
@@ -202,10 +202,10 @@ export default function LiveCallPanel() {
           <AnimatePresence>
             {isAiTyping && (
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 4 }}
-                transition={{ duration: 0.3 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
                 className="flex items-end gap-2.5 justify-start"
               >
                 <div className="w-7 h-7 rounded-xl bg-primary/20 border border-primary/20 flex items-center justify-center flex-shrink-0">
