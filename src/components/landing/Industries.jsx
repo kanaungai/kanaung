@@ -1,23 +1,15 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const CARDS = [
-  {
-    industry: "Restaurants",
-    scenario: "A customer asks to pre-order for 20 guests tomorrow and wants the full menu sent over.",
-  },
-  {
-    industry: "Car Dealerships",
-    scenario: "A buyer messages at midnight asking about installment plans on a specific model.",
-  },
-  {
-    industry: "Real Estate",
-    scenario: "A renter wants listings under budget in a specific township, with photos.",
-  },
-  {
-    industry: "Retail & E-commerce",
-    scenario: "A shopper asks if an item is in stock and how long delivery takes.",
-  },
+const INDUSTRIES = [
+  { name: "Restaurants", detail: "Bookings, menu questions, opening hours" },
+  { name: "Car Showrooms", detail: "Model availability, pricing, test drives" },
+  { name: "Clinics", detail: "Appointments, doctors, opening hours" },
+  { name: "Education Centers", detail: "Course info, fees, intake dates" },
+  { name: "Real Estate", detail: "Listings, viewings, pricing enquiries" },
+  { name: "Hotels", detail: "Room availability, rates, check-in details" },
+  { name: "Retail Stores", detail: "Stock, locations, delivery" },
+  { name: "Travel & Ticketing", detail: "Schedules, pricing, booking questions" },
 ];
 
 export default function Industries() {
@@ -37,34 +29,54 @@ export default function Industries() {
             Industries
           </p>
           <div className="w-full h-px bg-foreground/8 mb-10" />
-          <h2 className="font-sora text-[36px] md:text-[44px] xl:text-[50px] font-bold tracking-[-0.03em] leading-[1.06] text-foreground">
-            Built for the businesses Myanmar runs on.
-          </h2>
+          <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
+            <h2 className="font-sora text-[36px] md:text-[44px] xl:text-[50px] font-bold tracking-[-0.03em] leading-[1.06] text-foreground">
+              Built for high-inquiry businesses.
+            </h2>
+            <p className="text-[16px] text-muted-foreground leading-[1.8] md:pt-2 max-w-md font-inter">
+              Kanaung is built for businesses that handle constant customer questions across chat, messaging apps, and web — where fast, natural Burmese replies make a real difference.
+            </p>
+          </div>
         </motion.div>
 
-        {/* ── Cards ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
-          {CARDS.map((card, i) => (
-            <motion.div
-              key={card.industry}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.55, delay: 0.1 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="relative flex flex-col p-8 md:p-10 rounded-2xl border border-foreground/[0.07] overflow-hidden"
-              style={{
-                background: "linear-gradient(160deg, hsl(220 22% 98.5%) 0%, hsl(220 16% 96%) 100%)",
-              }}
-            >
-              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-foreground/8 to-transparent pointer-events-none" />
-              <h3 className="font-sora text-[17px] font-semibold tracking-[-0.02em] text-foreground leading-snug mb-4">
-                {card.industry}
-              </h3>
-              <p className="text-[14px] text-muted-foreground leading-[1.75] font-inter">
-                {card.scenario}
-              </p>
-            </motion.div>
-          ))}
+        {/* ── Industry grid ── */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-0 rounded-2xl border border-foreground/[0.07] overflow-hidden"
+          style={{
+            background: "linear-gradient(160deg, hsl(220 22% 98.5%) 0%, hsl(220 16% 96%) 100%)",
+          }}
+        >
+          {INDUSTRIES.map((item, i) => {
+            const col = i % 4;
+            const row = Math.floor(i / 4);
+            const totalRows = Math.ceil(INDUSTRIES.length / 4);
+            const isLastRow = row === totalRows - 1;
+            const isLastCol = col === 3;
+            const isLastColMobile = i % 2 === 1;
+            const isLastRowMobile = i >= INDUSTRIES.length - 2;
+
+            return (
+              <motion.div
+                key={item.name}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.45, delay: 0.05 + i * 0.05, ease: "easeOut" }}
+                className="group relative flex flex-col px-8 py-8 md:py-10 border-r border-b border-foreground/[0.07] hover:bg-foreground/[0.015] transition-colors duration-200"
+                style={{
+                  borderRight: isLastCol ? "none" : undefined,
+                  borderBottom: isLastRow ? "none" : undefined,
+                }}
+              >
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-foreground/8 to-transparent pointer-events-none" />
+                <h3 className="font-sora text-[16px] md:text-[17px] font-semibold tracking-[-0.02em] text-foreground leading-snug mb-2.5">
+                  {item.name}
+                </h3>
+                <p className="text-[13px] text-muted-foreground leading-[1.7] font-inter">
+                  {item.detail}
+                </p>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Bottom rule */}
