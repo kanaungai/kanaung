@@ -408,8 +408,8 @@ export default function ControlLayer() {
   const [selectedId, setSelectedId] = useState(1);
 
   return (
-    <section className="py-24 md:py-32 relative overflow-hidden bg-[hsl(220_25%_6%)]">
-      <div className="absolute inset-0 bg-gradient-to-b from-[hsl(220_25%_6%)] to-[hsl(220_25%_5%)] pointer-events-none" />
+    <section className="py-24 md:py-32 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-background to-background pointer-events-none" />
 
       <div className="relative max-w-[1200px] mx-auto px-8">
 
@@ -421,15 +421,15 @@ export default function ControlLayer() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16 md:mb-20"
         >
-          <p className="text-[11px] font-semibold tracking-[0.12em] uppercase text-white/30 mb-6">
+          <p className="text-[11px] font-semibold tracking-[0.12em] uppercase text-muted-foreground mb-6">
             The Control Layer
           </p>
-          <div className="w-full h-px bg-white/8 mb-10" />
+          <div className="w-full h-px bg-foreground/8 mb-10" />
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
-            <h2 className="font-sora text-[36px] md:text-[44px] xl:text-[50px] font-bold tracking-[-0.03em] leading-[1.06] text-white">
+            <h2 className="font-sora text-[36px] md:text-[44px] xl:text-[50px] font-bold tracking-[-0.03em] leading-[1.06] text-foreground">
               The control layer behind every conversation.
             </h2>
-            <p className="text-[16px] text-white/50 leading-[1.8] md:pt-2 max-w-md font-inter">
+            <p className="text-[16px] text-muted-foreground leading-[1.8] md:pt-2 max-w-md font-inter">
               Monitor AI-handled conversations, review auto-generated replies, and manage human escalations — all from one operations dashboard built for Myanmar businesses.
             </p>
           </div>
@@ -553,7 +553,7 @@ export default function ControlLayer() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="w-full h-px bg-white/8 mt-16 md:mt-20"
+          className="w-full h-px bg-foreground/8 mt-16 md:mt-20"
         />
       </div>
     </section>
