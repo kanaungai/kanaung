@@ -11,11 +11,15 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const scrollTo = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
   const links = [
-    { label: "Problem", href: "#problem" },
-    { label: "Industries", href: "#use-cases" },
-    { label: "Solutions", href: "#how-it-works" },
-    { label: "Blog", href: "#" },
+    { label: "How It Works", id: "how-it-works" },
+    { label: "Industries", id: "industries" },
+    { label: "Pricing", id: "pricing" },
+    { label: "Demo", id: "demo" },
   ];
 
   return (
@@ -43,13 +47,13 @@ export default function Navbar() {
         {/* Center links */}
         <div className="hidden md:flex items-center gap-0.5">
           {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
+            <button
+              key={link.id}
+              onClick={() => scrollTo(link.id)}
               className="px-4 py-2 text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-lg hover:bg-foreground/[0.04] tracking-[-0.01em]"
             >
               {link.label}
-            </a>
+            </button>
           ))}
         </div>
 
@@ -81,14 +85,13 @@ export default function Navbar() {
       {mobileOpen && (
         <div className="md:hidden bg-background/98 backdrop-blur-3xl border-b border-foreground/[0.06] px-6 pb-6 space-y-1">
           {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="block text-[13px] font-medium text-muted-foreground hover:text-foreground py-2.5 px-3 rounded-lg hover:bg-foreground/[0.04] transition-colors"
-              onClick={() => setMobileOpen(false)}
+            <button
+              key={link.id}
+              onClick={() => { scrollTo(link.id); setMobileOpen(false); }}
+              className="w-full text-left text-[13px] font-medium text-muted-foreground hover:text-foreground py-2.5 px-3 rounded-lg hover:bg-foreground/[0.04] transition-colors"
             >
               {link.label}
-            </a>
+            </button>
           ))}
           <div className="pt-4">
             <button
