@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Send, Pencil, AlertCircle, Zap, ChevronUp, ChevronDown } from "lucide-react";
+import { Send, Pencil, AlertCircle, Zap } from "lucide-react";
 
-export default function DraftComposer({ draft, setDraft, onSend, onEscalate, onCustomerSend, context }) {
+export default function DraftComposer({ draft, setDraft, onSend, onEscalate, onCustomerSend, context, isGenerating, generationError }) {
   const [customerInput, setCustomerInput] = useState("");
   const [draftText, setDraftText] = useState("");
   const [editingDraft, setEditingDraft] = useState(false);
@@ -28,7 +28,7 @@ export default function DraftComposer({ draft, setDraft, onSend, onEscalate, onC
 
   const handleCustomerSubmit = (e) => {
     e.preventDefault();
-    if (!customerInput.trim()) return;
+    if (!customerInput.trim() || isGenerating) return;
     onCustomerSend(customerInput);
     setCustomerInput("");
   };
@@ -37,6 +37,30 @@ export default function DraftComposer({ draft, setDraft, onSend, onEscalate, onC
     <div className="flex-shrink-0 border-t" style={{ borderColor: "hsl(220 16% 89%)" }}>
 
       {/* AI Draft */}
+      {!draft && isGenerating && (
+        <div
+          className="border-b px-4 py-3"
+          style={{ background: "hsl(220 18% 98%)", borderColor: "hsl(220 16% 89%)" }}
+        >
+          <div className="flex items-center gap-2 mb-2">
+            <Zap className="w-3 h-3" style={{ color: "hsl(220 20% 40%)" }} />
+            <p className="text-[9px] font-bold tracking-[0.1em] uppercase" style={{ color: "hsl(220 12% 54%)" }}>
+              Generating AI Draft
+            </p>
+          </div>
+          <p
+            className="text-[12px] leading-relaxed rounded-lg px-3 py-2"
+            style={{
+              background: "white",
+              border: "1px solid hsl(220 16% 89%)",
+              color: "hsl(220 18% 18%)",
+            }}
+          >
+            Sending the current showroom context to the backend function...
+          </p>
+        </div>
+      )}
+
       {draft && (
         <div
           className="border-b px-4 py-3"
@@ -127,18 +151,31 @@ export default function DraftComposer({ draft, setDraft, onSend, onEscalate, onC
         <p className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">
           Simulate Customer Message
         </p>
+        {generationError && (
+          <div
+            className="mb-2 text-[10px] rounded-lg px-3 py-2"
+            style={{
+              background: "hsl(38 80% 96%)",
+              color: "hsl(38 60% 34%)",
+              border: "1px solid hsl(38 65% 86%)",
+            }}
+          >
+            {generationError}
+          </div>
+        )}
         <form onSubmit={handleCustomerSubmit} className="flex gap-2">
           <input
             type="text"
             value={customerInput}
             onChange={(e) => setCustomerInput(e.target.value)}
-            placeholder="Type a customer message..."
+            placeholder={isGenerating ? "Waiting for backend response..." : "Type a customer message..."}
+            disabled={isGenerating}
             className="flex-1 text-[12px] bg-secondary/50 border rounded-lg px-3 py-2 focus:outline-none focus:ring-1 transition-all"
             style={{ borderColor: "hsl(220 16% 88%)", color: "hsl(220 18% 18%)" }}
           />
           <button
             type="submit"
-            disabled={!customerInput.trim()}
+            disabled={!customerInput.trim() || isGenerating}
             className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors disabled:opacity-40"
             style={{ background: "hsl(220 25% 11%)", color: "white" }}
           >
