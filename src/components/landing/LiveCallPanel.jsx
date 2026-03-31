@@ -68,13 +68,13 @@ export default function LiveCallPanel() {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    const delays = [1000, 2000, 1800, 1600, 2200, 1500, 2000];
+    const delays = [1800, 3500, 3000, 3000, 3800, 3000, 3500];
 
     if (currentIndex >= CONVERSATION.length) {
       timeoutRef.current = setTimeout(() => {
         setVisibleMessages([]);
         setCurrentIndex(0);
-      }, 3500);
+      }, 6000);
       return () => clearTimeout(timeoutRef.current);
     }
 
