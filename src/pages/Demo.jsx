@@ -12,7 +12,7 @@ export default function Demo() {
   const [kb, setKb] = useState(INITIAL_KB);
 
   return (
-    <div className="min-h-screen bg-[hsl(220_22%_97%)] flex flex-col font-inter">
+    <div className="h-screen bg-[hsl(220_22%_97%)] flex flex-col font-inter overflow-hidden">
       {/* Top bar */}
       <div
         className="flex items-center gap-4 px-6 h-[56px] border-b flex-shrink-0"
@@ -48,7 +48,7 @@ export default function Demo() {
       <div className="flex flex-1 overflow-hidden">
         {/* Left: Control Layer */}
         <div
-          className="w-[38%] flex-shrink-0 border-r overflow-y-auto"
+          className="w-[38%] flex-shrink-0 border-r flex flex-col overflow-hidden"
           style={{ borderColor: "hsl(220 16% 88%)", background: "hsl(220 20% 98%)" }}
         >
           <ControlLayer context={context} setContext={setContext} inventory={inventory} setInventory={setInventory} showroom={showroom} setShowroom={setShowroom} kb={kb} setKb={setKb} />
