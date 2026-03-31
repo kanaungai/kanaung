@@ -118,9 +118,7 @@ const ALL = [...CHANNELS, ...CHANNELS, ...CHANNELS];
 
 function Pill({ channel }) {
   return (
-    <div className="flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-white border border-foreground/[0.07] shadow-sm flex-shrink-0 select-none"
-      style={{ boxShadow: "0 1px 4px 0 rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04)" }}
-    >
+    <div className="flex items-center gap-2.5 flex-shrink-0 select-none">
       {channel.icon}
       {channel.label}
     </div>
@@ -129,7 +127,10 @@ function Pill({ channel }) {
 
 export default function ChannelsBar() {
   return (
-    <section className="py-8 md:py-10 overflow-hidden">
+    <section className="py-4 md:py-5 overflow-hidden">
+      <p className="text-center text-[10px] font-semibold tracking-[0.14em] uppercase text-muted-foreground/50 mb-5">
+        Integrations
+      </p>
       <div className="relative">
         {/* Fade edges */}
         <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
