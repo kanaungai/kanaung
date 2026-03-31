@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState } from "react";
 import { requestShowroomAssistantReply } from "@/api/showroomAssistant";
-import { INITIAL_MESSAGES, AUTO_MESSAGES } from "../../data/showroomData";
+import { INITIAL_MESSAGES } from "../../data/showroomData";
 import ConversationHeader from "./ConversationHeader";
 import MessageThread from "./MessageThread";
 import DraftComposer from "./DraftComposer";
@@ -10,11 +10,8 @@ export default function ConversationPanel({ context, inventory, showroom, kb }) 
   const [draft, setDraft] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationError, setGenerationError] = useState("");
-  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
-  const autoIndexRef = useRef(0);
-  const autoTimerRef = useRef(null);
 
-  const handleCustomerSend = useCallback(async (text) => {
+  const handleCustomerSend = async (text) => {
     if (!text.trim()) return;
 
     const customerMsg = {
@@ -44,31 +41,7 @@ export default function ConversationPanel({ context, inventory, showroom, kb }) 
     setDraft({ ...reply, id: Date.now() + 1 });
     setIsGenerating(false);
     setGenerationError(reply.error ? "Using local fallback because the backend function is unavailable." : "");
-
-    // Auto-play: after draft is set, auto-send it and queue next message
-    if (autoIndexRef.current > 0) {
-      setTimeout(() => {
-        setDraft((d) => {
-          if (!d) return null;
-          setMessages((prev) => [
-            ...prev,
-            { id: d.id, role: "ai", content: d.content, time: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }), signals: d.signals || [] },
-          ]);
-          return null;
-        });
-        // Queue next customer message
-        if (autoIndexRef.current < AUTO_MESSAGES.length) {
-          autoTimerRef.current = setTimeout(() => {
-            const nextMsg = AUTO_MESSAGES[autoIndexRef.current];
-            autoIndexRef.current += 1;
-            handleCustomerSend(nextMsg);
-          }, 1500 + Math.random() * 1000);
-        } else {
-          setIsAutoPlaying(false);
-        }
-      }, 800);
-    }
-  }, [context, inventory, showroom, kb, messages]);
+  };
 
   const handleSendDraft = () => {
     if (!draft) return;
@@ -81,18 +54,6 @@ export default function ConversationPanel({ context, inventory, showroom, kb }) 
     };
     setMessages((prev) => [...prev, aiMsg]);
     setDraft(null);
-  };
-
-  const handleAutoPlay = () => {
-    if (isAutoPlaying) {
-      clearTimeout(autoTimerRef.current);
-      setIsAutoPlaying(false);
-      autoIndexRef.current = 0;
-      return;
-    }
-    setIsAutoPlaying(true);
-    autoIndexRef.current = 1;
-    handleCustomerSend(AUTO_MESSAGES[0]);
   };
 
   const handleEscalate = () => {
@@ -119,8 +80,6 @@ export default function ConversationPanel({ context, inventory, showroom, kb }) 
         context={context}
         isGenerating={isGenerating}
         generationError={generationError}
-        isAutoPlaying={isAutoPlaying}
-        onAutoPlay={handleAutoPlay}
       />
     </div>
   );

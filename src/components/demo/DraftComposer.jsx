@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Send, Pencil, AlertCircle, Zap, Play, Square } from "lucide-react";
+import { Send, Pencil, AlertCircle, Zap } from "lucide-react";
 
-export default function DraftComposer({ draft, setDraft, onSend, onEscalate, onCustomerSend, context, isGenerating, generationError, isAutoPlaying, onAutoPlay }) {
+export default function DraftComposer({ draft, setDraft, onSend, onEscalate, onCustomerSend, context, isGenerating, generationError }) {
   const [customerInput, setCustomerInput] = useState("");
   const [draftText, setDraftText] = useState("");
   const [editingDraft, setEditingDraft] = useState(false);
@@ -148,23 +148,9 @@ export default function DraftComposer({ draft, setDraft, onSend, onEscalate, onC
 
       {/* Simulate customer input */}
       <div className="px-4 py-3" style={{ background: "white" }}>
-        <div className="flex items-center justify-between mb-2">
-          <p className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground">
-            Simulate Customer Message
-          </p>
-          <button
-            onClick={onAutoPlay}
-            className="flex items-center gap-1 text-[9px] font-bold px-2 py-1 rounded-md transition-all"
-            style={
-              isAutoPlaying
-                ? { background: "hsl(0 60% 95%)", color: "hsl(0 60% 38%)", border: "1px solid hsl(0 50% 86%)" }
-                : { background: "hsl(220 16% 93%)", color: "hsl(220 18% 28%)", border: "1px solid hsl(220 16% 87%)" }
-            }
-          >
-            {isAutoPlaying ? <Square className="w-2.5 h-2.5" /> : <Play className="w-2.5 h-2.5" />}
-            {isAutoPlaying ? "Stop" : "Auto Demo"}
-          </button>
-        </div>
+        <p className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">
+          Simulate Customer Message
+        </p>
         {generationError && (
           <div
             className="mb-2 text-[10px] rounded-lg px-3 py-2"

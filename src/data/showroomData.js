@@ -149,17 +149,6 @@ export const INITIAL_MESSAGES = [
   },
 ];
 
-// ─── Auto-play simulation messages ───────────────────────────────────────────
-export const AUTO_MESSAGES = [
-  "မင်္ဂလာပါ။ Toyota Fortuner ရဲ့ ဈေးနှုန်း ဘယ်လောက်ကျလဲ?",
-  "Installment နဲ့ ဝယ်လို့ရမလား?",
-  "Down payment ဘယ်လောက်ပေးရမလဲ?",
-  "Test drive လုပ်လို့ရမလား?",
-  "ဆိုင်ဖွင့်ချိန် ဘယ်အချိန်ကနေ ဘယ်အချိန်ထိလဲ?",
-  "Yangon ပြင်ပကို delivery ရနိုင်မလား?",
-  "ဈေးနှုန်းလျှော့ပေးနိုင်မလား?",
-];
-
 // ─── AI Reply Engine ──────────────────────────────────────────────────────────
 // Uses inventory (structured facts) + showroom (operational facts) + kb (policy/tone)
 
