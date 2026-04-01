@@ -5,6 +5,7 @@ import LiveCallPanel from "./LiveCallPanel";
 import { openCalendly } from "./CalendlyPopup";
 import { useLang } from "../../lib/LanguageContext";
 import { t } from "../../lib/translations";
+import TryDemoButton from "./TryDemoButton";
 
 export default function Hero() {
   const { lang } = useLang();
@@ -62,11 +63,7 @@ export default function Hero() {
                 {tx.hero_cta1}
                 <ArrowRight className="w-4 h-4" />
               </button>
-              <button
-                onClick={() => document.getElementById("demo")?.scrollIntoView({ behavior: "smooth" })}
-                className="inline-flex items-center justify-center gap-2 bg-transparent text-foreground text-[14px] font-semibold px-7 h-[50px] rounded-full border border-foreground/12 hover:bg-foreground/[0.04] transition-all duration-200 tracking-[-0.01em]">
-                {tx.hero_cta2}
-              </button>
+              <TryDemoButton label={tx.hero_cta2} />
             </div>
 
             <motion.div
