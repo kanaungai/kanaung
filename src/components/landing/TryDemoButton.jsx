@@ -69,26 +69,56 @@ export default function TryDemoButton({ label = "Try the Demo" }) {
   };
 
   // Derived animated values
-  const boxShadow = useTransform(proximity, [0, 1],
-    ["0 2px 16px rgba(0,0,0,0.06)", "0 8px 32px rgba(0,0,0,0.11)"]);
   const borderOpacity = useTransform(proximity, [0, 1], [0.06, 0.14]);
   const orbOpacity    = useTransform(proximity, [0, 1], [1, 1.6]);
   const liftY         = useTransform(proximity, [0, 1], [0, -2]);
 
+  // Glow halo driven by proximity — 0 at distance, 0.55 when on button
+  const glowOpacity = useTransform(proximity, [0, 1], [0.0, 0.55]);
+
   return (
     <>
-      <div ref={wrapperRef} className="relative inline-block">
+      <div ref={wrapperRef} className="relative inline-block" style={{ isolation: "isolate" }}>
         {/* Hover preview — desktop only */}
         <div className="hidden md:block">
           <DemoHoverPreview visible={hovered && !overlayOpen} />
         </div>
+
+        {/* Outer glow halo — breathes slowly, warms up on proximity/hover */}
+        <motion.div
+          className="absolute rounded-full pointer-events-none"
+          style={{
+            inset: "-8px",
+            zIndex: -1,
+            background:
+              "radial-gradient(ellipse at 35% 50%, rgba(255,106,61,0.26) 0%, rgba(79,209,197,0.16) 55%, transparent 80%)",
+            filter: "blur(12px)",
+            opacity: glowOpacity,
+            scale: hovered ? 1.06 : 1,
+          }}
+          animate={{ opacity: hovered ? undefined : [null, null, null] }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        />
+        {/* Slow breathing pulse — layered under the proximity-driven halo */}
+        <motion.div
+          className="absolute rounded-full pointer-events-none"
+          animate={{ opacity: [0.08, 0.22, 0.08], scale: [1, 1.03, 1] }}
+          transition={{ duration: 7, ease: "easeInOut", repeat: Infinity }}
+          style={{
+            inset: "-10px",
+            zIndex: -1,
+            background:
+              "radial-gradient(ellipse at 40% 50%, rgba(255,106,61,0.3) 0%, rgba(79,209,197,0.18) 60%, transparent 85%)",
+            filter: "blur(16px)",
+          }}
+        />
 
         <motion.button
           onClick={handleClick}
           onMouseEnter={handleEnter}
           onMouseLeave={handleLeave}
           whileTap={{ scale: 0.97 }}
-          style={{ y: liftY, boxShadow }}
+          style={{ y: liftY }}
           transition={{ duration: 0.18, ease: "easeOut" }}
           className="relative inline-flex items-center justify-center overflow-hidden rounded-full h-[50px] px-7 cursor-pointer"
         >
@@ -102,6 +132,11 @@ export default function TryDemoButton({ label = "Try the Demo" }) {
               borderWidth: 1,
               borderStyle: "solid",
               borderColor: useTransform(borderOpacity, (v) => `rgba(0,0,0,${v})`),
+              // Inner edge glow — very subtle warmth on the border itself
+              boxShadow: useTransform(
+                glowOpacity,
+                (v) => `inset 0 0 12px rgba(255,106,61,${v * 0.12}), inset 0 0 6px rgba(79,209,197,${v * 0.08}), 0 2px 20px rgba(0,0,0,0.07)`
+              ),
             }}
           />
 
