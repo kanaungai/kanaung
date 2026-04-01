@@ -1,6 +1,8 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { useLang } from "../../lib/LanguageContext";
 import { t } from "../../lib/translations";
+import { useScrollReveal, REVEAL } from "../../hooks/useScrollReveal";
 
 const CHANNELS = [
   {
@@ -130,18 +132,30 @@ function Pill({ channel }) {
 export default function ChannelsBar() {
   const { lang } = useLang();
   const tx = t[lang];
+  const { ref, inView } = useScrollReveal({ margin: "-60px" });
 
   return (
-    <section className="py-16 md:py-20">
+    <section className="py-16 md:py-20 relative">
       <div className="max-w-[1200px] mx-auto px-8">
 
         {/* Overline */}
-        <p className="text-center text-[10px] font-semibold tracking-[0.16em] uppercase text-muted-foreground/40 mb-10">
+        <motion.p
+          ref={ref}
+          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 12 }}
+          initial={{ opacity: 0, y: 12 }}
+          transition={REVEAL.primary}
+          className="text-center text-[10px] font-semibold tracking-[0.16em] uppercase text-muted-foreground/40 mb-10"
+        >
           {tx.channels_label}
-        </p>
+        </motion.p>
 
         {/* Constrained logo rail */}
-        <div className="relative max-w-2xl mx-auto overflow-hidden">
+        <motion.div
+          animate={{ opacity: inView ? 1 : 0 }}
+          initial={{ opacity: 0 }}
+          transition={{ ...REVEAL.fade, delay: 0.15 }}
+          className="relative max-w-2xl mx-auto overflow-hidden"
+        >
           {/* Left fade */}
           <div className="absolute left-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
             style={{ background: "linear-gradient(to right, hsl(var(--background)) 0%, transparent 100%)" }} />
@@ -162,7 +176,7 @@ export default function ChannelsBar() {
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
 
       </div>
 

@@ -3,10 +3,13 @@ import { motion } from "framer-motion";
 import { X, Check } from "lucide-react";
 import { useLang } from "../../lib/LanguageContext";
 import { t } from "../../lib/translations";
+import { useScrollReveal, REVEAL } from "../../hooks/useScrollReveal";
 
 export default function WhyDifferent() {
   const { lang } = useLang();
   const tx = t[lang];
+  const { ref: headerRef, inView: headerVisible } = useScrollReveal();
+  const { ref: cardRef, inView: cardVisible } = useScrollReveal({ margin: "-60px" });
 
   const TRADITIONAL = [tx.why_trad_1, tx.why_trad_2, tx.why_trad_3, tx.why_trad_4];
   const KANAUNG = [tx.why_kan_1, tx.why_kan_2, tx.why_kan_3, tx.why_kan_4];
@@ -18,10 +21,10 @@ export default function WhyDifferent() {
       <div className="relative max-w-[1200px] mx-auto px-8">
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          ref={headerRef}
+          animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 18 }}
+          initial={{ opacity: 0, y: 18 }}
+          transition={REVEAL.primary}
           className="mb-16 md:mb-20"
         >
           <p className="text-[11px] font-semibold tracking-[0.12em] uppercase text-white/30 mb-6">
@@ -32,17 +35,22 @@ export default function WhyDifferent() {
             <h2 className="font-sora text-[36px] md:text-[44px] xl:text-[50px] font-bold tracking-[-0.03em] leading-[1.06] text-white">
               {tx.why_h2}
             </h2>
-            <p className="text-[16px] text-white/50 leading-[1.8] md:pt-2 max-w-md font-inter">
+            <motion.p
+              animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 12 }}
+              initial={{ opacity: 0, y: 12 }}
+              transition={{ ...REVEAL.primary, delay: 0.12 }}
+              className="text-[16px] text-white/50 leading-[1.8] md:pt-2 max-w-md font-inter"
+            >
               {tx.why_sub}
-            </p>
+            </motion.p>
           </div>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          ref={cardRef}
+          animate={{ opacity: cardVisible ? 1 : 0, y: cardVisible ? 0 : 16 }}
+          initial={{ opacity: 0, y: 16 }}
+          transition={REVEAL.card}
           className="grid md:grid-cols-2 rounded-2xl overflow-hidden border border-white/[0.07]"
           style={{
             background: "linear-gradient(160deg, hsl(220 22% 10%) 0%, hsl(220 22% 8%) 100%)",
@@ -95,20 +103,18 @@ export default function WhyDifferent() {
         </motion.div>
 
         <motion.p
+          animate={{ opacity: cardVisible ? 1 : 0 }}
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.3 }}
+          transition={{ ...REVEAL.fade, delay: 0.3 }}
           className="mt-10 text-center text-[13px] text-white/30 font-inter tracking-wide"
         >
           {tx.why_micro}
         </motion.p>
 
         <motion.div
+          animate={{ opacity: cardVisible ? 1 : 0 }}
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ ...REVEAL.fade, delay: 0.4 }}
           className="w-full h-px bg-white/8 mt-16 md:mt-20"
         />
       </div>

@@ -2,10 +2,13 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useLang } from "../../lib/LanguageContext";
 import { t } from "../../lib/translations";
+import { useScrollReveal, REVEAL } from "../../hooks/useScrollReveal";
 
 export default function Industries() {
   const { lang } = useLang();
   const tx = t[lang];
+  const { ref: headerRef, inView: headerVisible } = useScrollReveal();
+  const { ref: gridRef, inView: gridVisible } = useScrollReveal({ margin: "-40px" });
 
   const INDUSTRIES = [
     { name: tx.ind_1_name, detail: tx.ind_1_detail },
@@ -19,14 +22,16 @@ export default function Industries() {
   ];
 
   return (
-    <section id="industries" className="py-24 md:py-32 bg-[hsl(220_25%_6%)]">
+    <section id="industries" className="py-24 md:py-32 bg-[hsl(220_25%_6%)] relative">
+      {/* Smooth gradient out to light section below */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-[hsl(220_22%_97%)] pointer-events-none" />
       <div className="max-w-[1200px] mx-auto px-8">
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          ref={headerRef}
+          animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 18 }}
+          initial={{ opacity: 0, y: 18 }}
+          transition={REVEAL.primary}
           className="mb-16 md:mb-20"
         >
           <p className="text-[11px] font-semibold tracking-[0.12em] uppercase text-white/30 mb-6">
@@ -37,13 +42,19 @@ export default function Industries() {
             <h2 className="font-sora text-[36px] md:text-[44px] xl:text-[50px] font-bold tracking-[-0.03em] leading-[1.06] text-white">
               {tx.ind_h2}
             </h2>
-            <p className="text-[16px] text-white/50 leading-[1.8] md:pt-2 max-w-md font-inter">
+            <motion.p
+              animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 12 }}
+              initial={{ opacity: 0, y: 12 }}
+              transition={{ ...REVEAL.primary, delay: 0.12 }}
+              className="text-[16px] text-white/50 leading-[1.8] md:pt-2 max-w-md font-inter"
+            >
               {tx.ind_sub}
-            </p>
+            </motion.p>
           </div>
         </motion.div>
 
         <div
+          ref={gridRef}
           className="grid grid-cols-2 md:grid-cols-4 gap-0 rounded-2xl border border-white/[0.07] overflow-hidden"
           style={{
             background: "linear-gradient(160deg, hsl(220 22% 10%) 0%, hsl(220 22% 8%) 100%)",
@@ -59,10 +70,9 @@ export default function Industries() {
             return (
               <motion.div
                 key={item.name}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.45, delay: 0.05 + i * 0.05, ease: "easeOut" }}
+                animate={{ opacity: gridVisible ? 1 : 0, y: gridVisible ? 0 : 12 }}
+                initial={{ opacity: 0, y: 12 }}
+                transition={{ ...REVEAL.card, delay: i * 0.06 }}
                 className="group relative flex flex-col px-8 py-8 md:py-10 border-r border-b border-foreground/[0.07] hover:bg-foreground/[0.015] transition-colors duration-200"
                 style={{
                   borderRight: isLastCol ? "none" : undefined,
@@ -82,10 +92,9 @@ export default function Industries() {
         </div>
 
         <motion.div
+          animate={{ opacity: gridVisible ? 1 : 0 }}
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ ...REVEAL.fade, delay: 0.4 }}
           className="w-full h-px bg-white/8 mt-16 md:mt-20"
         />
       </div>

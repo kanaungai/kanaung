@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useScrollReveal, REVEAL } from "../../hooks/useScrollReveal";
 import {
   MessageSquare,
   ArrowRightLeft,
@@ -406,19 +407,23 @@ function DetailPanel({ detail }) {
 
 export default function ControlLayer() {
   const [selectedId, setSelectedId] = useState(1);
+  const { ref: headerRef, inView: headerVisible } = useScrollReveal();
+  const { ref: dashRef, inView: dashVisible } = useScrollReveal({ margin: "-60px" });
 
   return (
     <section className="py-24 md:py-32 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-background to-background pointer-events-none" />
+      {/* Smooth bridge into dark CostSection below */}
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent to-[hsl(220_25%_6%)] pointer-events-none z-10" />
 
       <div className="relative max-w-[1200px] mx-auto px-8">
 
         {/* ── Section header ── */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          ref={headerRef}
+          animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 18 }}
+          initial={{ opacity: 0, y: 18 }}
+          transition={REVEAL.primary}
           className="mb-16 md:mb-20"
         >
           <p className="text-[11px] font-semibold tracking-[0.12em] uppercase text-muted-foreground mb-6">
@@ -429,18 +434,23 @@ export default function ControlLayer() {
             <h2 className="font-sora text-[36px] md:text-[44px] xl:text-[50px] font-bold tracking-[-0.03em] leading-[1.06] text-foreground">
               The control layer behind every conversation.
             </h2>
-            <p className="text-[16px] text-muted-foreground leading-[1.8] md:pt-2 max-w-md font-inter">
+            <motion.p
+              animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 12 }}
+              initial={{ opacity: 0, y: 12 }}
+              transition={{ ...REVEAL.primary, delay: 0.12 }}
+              className="text-[16px] text-muted-foreground leading-[1.8] md:pt-2 max-w-md font-inter"
+            >
               Monitor AI-handled conversations, review auto-generated replies, and manage human escalations — all from one operations dashboard built for Myanmar businesses.
-            </p>
+            </motion.p>
           </div>
         </motion.div>
 
         {/* ── Dashboard chrome ── */}
         <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          ref={dashRef}
+          animate={{ opacity: dashVisible ? 1 : 0, y: dashVisible ? 0 : 20 }}
+          initial={{ opacity: 0, y: 20 }}
+          transition={REVEAL.card}
           className="relative rounded-2xl overflow-hidden"
           style={{
             border: "1px solid hsl(220 16% 84%)",
@@ -549,10 +559,9 @@ export default function ControlLayer() {
 
         {/* Bottom rule */}
         <motion.div
+          animate={{ opacity: dashVisible ? 1 : 0 }}
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ ...REVEAL.fade, delay: 0.4 }}
           className="w-full h-px bg-foreground/8 mt-16 md:mt-20"
         />
       </div>
