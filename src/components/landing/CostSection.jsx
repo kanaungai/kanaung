@@ -2,10 +2,13 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useLang } from "../../lib/LanguageContext";
 import { t } from "../../lib/translations";
+import { useScrollReveal, REVEAL } from "../../hooks/useScrollReveal";
 
 export default function CostSection() {
   const { lang } = useLang();
   const tx = t[lang];
+  const { ref: headerRef, inView: headerVisible } = useScrollReveal();
+  const { ref: statsRef, inView: statsVisible } = useScrollReveal({ margin: "-60px" });
 
   const STATS = [
     { label: tx.cost_s1_label, stat: tx.cost_s1_stat, body: tx.cost_s1_body },
@@ -15,15 +18,18 @@ export default function CostSection() {
 
   return (
     <section className="py-24 md:py-32 relative overflow-hidden bg-[hsl(220_25%_6%)]">
+
       <div className="absolute inset-0 bg-gradient-to-b from-[hsl(220_25%_4%)] via-[hsl(220_25%_7%)] to-[hsl(220_25%_6%)] pointer-events-none" />
+      {/* Subtle warm/red glow — echoes FinalCTA */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full pointer-events-none" style={{ background: "hsl(352 72% 38% / 0.08)", filter: "blur(100px)" }} />
 
       <div className="relative max-w-[1200px] mx-auto px-8">
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          ref={headerRef}
+          animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 18 }}
+          initial={{ opacity: 0, y: 18 }}
+          transition={REVEAL.primary}
           className="mb-16 md:mb-20"
         >
           <p className="text-[11px] font-semibold tracking-[0.12em] uppercase text-white/30 mb-6">
@@ -34,20 +40,24 @@ export default function CostSection() {
             <h2 className="font-sora text-[36px] md:text-[44px] xl:text-[50px] font-bold tracking-[-0.03em] leading-[1.06] text-white">
               {tx.cost_h2}
             </h2>
-            <p className="text-[16px] text-white/50 leading-[1.8] md:pt-2 max-w-md font-inter">
+            <motion.p
+              animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 12 }}
+              initial={{ opacity: 0, y: 12 }}
+              transition={{ ...REVEAL.primary, delay: 0.12 }}
+              className="text-[16px] text-white/50 leading-[1.8] md:pt-2 max-w-md font-inter"
+            >
               {tx.cost_sub}
-            </p>
+            </motion.p>
           </div>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/8">
+        <div ref={statsRef} className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/8">
           {STATS.map((item, i) => (
             <motion.div
               key={item.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              animate={{ opacity: statsVisible ? 1 : 0, y: statsVisible ? 0 : 16 }}
+              initial={{ opacity: 0, y: 16 }}
+              transition={{ ...REVEAL.card, delay: i * REVEAL.stagger }}
               className="pt-10 md:pt-0 md:px-10 first:md:pl-0 last:md:pr-0 pb-10 md:pb-0"
             >
               <p className="text-[11px] font-semibold tracking-[0.1em] uppercase text-white/30 mb-5">
@@ -65,10 +75,9 @@ export default function CostSection() {
         </div>
 
         <motion.div
+          animate={{ opacity: statsVisible ? 1 : 0 }}
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ ...REVEAL.fade, delay: 0.4 }}
           className="w-full h-px bg-white/8 mt-16 md:mt-20"
         />
       </div>

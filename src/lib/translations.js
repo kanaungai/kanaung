@@ -4,7 +4,7 @@ export const t = {
     nav_how: "How It Works",
     nav_industries: "Industries",
     nav_pricing: "Pricing",
-    nav_demo: "Demo",
+    nav_demo: "Live Demo",
     nav_signin: "Sign in",
     nav_book: "Book Demo",
 

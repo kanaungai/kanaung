@@ -5,19 +5,21 @@ import { ArrowRight } from "lucide-react";
 import { openCalendly } from "./CalendlyPopup";
 import { useLang } from "../../lib/LanguageContext";
 import { t } from "../../lib/translations";
+import { useScrollReveal, REVEAL } from "../../hooks/useScrollReveal";
 
 export default function FinalCTA() {
   const { lang } = useLang();
   const tx = t[lang];
+  const { ref, inView } = useScrollReveal({ margin: "-100px" });
 
   return (
     <section id="final-cta" className="py-20 md:py-28">
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
+          ref={ref}
+          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }}
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
+          transition={REVEAL.primary}
           className="relative rounded-3xl bg-foreground overflow-hidden"
         >
           <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-[120px] pointer-events-none" />

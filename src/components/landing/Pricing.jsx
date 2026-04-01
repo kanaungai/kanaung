@@ -4,10 +4,13 @@ import { Check } from "lucide-react";
 import { openCalendly } from "./CalendlyPopup";
 import { useLang } from "../../lib/LanguageContext";
 import { t } from "../../lib/translations";
+import { useScrollReveal, REVEAL } from "../../hooks/useScrollReveal";
 
 export default function Pricing() {
   const { lang } = useLang();
   const tx = t[lang];
+  const { ref: headerRef, inView: headerVisible } = useScrollReveal();
+  const { ref: plansRef, inView: plansVisible } = useScrollReveal({ margin: "-60px" });
 
   const PLANS = [
     {
@@ -61,14 +64,15 @@ export default function Pricing() {
   ];
 
   return (
-    <section id="pricing" className="py-24 md:py-32">
-      <div className="max-w-[1200px] mx-auto px-8">
+    <section id="pricing" className="py-24 md:py-32 relative">
+
+      <div className="max-w-[1200px] mx-auto px-8 relative">
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          ref={headerRef}
+          animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 18 }}
+          initial={{ opacity: 0, y: 18 }}
+          transition={REVEAL.primary}
           className="mb-16 md:mb-20"
         >
           <p className="text-[11px] font-semibold tracking-[0.12em] uppercase text-muted-foreground mb-6">
@@ -79,20 +83,24 @@ export default function Pricing() {
             <h2 className="font-sora text-[36px] md:text-[44px] xl:text-[50px] font-bold tracking-[-0.03em] leading-[1.06] text-foreground">
               {tx.price_h2}
             </h2>
-            <p className="text-[16px] text-muted-foreground leading-[1.8] md:pt-2 max-w-md font-inter">
+            <motion.p
+              animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 12 }}
+              initial={{ opacity: 0, y: 12 }}
+              transition={{ ...REVEAL.primary, delay: 0.12 }}
+              className="text-[16px] text-muted-foreground leading-[1.8] md:pt-2 max-w-md font-inter"
+            >
               {tx.price_sub}
-            </p>
+            </motion.p>
           </div>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-5">
+        <div ref={plansRef} className="grid md:grid-cols-3 gap-5">
           {PLANS.map((plan, i) => (
             <motion.div
               key={plan.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.55, delay: 0.05 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              animate={{ opacity: plansVisible ? 1 : 0, y: plansVisible ? 0 : 16 }}
+              initial={{ opacity: 0, y: 16 }}
+              transition={{ ...REVEAL.card, delay: i * REVEAL.stagger }}
               className="relative flex flex-col rounded-2xl p-8"
               style={
                 plan.highlighted
@@ -193,20 +201,18 @@ export default function Pricing() {
         </div>
 
         <motion.p
+          animate={{ opacity: plansVisible ? 1 : 0 }}
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ ...REVEAL.fade, delay: 0.35 }}
           className="text-center text-[13px] text-muted-foreground mt-10 font-inter"
         >
           {tx.price_trial}
         </motion.p>
 
         <motion.div
+          animate={{ opacity: plansVisible ? 1 : 0 }}
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ ...REVEAL.fade, delay: 0.45 }}
           className="w-full h-px bg-foreground/8 mt-16 md:mt-20"
         />
       </div>

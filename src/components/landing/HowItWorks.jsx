@@ -2,10 +2,13 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useLang } from "../../lib/LanguageContext";
 import { t } from "../../lib/translations";
+import { useScrollReveal, REVEAL } from "../../hooks/useScrollReveal";
 
 export default function HowItWorks() {
   const { lang } = useLang();
   const tx = t[lang];
+  const { ref: headerRef, inView: headerVisible } = useScrollReveal();
+  const { ref: stepsRef, inView: stepsVisible } = useScrollReveal({ margin: "-60px" });
 
   const STEPS = [
     { number: tx.hiw_s1_num, title: tx.hiw_s1_title, description: tx.hiw_s1_desc, label: tx.hiw_s1_label },
@@ -14,14 +17,16 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section id="how-it-works" className="py-24 md:py-32 bg-[hsl(220_25%_6%)]">
-      <div className="max-w-[1200px] mx-auto px-8">
+    <section id="how-it-works" className="py-24 md:py-32 bg-[hsl(220_25%_6%)] relative overflow-hidden">
+      {/* Subtle cool blue depth */}
+      <div className="absolute bottom-0 right-0 w-[500px] h-[400px] rounded-full pointer-events-none" style={{ background: "hsl(210 80% 55% / 0.05)", filter: "blur(120px)" }} />
+      <div className="relative max-w-[1200px] mx-auto px-8">
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          ref={headerRef}
+          animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 18 }}
+          initial={{ opacity: 0, y: 18 }}
+          transition={REVEAL.primary}
           className="mb-16 md:mb-20"
         >
           <p className="text-[11px] font-semibold tracking-[0.12em] uppercase text-white/30 mb-6">
@@ -32,17 +37,22 @@ export default function HowItWorks() {
             <h2 className="font-sora text-[36px] md:text-[44px] xl:text-[50px] font-bold tracking-[-0.03em] leading-[1.06] text-white">
               {tx.hiw_h2}
             </h2>
-            <p className="text-[16px] text-white/50 leading-[1.8] md:pt-2 max-w-md font-inter">
+            <motion.p
+              animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 12 }}
+              initial={{ opacity: 0, y: 12 }}
+              transition={{ ...REVEAL.primary, delay: 0.12 }}
+              className="text-[16px] text-white/50 leading-[1.8] md:pt-2 max-w-md font-inter"
+            >
               {tx.hiw_sub}
-            </p>
+            </motion.p>
           </div>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          ref={stepsRef}
+          animate={{ opacity: stepsVisible ? 1 : 0, y: stepsVisible ? 0 : 16 }}
+          initial={{ opacity: 0, y: 16 }}
+          transition={REVEAL.card}
           className="relative rounded-2xl border border-white/[0.08] overflow-hidden"
           style={{
             background: "linear-gradient(160deg, hsl(220 22% 10%) 0%, hsl(220 22% 8%) 100%)",
@@ -54,10 +64,9 @@ export default function HowItWorks() {
             {STEPS.map((step, i) => (
               <motion.div
                 key={step.number}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.55, delay: 0.15 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                animate={{ opacity: stepsVisible ? 1 : 0, y: stepsVisible ? 0 : 14 }}
+                initial={{ opacity: 0, y: 14 }}
+                transition={{ ...REVEAL.card, delay: 0.1 + i * REVEAL.stagger }}
                 className="relative flex flex-col p-8 md:p-10"
               >
                 <span className="font-sora text-[11px] font-bold tracking-[0.12em] uppercase text-white/25 mb-8">
@@ -83,10 +92,9 @@ export default function HowItWorks() {
         </motion.div>
 
         <motion.div
+          animate={{ opacity: stepsVisible ? 1 : 0 }}
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ ...REVEAL.fade, delay: 0.4 }}
           className="w-full h-px bg-white/8 mt-16 md:mt-20"
         />
       </div>
