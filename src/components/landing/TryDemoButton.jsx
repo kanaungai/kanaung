@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { motion, useSpring, useTransform } from "framer-motion";
-import { Link } from "react-router-dom";
 import DemoHoverPreview from "./DemoHoverPreview";
+import DemoOverlay from "./DemoOverlay";
 
-const PROXIMITY_RADIUS = 120; // px — effect starts this far from the button edge
+const PROXIMITY_RADIUS = 120;
 
 export default function TryDemoButton({ label = "Try the Demo" }) {
   const wrapperRef = useRef(null);
@@ -11,35 +11,25 @@ export default function TryDemoButton({ label = "Try the Demo" }) {
   const leaveTimer = useRef(null);
 
   const [hovered, setHovered] = useState(false);
+  const [overlayOpen, setOverlayOpen] = useState(false);
 
-  // proximity: 0 = far away, 1 = directly on button
-  const proximityRaw = useRef(0);
+  // Proximity spring: 0 = far, 1 = on button
   const proximity = useSpring(0, { stiffness: 80, damping: 22, mass: 0.6 });
-
-  // orb offset toward cursor, clamped to small range
   const orbX = useSpring(0, { stiffness: 60, damping: 20 });
   const orbY = useSpring(0, { stiffness: 60, damping: 20 });
 
   const handleMouseMove = useCallback((e) => {
     const el = wrapperRef.current;
     if (!el) return;
-
     const rect = el.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
-
-    // Distance from cursor to button center
     const dx = e.clientX - cx;
     const dy = e.clientY - cy;
     const dist = Math.sqrt(dx * dx + dy * dy);
-
-    // Max possible distance we care about
     const maxDist = Math.max(rect.width / 2, rect.height / 2) + PROXIMITY_RADIUS;
     const raw = Math.max(0, 1 - dist / maxDist);
-    proximityRaw.current = raw;
     proximity.set(raw);
-
-    // Orb shift: max ±12px horizontally, ±6px vertically
     const strength = raw * 0.4;
     orbX.set(dx * strength * 0.25);
     orbY.set(dy * strength * 0.15);
@@ -59,33 +49,36 @@ export default function TryDemoButton({ label = "Try the Demo" }) {
     leaveTimer.current = setTimeout(() => setHovered(false), 120);
   };
 
+  const handleClick = () => {
+    setHovered(false);
+    setOverlayOpen(true);
+  };
+
   // Derived animated values
-  const boxShadow = useTransform(
-    proximity,
-    [0, 1],
-    ["0 2px 16px rgba(0,0,0,0.06)", "0 8px 32px rgba(0,0,0,0.11)"]
-  );
+  const boxShadow = useTransform(proximity, [0, 1],
+    ["0 2px 16px rgba(0,0,0,0.06)", "0 8px 32px rgba(0,0,0,0.11)"]);
   const borderOpacity = useTransform(proximity, [0, 1], [0.06, 0.14]);
   const orbOpacity    = useTransform(proximity, [0, 1], [1, 1.6]);
   const liftY         = useTransform(proximity, [0, 1], [0, -2]);
 
   return (
-    <div ref={wrapperRef} className="relative inline-block">
-      {/* Hover preview — desktop only */}
-      <div className="hidden md:block">
-        <DemoHoverPreview visible={hovered} />
-      </div>
+    <>
+      <div ref={wrapperRef} className="relative inline-block">
+        {/* Hover preview — desktop only */}
+        <div className="hidden md:block">
+          <DemoHoverPreview visible={hovered && !overlayOpen} />
+        </div>
 
-      <Link to="/demo">
         <motion.button
+          onClick={handleClick}
           onMouseEnter={handleEnter}
           onMouseLeave={handleLeave}
           whileTap={{ scale: 0.97 }}
           style={{ y: liftY, boxShadow }}
           transition={{ duration: 0.18, ease: "easeOut" }}
-          className="relative inline-flex items-center justify-center overflow-hidden rounded-full h-[50px] px-7"
+          className="relative inline-flex items-center justify-center overflow-hidden rounded-full h-[50px] px-7 cursor-pointer"
         >
-          {/* Base background — reacts to proximity via borderOpacity */}
+          {/* Base background */}
           <motion.div
             className="absolute inset-0 rounded-full pointer-events-none"
             style={{
@@ -125,7 +118,14 @@ export default function TryDemoButton({ label = "Try the Demo" }) {
             {label}
           </span>
         </motion.button>
-      </Link>
-    </div>
+      </div>
+
+      {/* Full demo overlay — portal-rendered */}
+      <DemoOverlay
+        open={overlayOpen}
+        onClose={() => setOverlayOpen(false)}
+        originRef={wrapperRef}
+      />
+    </>
   );
 }
