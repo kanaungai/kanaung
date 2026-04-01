@@ -17,8 +17,10 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section id="how-it-works" className="py-24 md:py-32 bg-[hsl(220_25%_6%)]">
-      <div className="max-w-[1200px] mx-auto px-8">
+    <section id="how-it-works" className="py-24 md:py-32 bg-[hsl(220_25%_6%)] relative overflow-hidden">
+      {/* Subtle cool blue depth */}
+      <div className="absolute bottom-0 right-0 w-[500px] h-[400px] rounded-full pointer-events-none" style={{ background: "hsl(210 80% 55% / 0.05)", filter: "blur(120px)" }} />
+      <div className="relative max-w-[1200px] mx-auto px-8">
 
         <motion.div
           ref={headerRef}

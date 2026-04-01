@@ -20,6 +20,8 @@ export default function CostSection() {
     <section className="py-24 md:py-32 relative overflow-hidden bg-[hsl(220_25%_6%)]">
 
       <div className="absolute inset-0 bg-gradient-to-b from-[hsl(220_25%_4%)] via-[hsl(220_25%_7%)] to-[hsl(220_25%_6%)] pointer-events-none" />
+      {/* Subtle warm/red glow — echoes FinalCTA */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full pointer-events-none" style={{ background: "hsl(352 72% 38% / 0.08)", filter: "blur(100px)" }} />
 
       <div className="relative max-w-[1200px] mx-auto px-8">
 
