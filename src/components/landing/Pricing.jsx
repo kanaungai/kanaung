@@ -65,8 +65,7 @@ export default function Pricing() {
 
   return (
     <section id="pricing" className="py-24 md:py-32 relative">
-      {/* Smooth bridge from dark Industries → light Pricing */}
-      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[hsl(220_25%_6%)] to-transparent pointer-events-none" />
+
       <div className="max-w-[1200px] mx-auto px-8 relative">
 
         <motion.div

@@ -413,8 +413,7 @@ export default function ControlLayer() {
   return (
     <section className="py-24 md:py-32 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-background to-background pointer-events-none" />
-      {/* Smooth bridge into dark CostSection below */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent to-[hsl(220_25%_6%)] pointer-events-none z-10" />
+
 
       <div className="relative max-w-[1200px] mx-auto px-8">
 

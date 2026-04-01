@@ -23,8 +23,7 @@ export default function Industries() {
 
   return (
     <section id="industries" className="py-24 md:py-32 bg-[hsl(220_25%_6%)] relative">
-      {/* Smooth gradient out to light section below */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-[hsl(220_22%_97%)] pointer-events-none" />
+
       <div className="max-w-[1200px] mx-auto px-8">
 
         <motion.div

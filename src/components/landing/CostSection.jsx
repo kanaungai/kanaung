@@ -18,8 +18,7 @@ export default function CostSection() {
 
   return (
     <section className="py-24 md:py-32 relative overflow-hidden bg-[hsl(220_25%_6%)]">
-      {/* Smooth bridge from light hero → dark section */}
-      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[hsl(220_22%_97%)] to-transparent pointer-events-none" />
+
       <div className="absolute inset-0 bg-gradient-to-b from-[hsl(220_25%_4%)] via-[hsl(220_25%_7%)] to-[hsl(220_25%_6%)] pointer-events-none" />
 
       <div className="relative max-w-[1200px] mx-auto px-8">
