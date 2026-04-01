@@ -12,6 +12,19 @@ export default function TryDemoButton({ label = "Try the Demo" }) {
 
   const [hovered, setHovered] = useState(false);
   const [overlayOpen, setOverlayOpen] = useState(false);
+  // "button" = expand from button, "center" = expand from screen center
+  const [overlayOrigin, setOverlayOrigin] = useState("button");
+
+  // Listen for navbar trigger
+  useEffect(() => {
+    const handler = () => {
+      setOverlayOrigin("center");
+      setOverlayOpen(true);
+      setHovered(false);
+    };
+    window.addEventListener("kanaung:open-demo", handler);
+    return () => window.removeEventListener("kanaung:open-demo", handler);
+  }, []);
 
   // Proximity spring: 0 = far, 1 = on button
   const proximity = useSpring(0, { stiffness: 80, damping: 22, mass: 0.6 });
@@ -51,6 +64,7 @@ export default function TryDemoButton({ label = "Try the Demo" }) {
 
   const handleClick = () => {
     setHovered(false);
+    setOverlayOrigin("button");
     setOverlayOpen(true);
   };
 
@@ -120,11 +134,11 @@ export default function TryDemoButton({ label = "Try the Demo" }) {
         </motion.button>
       </div>
 
-      {/* Full demo overlay — portal-rendered */}
+      {/* Single demo overlay — serves both hero and navbar */}
       <DemoOverlay
         open={overlayOpen}
         onClose={() => setOverlayOpen(false)}
-        originRef={wrapperRef}
+        originRef={overlayOrigin === "button" ? wrapperRef : null}
       />
     </>
   );

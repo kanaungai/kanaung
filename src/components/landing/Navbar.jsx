@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { openCalendly } from "./CalendlyPopup";
 import { useLang } from "../../lib/LanguageContext";
 import { t } from "../../lib/translations";
+
+export function openDemoOverlay() {
+  window.dispatchEvent(new CustomEvent("kanaung:open-demo"));
+}
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { lang, toggle } = useLang();
   const tx = t[lang];
-  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -26,13 +29,12 @@ export default function Navbar() {
   { label: tx.nav_how, id: "how-it-works", scroll: true },
   { label: tx.nav_industries, id: "industries", scroll: true },
   { label: tx.nav_pricing, id: "pricing", scroll: true },
-  { label: tx.nav_demo, id: "demo", scroll: false, href: "/demo" }];
-
+  { label: tx.nav_demo, id: "demo", scroll: false, isDemo: true }];
 
   const handleLink = (link) => {
-    if (!link.scroll) {
-      navigate(link.href);
-    } else {
+    if (link.isDemo) {
+      openDemoOverlay();
+    } else if (link.scroll) {
       scrollTo(link.id);
     }
   };

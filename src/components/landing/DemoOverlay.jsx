@@ -35,10 +35,11 @@ export default function DemoOverlay({ open, onClose, originRef }) {
     return () => window.removeEventListener("keydown", handler);
   }, [open, onClose]);
 
-  // Get button origin rect for the expanding-from animation
+  // Get button origin rect for the expanding-from animation.
+  // null originRef = navbar trigger → expand from center (x:0, y:0 relative to panel center)
   const originRect = originRef?.current?.getBoundingClientRect?.() ?? null;
-  const originCx = originRect ? originRect.left + originRect.width / 2 : "50vw";
-  const originCy = originRect ? originRect.top + originRect.height / 2 : "50vh";
+  const originCx = originRect ? originRect.left + originRect.width / 2 - window.innerWidth / 2 : 0;
+  const originCy = originRect ? originRect.top + originRect.height / 2 - window.innerHeight / 2 : 0;
 
   return createPortal(
     <AnimatePresence>
@@ -65,10 +66,10 @@ export default function DemoOverlay({ open, onClose, originRef }) {
             key="panel"
             initial={{
               opacity: 0,
-              scale: 0.12,
-              x: originRect ? originCx - window.innerWidth / 2 : 0,
-              y: originRect ? originCy - window.innerHeight / 2 : 0,
-              borderRadius: 50,
+              scale: originRect ? 0.12 : 0.94,
+              x: originCx,
+              y: originCy,
+              borderRadius: originRect ? 50 : 20,
             }}
             animate={{
               opacity: 1,
@@ -79,10 +80,10 @@ export default function DemoOverlay({ open, onClose, originRef }) {
             }}
             exit={{
               opacity: 0,
-              scale: 0.1,
-              x: originRect ? originCx - window.innerWidth / 2 : 0,
-              y: originRect ? originCy - window.innerHeight / 2 : 0,
-              borderRadius: 50,
+              scale: originRect ? 0.1 : 0.94,
+              x: originCx,
+              y: originCy,
+              borderRadius: originRect ? 50 : 20,
             }}
             transition={{
               duration: 0.52,
