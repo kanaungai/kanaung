@@ -1,305 +1,320 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mic, PhoneOff, Volume2, Wifi } from "lucide-react";
+import { CheckCircle2, AlertCircle, Zap, ChevronRight, Clock, User, MessageSquare } from "lucide-react";
 
-const CONVERSATION = [
-  { role: "ai", text: "မင်္ဂလာပါ။ ရွှေကြယ် စက်ပစ္စည်းဆိုင်မှ ကြိုဆိုပါတယ်။ ဘာများ ကူညီပေးရမလဲ?" },
-  { role: "customer", text: "Mini Excavator EX55 model ရှိသေးလား?" },
-  { role: "ai", text: "ဟုတ်ကဲ့၊ EX55 လက်ရှိ stock ရှိပါတယ်။ အရောင် ၂ မျိုး ရရှိနိုင်ပါတယ်။" },
-  { role: "customer", text: "ဈေးနှုန်းဘယ်လောက်လဲ?" },
-  { role: "ai", text: "EX55 အတွက် ကျပ် ၂၈၀ သိန်းမှ စတင်ပါတယ်။ အချိုးအစားပေါ် မူတည်ပြီး အသေးစိတ် quote ပေးနိုင်ပါတယ်။" },
-  { role: "customer", text: "ရန်ကုန်ကို ပို့ဆောင်ပေးနိုင်သလား?" },
-  { role: "ai", text: "ဟုတ်ကဲ့၊ ရန်ကုန်အတွင်း ပို့ဆောင်ခ အခမဲ့ ပေးပါတယ်။ အသေးစိတ်အတွက် ဖုန်းနံပါတ် ချန်ထားနိုင်ပါတယ်။" },
+const QUEUE = [
+  {
+    id: 1,
+    name: "Ko Zaw Lin",
+    preview: "L200 spare parts — availability & price",
+    channel: "Messenger",
+    status: "review",
+    time: "2m ago",
+    intent: "Product Inquiry",
+  },
+  {
+    id: 2,
+    name: "Ma Hnin Thida",
+    preview: "ဒီကနေ Mandalay ပို့ဆောင်ပေးနိုင်သလား?",
+    channel: "Viber",
+    status: "ready",
+    time: "8m ago",
+    intent: "Delivery Query",
+  },
+  {
+    id: 3,
+    name: "Aung Myat Thu",
+    preview: "Generator 50KVA bulk order — 5 units",
+    channel: "Web",
+    status: "escalated",
+    time: "14m ago",
+    intent: "Bulk Purchase",
+  },
+  {
+    id: 4,
+    name: "Kyaw Zin Oo",
+    preview: "EX55 excavator ဈေးနှုန်းပြောပါ",
+    channel: "Messenger",
+    status: "ready",
+    time: "22m ago",
+    intent: "Pricing",
+  },
 ];
 
-function WaveBar({ delay, height }) {
+const DETAIL = {
+  inquiry: "Mitsubishi L200 (2022 model) အတွက် spare parts ရှိသေးလား? Crankshaft bearing နဲ့ timing belt set ဈေးနှုန်းပါ ပြောပြပါ။",
+  draft: "မင်္ဂလာပါ။ Mitsubishi L200 2022 model အတွက် spare parts ရှိပါတယ်။\n\n• Crankshaft bearing set — ကျပ် ၁၂,၅၀၀\n• Timing belt set — ကျပ် ၁၈,၀၀၀\n\nဒါ့အပြင် ကျွန်တော်တို့ဆိုင် OEM genuine parts နဲ့ aftermarket options နှစ်မျိုးလုံး ရပါတယ်။ ဘယ် option ကြိုက်ပါသလဲ?",
+  confidence: 94,
+  signals: ["Product match found", "Price data used", "Stock confirmed"],
+};
+
+function QueueItem({ item, selected, onClick }) {
+  const statusColor =
+    item.status === "ready"
+      ? { dot: "#22c55e", badge: { bg: "hsl(142 55% 95%)", color: "hsl(142 55% 33%)" }, label: "Ready" }
+      : item.status === "review"
+      ? { dot: "#f59e0b", badge: { bg: "hsl(43 90% 95%)", color: "hsl(38 70% 36%)" }, label: "Needs review" }
+      : { dot: "#ef4444", badge: { bg: "hsl(0 70% 96%)", color: "hsl(0 65% 40%)" }, label: "Escalated" };
+
   return (
-    <motion.div
-      className="w-[3px] rounded-full flex-shrink-0"
-      animate={{
-        height: [height * 0.25, height, height * 0.35, height * 0.75, height * 0.15, height * 0.9],
-        opacity: [0.4, 1, 0.5, 0.85, 0.3, 0.95],
-      }}
-      transition={{
-        duration: 1.8,
-        repeat: Infinity,
-        delay,
-        ease: "easeInOut",
-      }}
+    <button
+      onClick={onClick}
+      className="w-full text-left px-3 py-3 flex items-start gap-2.5 transition-all duration-100 border-l-2"
       style={{
-        minHeight: 3,
-        background: "linear-gradient(to top, hsl(352 72% 48% / 0.5), hsl(352 65% 62% / 0.9))",
+        borderLeftColor: selected ? "hsl(220 25% 12%)" : "transparent",
+        background: selected ? "white" : "transparent",
+        borderBottom: "1px solid hsl(220 16% 92%)",
       }}
-    />
-  );
-}
-
-function Waveform() {
-  const heights = [8, 16, 28, 20, 36, 24, 16, 32, 20, 10, 28, 18, 36, 14, 24, 30, 18, 34, 10, 26, 20, 30, 16, 24, 18, 28, 12, 20, 26, 32, 10, 22, 18, 34, 14, 24];
-  return (
-    <div className="flex items-center justify-center gap-[3px] h-12">
-      {heights.map((h, i) => (
-        <WaveBar key={i} delay={i * 0.048} height={h} />
-      ))}
-    </div>
-  );
-}
-
-function AIAvatar() {
-  return (
-    <div className="relative w-10 h-10 flex-shrink-0">
-      <div className="absolute inset-0 rounded-2xl bg-primary/20 blur-md" />
-      <div className="relative w-10 h-10 rounded-2xl bg-[#1a1015] border border-primary/25 flex items-center justify-center overflow-hidden">
-        <img
-          src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
-          alt="Kanaung"
-          className="w-6 h-6 object-contain"
-          style={{ filter: "brightness(0) invert(1) opacity(0.9)" }}
-        />
+    >
+      <div className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style={{ background: statusColor.dot }} />
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center justify-between gap-1 mb-0.5">
+          <span className="text-[11px] font-semibold truncate" style={{ color: "hsl(220 25% 12%)" }}>
+            {item.name}
+          </span>
+          <span className="text-[9px] flex-shrink-0" style={{ color: "hsl(220 12% 60%)" }}>
+            {item.time}
+          </span>
+        </div>
+        <p className="text-[10px] truncate mb-1.5" style={{ color: "hsl(220 12% 52%)" }}>
+          {item.preview}
+        </p>
+        <div className="flex items-center gap-1.5">
+          <span
+            className="text-[8px] font-medium px-1.5 py-0.5 rounded"
+            style={{ background: "hsl(220 16% 92%)", color: "hsl(220 12% 48%)" }}
+          >
+            {item.channel}
+          </span>
+          <span
+            className="text-[8px] font-semibold px-1.5 py-0.5 rounded"
+            style={statusColor.badge}
+          >
+            {statusColor.label}
+          </span>
+        </div>
       </div>
-    </div>
+    </button>
   );
 }
 
 export default function LiveCallPanel() {
-  const [visibleMessages, setVisibleMessages] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const timeoutRef = useRef(null);
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    const delays = [1200, 2800, 2400, 2600, 3200, 2600, 2800];
-
-    if (currentIndex >= CONVERSATION.length) {
-      timeoutRef.current = setTimeout(() => {
-        setVisibleMessages([]);
-        setCurrentIndex(0);
-      }, 5000);
-      return () => clearTimeout(timeoutRef.current);
-    }
-
-    const delay = delays[currentIndex] || 2000;
-    timeoutRef.current = setTimeout(() => {
-      setVisibleMessages((prev) => [...prev, CONVERSATION[currentIndex]]);
-      setCurrentIndex((i) => i + 1);
-    }, delay);
-
-    return () => clearTimeout(timeoutRef.current);
-  }, [currentIndex]);
-
-  useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollTo({ top: containerRef.current.scrollHeight, behavior: "smooth" });
-    }
-  }, [visibleMessages]);
-
-  const isAiTyping =
-    currentIndex < CONVERSATION.length &&
-    visibleMessages.length > 0 &&
-    visibleMessages[visibleMessages.length - 1]?.role === "customer";
+  const [selected, setSelected] = useState(1);
 
   return (
     <div className="relative w-full">
-      {/* Multi-layer premium glow */}
-      <div className="absolute -inset-4 rounded-[36px] bg-primary/[0.08] blur-3xl pointer-events-none" />
-      <div className="absolute -inset-1 rounded-[32px] bg-gradient-to-br from-primary/10 via-transparent to-blue-500/5 blur-xl pointer-events-none" />
+      {/* Ambient glow */}
+      <div className="absolute -inset-4 rounded-[32px] bg-primary/[0.05] blur-3xl pointer-events-none" />
+      <div className="absolute -inset-1 rounded-[28px] bg-gradient-to-br from-blue-500/[0.04] via-transparent to-primary/[0.04] blur-xl pointer-events-none" />
 
-      {/* Main panel */}
-      <div className="relative rounded-[28px] overflow-hidden shadow-2xl shadow-black/40"
+      {/* App shell */}
+      <div
+        className="relative rounded-2xl overflow-hidden"
         style={{
-          background: "linear-gradient(145deg, #111117 0%, #0d0d12 50%, #0f0e14 100%)",
-          border: "1px solid rgba(255,255,255,0.07)",
+          background: "hsl(220 18% 98%)",
+          border: "1px solid hsl(220 16% 86%)",
+          boxShadow:
+            "0 0 0 1px hsl(220 20% 96%), 0 24px 60px -10px hsl(220 25% 15% / 0.14), 0 6px 20px -4px hsl(220 25% 15% / 0.06)",
         }}
       >
-        {/* Inner top highlight */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
+        {/* Top highlight */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent pointer-events-none z-10" />
 
-        {/* ── Header ── */}
-        <div className="px-6 pt-6 pb-5 flex items-center justify-between"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}
-        >
-          <div className="flex items-center gap-3.5">
-            <AIAvatar />
-            <div>
-              <div className="font-sora text-[14px] font-semibold text-white leading-tight tracking-[-0.01em]">
-                Kanaung AI
-              </div>
-              <div className="text-[11px] text-white/35 mt-0.5 tracking-wide">
-                ရွှေကြယ် စက်ပစ္စည်း
-              </div>
-            </div>
-          </div>
-
-          {/* Status pill */}
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"
-              style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.15)" }}
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-[10px] font-bold text-green-400 tracking-[0.1em] uppercase">Live</span>
-            </div>
-          </div>
-        </div>
-
-        {/* ── Messages area ── */}
+        {/* Browser bar */}
         <div
-          ref={containerRef}
-          className="px-6 py-5 space-y-4 overflow-y-auto scrollbar-none"
-          style={{
-            height: "380px",
-            scrollbarWidth: "none",
-          }}
-        >
-          <AnimatePresence initial={false}>
-            {visibleMessages.map((msg, i) => (
-              <motion.div
-               key={i}
-               initial={{ opacity: 0, y: 8, scale: 0.96 }}
-               animate={{ opacity: 1, y: 0, scale: 1 }}
-               transition={{ duration: 0.32, ease: [0.25, 1, 0.4, 1] }}
-               className={`flex items-end gap-2.5 ${msg.role === "ai" ? "justify-start" : "justify-end"}`}
-              >
-                {msg.role === "ai" && (
-                  <div className="w-7 h-7 rounded-xl bg-primary/20 border border-primary/20 flex items-center justify-center flex-shrink-0 mb-0.5">
-                    <img
-                      src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
-                      alt="AI"
-                      className="w-4 h-4 object-contain"
-                      style={{ filter: "brightness(0) invert(1) opacity(0.8)" }}
-                    />
-                  </div>
-                )}
-                <div
-                  className={`max-w-[78%] px-4 py-3 text-[13.5px] leading-[1.65] font-inter ${
-                    msg.role === "ai"
-                      ? "rounded-2xl rounded-bl-md text-white/80"
-                      : "rounded-2xl rounded-br-md text-white"
-                  }`}
-                  style={
-                    msg.role === "ai"
-                      ? {
-                          background: "rgba(255,255,255,0.055)",
-                          border: "1px solid rgba(255,255,255,0.07)",
-                        }
-                      : {
-                          background: "linear-gradient(135deg, hsl(352 72% 44%) 0%, hsl(352 65% 38%) 100%)",
-                          boxShadow: "0 4px 20px hsl(352 72% 38% / 0.25)",
-                        }
-                  }
-                >
-                  {msg.text}
-                </div>
-                {msg.role === "customer" && (
-                  <div className="w-7 h-7 rounded-xl bg-white/8 border border-white/10 flex items-center justify-center flex-shrink-0 mb-0.5">
-                    <span className="text-[10px] font-bold text-white/50">U</span>
-                  </div>
-                )}
-              </motion.div>
-            ))}
-          </AnimatePresence>
-
-          {/* Typing indicator */}
-          <AnimatePresence>
-            {isAiTyping && (
-              <motion.div
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-                className="flex items-end gap-2.5 justify-start"
-              >
-                <div className="w-7 h-7 rounded-xl bg-primary/20 border border-primary/20 flex items-center justify-center flex-shrink-0">
-                  <img
-                    src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
-                    alt="AI"
-                    className="w-4 h-4 object-contain"
-                    style={{ filter: "brightness(0) invert(1) opacity(0.8)" }}
-                  />
-                </div>
-                <div
-                  className="px-4 py-3 rounded-2xl rounded-bl-md flex gap-1.5 items-center"
-                  style={{
-                    background: "rgba(255,255,255,0.055)",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                  }}
-                >
-                  {[0, 150, 300].map((d, i) => (
-                    <span
-                      key={i}
-                      className="w-1.5 h-1.5 rounded-full bg-white/35 animate-bounce"
-                      style={{ animationDelay: `${d}ms` }}
-                    />
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* ── AI status label ── */}
-        <div
-          className="px-6 py-3 flex items-center justify-between"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
-        >
-          <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            <span className="text-[11px] font-medium text-white/30 tracking-wide">
-              AI is responding
-            </span>
-          </div>
-          <div className="flex items-center gap-1 text-white/20">
-            <Wifi className="w-3 h-3" />
-            <span className="text-[10px] font-medium tracking-wide">Secure</span>
-          </div>
-        </div>
-
-        {/* ── Waveform ── */}
-        <div className="px-6 pb-4">
-          <div
-            className="rounded-2xl px-5 py-4"
-            style={{
-              background: "rgba(255,255,255,0.03)",
-              border: "1px solid rgba(255,255,255,0.06)",
-            }}
-          >
-            <Waveform />
-          </div>
-        </div>
-
-        {/* ── Controls ── */}
-        <div
-          className="px-6 pb-6 flex items-center justify-between"
+          className="flex items-center gap-3 px-4 py-2.5 border-b"
+          style={{ background: "hsl(0 0% 100%)", borderColor: "hsl(220 16% 88%)" }}
         >
           <div className="flex items-center gap-1.5">
-            <div className="w-2 h-2 rounded-full bg-primary/60 animate-pulse" />
-            <div className="w-1.5 h-1.5 rounded-full bg-primary/40 animate-pulse" style={{ animationDelay: "300ms" }} />
-            <div className="w-1 h-1 rounded-full bg-primary/20 animate-pulse" style={{ animationDelay: "600ms" }} />
+            {["hsl(0 75% 70%)", "hsl(38 75% 60%)", "hsl(142 55% 55%)"].map((c, i) => (
+              <div key={i} className="w-2 h-2 rounded-full" style={{ background: c }} />
+            ))}
           </div>
+          <div
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded text-[9px] font-mono flex-1 justify-center"
+            style={{ background: "hsl(220 16% 94%)", border: "1px solid hsl(220 16% 89%)", color: "hsl(220 12% 52%)", maxWidth: 210 }}
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
+            app.kanaung.ai / inbox
+          </div>
+          <span
+            className="text-[8px] font-semibold px-2 py-0.5 rounded-full ml-auto"
+            style={{ background: "hsl(142 50% 94%)", color: "hsl(142 55% 33%)", border: "1px solid hsl(142 45% 86%)" }}
+          >
+            ● LIVE
+          </span>
+        </div>
 
-          <div className="flex items-center gap-2.5">
-            <button
-              className="w-9 h-9 rounded-2xl flex items-center justify-center transition-all duration-200 hover:scale-105"
-              style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}
+        {/* Inner topbar */}
+        <div
+          className="flex items-center justify-between px-4 py-2.5 border-b"
+          style={{ background: "white", borderColor: "hsl(220 16% 90%)" }}
+        >
+          <div>
+            <p className="text-[12px] font-semibold" style={{ color: "hsl(220 25% 10%)" }}>
+              Inbox
+            </p>
+            <p className="text-[9px]" style={{ color: "hsl(220 12% 55%)" }}>
+              24 today · 3 need review · 21 handled by AI
+            </p>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span
+              className="text-[9px] font-semibold px-2 py-1 rounded-full"
+              style={{ background: "hsl(220 18% 95%)", color: "hsl(220 18% 38%)", border: "1px solid hsl(220 16% 87%)" }}
             >
-              <Volume2 className="w-3.5 h-3.5 text-white/40" />
-            </button>
-            <button
-              className="w-9 h-9 rounded-2xl flex items-center justify-center transition-all duration-200 hover:scale-105"
-              style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}
-            >
-              <Mic className="w-3.5 h-3.5 text-white/40" />
-            </button>
-            <button
-              className="w-9 h-9 rounded-2xl flex items-center justify-center transition-all duration-200 hover:scale-105"
-              style={{ background: "rgba(239,68,68,0.12)", border: "1px solid rgba(239,68,68,0.2)" }}
-            >
-              <PhoneOff className="w-3.5 h-3.5 text-red-400" />
-            </button>
+              Golden Star Auto Parts
+            </span>
           </div>
         </div>
 
-        {/* Bottom inner highlight */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent pointer-events-none" />
+        {/* Main area */}
+        <div className="flex" style={{ minHeight: 360 }}>
+
+          {/* Queue sidebar */}
+          <div
+            className="w-[185px] flex-shrink-0 border-r overflow-hidden flex flex-col"
+            style={{ background: "hsl(220 18% 97.5%)", borderColor: "hsl(220 16% 89%)" }}
+          >
+            <div className="px-3 py-2 border-b" style={{ borderColor: "hsl(220 16% 91%)" }}>
+              <p className="text-[8px] font-bold tracking-[0.1em] uppercase" style={{ color: "hsl(220 12% 56%)" }}>
+                Queue · {QUEUE.length}
+              </p>
+            </div>
+            {QUEUE.map((item) => (
+              <QueueItem
+                key={item.id}
+                item={item}
+                selected={selected === item.id}
+                onClick={() => setSelected(item.id)}
+              />
+            ))}
+          </div>
+
+          {/* Detail panel */}
+          <div className="flex-1 min-w-0 flex flex-col bg-white">
+
+            {/* Customer strip */}
+            <div className="px-4 py-3 border-b flex items-center gap-2.5" style={{ borderColor: "hsl(220 16% 91%)" }}>
+              <div
+                className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
+                style={{ background: "hsl(220 16% 92%)" }}
+              >
+                <User className="w-3.5 h-3.5" style={{ color: "hsl(220 12% 46%)" }} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[11px] font-semibold" style={{ color: "hsl(220 25% 10%)" }}>
+                  Ko Zaw Lin
+                </p>
+                <p className="text-[9px]" style={{ color: "hsl(220 12% 54%)" }}>
+                  via Messenger · 2 minutes ago
+                </p>
+              </div>
+              <span
+                className="text-[8px] font-semibold px-1.5 py-0.5 rounded flex-shrink-0"
+                style={{ background: "hsl(43 90% 95%)", color: "hsl(38 70% 36%)", border: "1px solid hsl(43 60% 85%)" }}
+              >
+                Needs review
+              </span>
+            </div>
+
+            {/* Customer message */}
+            <div className="px-4 pt-4 pb-2">
+              <p className="text-[8px] font-bold tracking-[0.09em] uppercase mb-2" style={{ color: "hsl(220 12% 56%)" }}>
+                Customer Inquiry
+              </p>
+              <div
+                className="px-3 py-2.5 rounded-xl text-[11px] leading-relaxed"
+                style={{
+                  background: "hsl(220 18% 97%)",
+                  border: "1px solid hsl(220 16% 90%)",
+                  color: "hsl(220 18% 22%)",
+                }}
+              >
+                {DETAIL.inquiry}
+              </div>
+            </div>
+
+            {/* AI Draft — focal point */}
+            <div className="px-4 pt-3 pb-3 flex-1">
+              {/* Header row */}
+              <div className="flex items-center gap-2 mb-2">
+                <div
+                  className="flex items-center gap-1.5 flex-1"
+                >
+                  <Zap className="w-3 h-3" style={{ color: "hsl(220 20% 42%)" }} />
+                  <p className="text-[8px] font-bold tracking-[0.09em] uppercase" style={{ color: "hsl(220 12% 56%)" }}>
+                    AI Drafted Reply
+                  </p>
+                </div>
+                {/* Confidence pill */}
+                <div
+                  className="flex items-center gap-1 px-2 py-1 rounded-full"
+                  style={{ background: "hsl(142 50% 95%)", border: "1px solid hsl(142 45% 86%)" }}
+                >
+                  <CheckCircle2 className="w-2.5 h-2.5" style={{ color: "hsl(142 55% 40%)" }} />
+                  <span className="text-[8px] font-bold" style={{ color: "hsl(142 55% 33%)" }}>
+                    {DETAIL.confidence}% confidence
+                  </span>
+                </div>
+              </div>
+
+              {/* Draft card — elevated, dominant */}
+              <div
+                className="relative px-3.5 py-3 rounded-xl text-[11px] leading-relaxed mb-2.5"
+                style={{
+                  background: "white",
+                  border: "1.5px solid hsl(220 16% 86%)",
+                  color: "hsl(220 18% 20%)",
+                  boxShadow: "0 2px 12px hsl(220 25% 15% / 0.07)",
+                  whiteSpace: "pre-line",
+                }}
+              >
+                <div className="absolute top-0 left-3 right-3 h-px bg-gradient-to-r from-transparent via-foreground/8 to-transparent pointer-events-none" />
+                {DETAIL.draft}
+              </div>
+
+              {/* Signals */}
+              <div className="flex items-center gap-1.5 mb-3 flex-wrap">
+                {DETAIL.signals.map((s) => (
+                  <span
+                    key={s}
+                    className="text-[8px] font-medium px-1.5 py-0.5 rounded-full flex items-center gap-1"
+                    style={{ background: "hsl(220 16% 94%)", color: "hsl(220 12% 46%)" }}
+                  >
+                    <span className="w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
+                    {s}
+                  </span>
+                ))}
+              </div>
+
+              {/* Actions */}
+              <div className="flex items-center gap-2">
+                <button
+                  className="flex-1 flex items-center justify-center gap-1.5 text-[10px] font-semibold py-2 rounded-lg transition-all"
+                  style={{ background: "hsl(220 25% 11%)", color: "white" }}
+                >
+                  <CheckCircle2 className="w-3 h-3" />
+                  Approve & Send
+                </button>
+                <button
+                  className="flex items-center justify-center gap-1.5 text-[10px] font-semibold py-2 px-3 rounded-lg transition-all"
+                  style={{
+                    background: "transparent",
+                    color: "hsl(38 70% 38%)",
+                    border: "1.5px solid hsl(43 60% 82%)",
+                  }}
+                >
+                  <AlertCircle className="w-3 h-3" />
+                  Escalate
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom highlight */}
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-foreground/[0.04] to-transparent pointer-events-none" />
       </div>
     </div>
   );
