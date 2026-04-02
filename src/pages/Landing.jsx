@@ -7,7 +7,7 @@ import ChatDemo from "../components/landing/ChatDemo";
 import ProblemSection from "../components/landing/ProblemSection";
 import HowItWorks from "../components/landing/HowItWorks";
 import WhyDifferent from "../components/landing/WhyDifferent";
-import InboxShowcase from "../components/landing/InboxShowcase";
+import ControlLayer from "../components/landing/ControlLayer";
 import Industries from "../components/landing/Industries";
 import Pricing from "../components/landing/Pricing";
 import FinalCTA from "../components/landing/FinalCTA";
@@ -22,7 +22,7 @@ export default function Landing() {
       <Navbar />
       <Hero />
       <ChannelsBar />
-      <InboxShowcase />
+      <ControlLayer />
       <CostSection />
       <HowItWorks />
       <WhyDifferent />

@@ -9,17 +9,17 @@ export const t = {
     nav_book: "Book Demo",
 
     // Hero
-    hero_eyebrow: "Burmese-First · Human-in-the-Loop",
-    hero_h1_1: "Handle every customer",
-    hero_h1_2: "conversation",
-    hero_h1_3: "in Burmese.",
-    hero_sub: "Kanaung is a Burmese-first AI support assistant for web, Messenger, and Viber — drafting replies from your business data and routing edge cases to your team.",
-    hero_sub_bold: "",
+    hero_eyebrow: "LLM-Powered · Burmese-First",
+    hero_h1_1: "Never miss a",
+    hero_h1_2: "customer",
+    hero_h1_3: "conversation.",
+    hero_sub: "Kanaung is an LLM-powered Burmese customer service assistant that handles natural customer conversations across web, Messenger, and Viber —",
+    hero_sub_bold: "using your business's own data.",
     hero_cta1: "Book a Demo",
     hero_cta2: "Try the Demo",
-    stat1_label: "Multi-channel",
+    stat1_label: "Not rule-based",
     stat2_label: "Always on",
-    stat3_label: "Human review controls",
+    stat3_label: "Native language",
 
     // ChannelsBar
     channels_label: "Integrations",
@@ -127,17 +127,17 @@ export const t = {
     nav_book: "Demo ချိန်းဆိုရန်",
 
     // Hero
-    hero_eyebrow: "မြန်မာဘာသာ အထူးပြု · လူ + AI ပူးပေါင်း",
+    hero_eyebrow: "LLM နည်းပညာ · မြန်မာဘာသာ အထူးပြု",
     hero_h1_1: "သုံးစွဲသူ၏ မေးမြန်းချက်",
-    hero_h1_2: "တိုင်းကို မြန်မာဘာသာဖြင့်",
-    hero_h1_3: "ကိုင်တွယ်ပါ။",
-    hero_sub: "Kanaung သည် web, Messenger နှင့် Viber အတွက် မြန်မာဘာသာ AI support assistant ဖြစ်ပြီး — သင့်လုပ်ငန်းဒေတာမှ ဖြေကြားချက်မူကြမ်းဆွဲပြီး edge case များကို သင့်အဖွဲ့သို့ လွှဲပြောင်းပေးသည်။",
-    hero_sub_bold: "",
+    hero_h1_2: "တစ်ခုမှ",
+    hero_h1_3: "လက်မလွတ်တော့ပါ။",
+    hero_sub: "Kanaung သည် LLM နည်းပညာဖြင့် မြန်မာဘာသာဖြင့် သုံးစွဲသူများ၏ မေးမြန်းချက်များကို web, Messenger နှင့် Viber တို့မှတဆင့် ဖြေဆိုပေးသည့် AI customer service assistant ဖြစ်ပြီး —",
+    hero_sub_bold: "သင့်လုပ်ငန်း၏ ကိုယ်ပိုင်အချက်အလက်များကို အသုံးပြု၍ ဖြေဆိုသည်။",
     hero_cta1: "Demo ချိန်းဆိုရန်",
     hero_cta2: "စမ်းသပ်ကြည့်ရှုရန်",
-    stat1_label: "Multi-channel",
+    stat1_label: "Rule-based မဟုတ်ပါ",
     stat2_label: "အချိန်မဆိုဖွင့်ထားသည်",
-    stat3_label: "လူ review ထိန်းချုပ်မှု",
+    stat3_label: "မိခင်ဘာသာ",
 
     // ChannelsBar
     channels_label: "ချိတ်ဆက်မှုများ",
