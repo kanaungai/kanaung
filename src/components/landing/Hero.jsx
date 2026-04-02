@@ -52,8 +52,7 @@ export default function Hero() {
             </h1>
 
             <p className="mt-7 text-[16px] md:text-[17px] text-muted-foreground leading-[1.75] max-w-[420px] font-inter font-normal">
-              {tx.hero_sub}{" "}
-              <span className="text-foreground/70 font-medium">{tx.hero_sub_bold}</span>
+              {tx.hero_sub}
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row gap-3">
@@ -72,9 +71,9 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.55 }}
               className="mt-14 flex items-center gap-10">
               {[
-                { value: "LLM", label: tx.stat1_label },
+                { value: lang === "en" ? "Web · Msg · Viber" : "Web · Msg · Viber", label: tx.stat1_label },
                 { value: "24 / 7", label: tx.stat2_label },
-                { value: lang === "en" ? "Burmese" : "မြန်မာ", label: tx.stat3_label },
+                { value: lang === "en" ? "Human-in-loop" : "Human-in-loop", label: tx.stat3_label },
               ].map((stat) => (
                 <div key={stat.label} className="flex flex-col gap-0.5">
                   <span className="font-sora text-[22px] font-bold text-foreground tracking-[-0.02em]">
