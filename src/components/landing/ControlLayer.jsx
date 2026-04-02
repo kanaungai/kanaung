@@ -3,402 +3,372 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useScrollReveal, REVEAL } from "../../hooks/useScrollReveal";
 import {
   MessageSquare,
-  ArrowRightLeft,
-  Globe,
-  Phone,
+  BookOpen,
+  Zap,
+  GitBranch,
+  Settings,
+  BarChart2,
+  Radio,
+  ChevronRight,
   User,
   CheckCircle2,
-  AlertCircle,
-  Zap,
-  BookOpen,
-  ChevronRight,
-  Clock,
+  AlertTriangle,
+  Pencil,
+  ArrowUpRight,
 } from "lucide-react";
 
-// ── Top summary stats ──
-const SUMMARY = [
-  { label: "Active Conversations", value: "47", delta: "+12 vs yesterday" },
-  { label: "Escalations Pending", value: "3", delta: "2 high priority" },
-  { label: "AI Resolution Rate", value: "94%", delta: "Last 7 days" },
-  { label: "Channels Online", value: "3 / 4", delta: "Web · Messenger · Viber" },
+// ── Sidebar nav items ──
+const NAV = [
+  { icon: MessageSquare, label: "Inbox", active: true },
+  { icon: BookOpen, label: "Knowledge" },
+  { icon: Radio, label: "Channels" },
+  { icon: BarChart2, label: "Insights" },
+  { icon: GitBranch, label: "Workflows" },
+  { icon: Settings, label: "Settings" },
 ];
 
-// ── Conversation queue ──
-const QUEUE = [
+// ── Queue categories ──
+const CATEGORIES = [
+  { id: "needs_review", label: "Needs Review", count: 4, color: "hsl(38 75% 46%)" },
+  { id: "at_risk", label: "At Risk", count: 1, color: "hsl(0 65% 52%)" },
+  { id: "awaiting_human", label: "Awaiting Human", count: 3, color: "hsl(220 65% 52%)" },
+  { id: "ai_resolved", label: "AI Resolved", count: 44, color: "hsl(142 55% 44%)" },
+];
+
+const CHANNEL_PILLS = [
+  { label: "Messenger", color: "#006AFF" },
+  { label: "Viber", color: "#7360F2" },
+  { label: "WhatsApp", color: "#25D366" },
+];
+
+// ── Conversation list ──
+const CONVERSATIONS = [
   {
     id: 1,
-    name: "Aung Myat Thu",
-    preview: "Generator 50KVA bulk order — need pricing for 5 units",
-    channel: "Viber",
-    status: "escalated",
-    priority: "high",
-    time: "18m ago",
-    assigned: null,
+    name: "U Kyaw Zin",
+    preview: "Mitsubishi L200 spare parts — do you have stock?",
+    channel: "Messenger",
+    channelColor: "#006AFF",
+    status: "needs_review",
+    time: "4m ago",
+    intent: "Parts Enquiry",
+    confidence: 72,
   },
   {
     id: 2,
-    name: "Ko Htet Aung",
-    preview: "Wheel loader WL350 — requesting live demo",
-    channel: "Messenger",
-    status: "escalated",
-    priority: "medium",
-    time: "1h ago",
-    assigned: null,
+    name: "Ma Thida",
+    preview: "EX55 model ရှိသေးလား? ဈေးနှုန်းပြောပြပါ",
+    channel: "Viber",
+    channelColor: "#7360F2",
+    status: "needs_review",
+    time: "22m ago",
+    intent: "Stock Check",
+    confidence: 88,
   },
   {
     id: 3,
-    name: "Kyaw Zin Oo",
-    preview: "EX55 model ရှိသေးလား? ဈေးနှုန်းပြောပြပါ",
-    channel: "Messenger",
-    status: "resolved",
-    priority: null,
-    time: "2h ago",
-    assigned: "AI",
-  },
-  {
-    id: 4,
-    name: "Mg Zaw Win",
-    preview: "Fleet purchase — 3 excavators, delivery to Mandalay",
-    channel: "Web",
-    status: "escalated",
-    priority: "high",
-    time: "3h ago",
-    assigned: null,
-  },
-  {
-    id: 5,
-    name: "Ma Hnin Wai",
-    preview: "ရန်ကုန်ကို delivery ဘယ်လောက်ကြာလဲ?",
-    channel: "Web",
-    status: "resolved",
-    priority: null,
-    time: "3h ago",
-    assigned: "AI",
-  },
-  {
-    id: 6,
-    name: "Su Myat Noe",
-    preview: "ရုံးချိန် ဘယ်အချိန်ဖွင့်လဲ?",
-    channel: "Web",
-    status: "resolved",
-    priority: null,
-    time: "4h ago",
-    assigned: "AI",
+    name: "Ko Aung Naing",
+    preview: "Mandalay delivery — ဘယ်လောက်ကြာလဲ?",
+    channel: "WhatsApp",
+    channelColor: "#25D366",
+    status: "ai_resolved",
+    time: "1h ago",
+    intent: "Delivery Info",
+    confidence: 95,
   },
 ];
 
-// ── Selected conversation detail ──
+// ── Conversation detail ──
 const DETAIL = {
   1: {
-    name: "Aung Myat Thu",
-    phone: "09-456-789-123",
-    channel: "Viber",
-    time: "18 minutes ago",
-    priority: "high",
-    inquiry: "Generator 50KVA လောကြည့်ရမလဲ? Bulk order ဆိုရင် ဈေးနှုန်းသက်သာမလဲ? ၅ လုံးဝယ်ချင်တယ်",
-    aiReply: "Generator 50KVA single unit ဈေးနှုန်းမှာ ကျပ် ၁၄၅ သိန်းမှ စတင်ပါတယ်။ Bulk order ၅ လုံးအတွက် ၅–8% လျော့ပေးနိုင်ပါတယ်။ Sales team မှ အသေးစိတ် ဆက်သွယ်ပေးပါ့မယ်။",
-    source: "Product Catalog · Generator specs",
-    handoff: true,
-    handoffReason: "Bulk purchase — pricing authority required",
+    name: "U Kyaw Zin",
+    channel: "Messenger",
+    channelColor: "#006AFF",
+    intent: "Parts Enquiry",
+    confidence: 72,
+    status: "needs_review",
+    customerMsg: "Hello, I urgently need Mitsubishi L200 spare parts. Do you have them in stock? Please let me know as soon as possible — my truck is down.",
+    aiDraft: "Thank you for reaching out. We carry a range of Mitsubishi L200 spare parts and can check availability right away. Could you let us know which specific parts you need? Once we confirm, we can provide pricing and estimated delivery time.",
+    source: "Parts Catalog · Mitsubishi L200",
+    handoff: false,
   },
   2: {
-    name: "Ko Htet Aung",
-    phone: "09-321-654-987",
-    channel: "Messenger",
-    time: "1 hour ago",
-    priority: "medium",
-    inquiry: "Wheel loader WL350 demo ကြည့်လို့ရလား? ဘယ်နေ့ဘယ်အချိန် သွားလို့ရမလဲ?",
-    aiReply: "WL350 demo ကြည့်ရှုနိုင်ပါတယ်။ တနင်္လာမှ စနေ နံနက် ၉:၀၀ မှ ညနေ ၅:၃၀ ထိ ရရှိနိုင်ပါတယ်။ ကြိုတင်ချိန်းဆိုပေးဖို့ team မှ ဆက်သွယ်ပေးပါ့မယ်။",
-    source: "Locations & Hours · Demo policy",
-    handoff: true,
-    handoffReason: "Showroom demo request — scheduling required",
+    name: "Ma Thida",
+    channel: "Viber",
+    channelColor: "#7360F2",
+    intent: "Stock Check",
+    confidence: 88,
+    status: "needs_review",
+    customerMsg: "EX55 model ရှိသေးလား? ဈေးနှုန်းပြောပြပါ",
+    aiDraft: "EX55 model လက်ရှိ stock ရှိပါတယ်။ ကျပ် ၂၈၀ သိန်းမှ စတင်ပါတယ်။ အရောင် ၂ မျိုး ရရှိနိုင်ပြီး financing option များလည်း ရှိပါတယ်။ အသေးစိတ် သိချင်ပါက ဆက်သွယ်ပေးပါ။",
+    source: "Product Catalog · EX55 Specifications",
+    handoff: false,
   },
   3: {
-    name: "Kyaw Zin Oo",
-    phone: "09-789-123-456",
-    channel: "Messenger",
-    time: "2 hours ago",
-    priority: null,
-    inquiry: "EX55 model ရှိသေးလား? ဈေးနှုန်းပြောပြပါ",
-    aiReply: "EX55 model လက်ရှိ stock ရှိပါတယ်။ ကျပ် ၂၈၀ သိန်းမှ စတင်ပါတယ်။ အရောင် ၂ မျိုး ရရှိနိုင်ပါတယ်။",
-    source: "Product Catalog · EX55 specifications",
+    name: "Ko Aung Naing",
+    channel: "WhatsApp",
+    channelColor: "#25D366",
+    intent: "Delivery Info",
+    confidence: 95,
+    status: "ai_resolved",
+    customerMsg: "Mandalay ကို delivery ဘယ်လောက်ကြာမလဲ? မနက်ဖြန် ရနိုင်မလား?",
+    aiDraft: "Mandalay ကို ပုံမှန် ၃–၅ ရက်အတွင်း ရောက်ပါတယ်။ Urgent delivery ဆိုရင် express option ကို ၂ ရက်အတွင်း စီစဉ်ပေးနိုင်ပါတယ်။ Order ထည့်ပြီးနောက် tracking link ပို့ပေးပါ့မယ်။",
+    source: "Delivery Policy · Upcountry",
     handoff: false,
-    handoffReason: null,
-  },
-  4: {
-    name: "Mg Zaw Win",
-    phone: "09-111-222-333",
-    channel: "Web",
-    time: "3 hours ago",
-    priority: "high",
-    inquiry: "Excavator ၃ လုံး Mandalay ကို ပို့ဆောင်ပေးနိုင်မလား? ဈေးနှုန်းနဲ့ timelines ပါ ပြောပြပါ",
-    aiReply: "Mandalay ကို ပို့ဆောင်ပေးနိုင်ပါတယ်။ Fleet order အတွက် သီးသန့် quote နဲ့ logistics planning ပေးနိုင်ပါတယ်။",
-    source: "Delivery Policy · Upcountry rates",
-    handoff: true,
-    handoffReason: "Fleet sale + upcountry logistics — senior sales required",
-  },
-  5: {
-    name: "Ma Hnin Wai",
-    phone: "09-222-333-444",
-    channel: "Web",
-    time: "3 hours ago",
-    priority: null,
-    inquiry: "ရန်ကုန်ကို delivery ဘယ်လောက်ကြာလဲ?",
-    aiReply: "ရန်ကုန်တွင်း delivery ၁–၂ ရက်အတွင်း ပြီးပါတယ်။ ပို့ဆောင်ခ အခမဲ့ ဖြစ်ပါတယ်။",
-    source: "Delivery Policy · Yangon delivery",
-    handoff: false,
-    handoffReason: null,
-  },
-  6: {
-    name: "Su Myat Noe",
-    phone: "09-555-666-777",
-    channel: "Web",
-    time: "4 hours ago",
-    priority: null,
-    inquiry: "ရုံးချိန် ဘယ်အချိန်ဖွင့်လဲ?",
-    aiReply: "တနင်္လာ မှ စနေ နံနက် ၉:၀၀ မှ ညနေ ၅:၃၀ ထိ ဖွင့်ပါတယ်။ တနင်္ဂနွေ ပိတ်ပါတယ်။",
-    source: "Locations & Hours",
-    handoff: false,
-    handoffReason: null,
   },
 };
 
-function SummaryStrip() {
+const STATUS_CONFIG = {
+  needs_review: { label: "Needs Review", bg: "hsl(38 80% 96%)", color: "hsl(38 65% 38%)", border: "hsl(38 60% 88%)" },
+  at_risk: { label: "At Risk", bg: "hsl(0 70% 97%)", color: "hsl(0 60% 42%)", border: "hsl(0 55% 90%)" },
+  awaiting_human: { label: "Awaiting Human", bg: "hsl(220 70% 96%)", color: "hsl(220 55% 42%)", border: "hsl(220 55% 88%)" },
+  ai_resolved: { label: "AI Resolved", bg: "hsl(142 55% 95%)", color: "hsl(142 50% 33%)", border: "hsl(142 45% 86%)" },
+};
+
+// ── Confidence ring ──
+function ConfidenceRing({ value }) {
+  const r = 14;
+  const circ = 2 * Math.PI * r;
+  const fill = (value / 100) * circ;
+  const color = value >= 85 ? "hsl(142 55% 44%)" : value >= 65 ? "hsl(38 75% 46%)" : "hsl(0 65% 52%)";
   return (
-    <div className="grid grid-cols-4 border-b" style={{ borderColor: "hsl(220 16% 89%)" }}>
-      {SUMMARY.map((s, i) => (
-        <div
-          key={s.label}
-          className="px-6 py-4 border-r last:border-r-0"
-          style={{ borderColor: "hsl(220 16% 89%)" }}
-        >
-          <p
-            className="text-[22px] font-bold tracking-[-0.03em] leading-none"
-            style={{ color: "hsl(220 25% 10%)" }}
-          >
-            {s.value}
-          </p>
-          <p
-            className="text-[11px] font-semibold mt-1.5 leading-none"
-            style={{ color: "hsl(220 18% 30%)" }}
-          >
-            {s.label}
-          </p>
-          <p
-            className="text-[10px] mt-1 leading-none"
-            style={{ color: "hsl(220 12% 58%)" }}
-          >
-            {s.delta}
-          </p>
-        </div>
-      ))}
-    </div>
+    <svg width="36" height="36" viewBox="0 0 36 36" style={{ flexShrink: 0 }}>
+      <circle cx="18" cy="18" r={r} fill="none" stroke="hsl(220 16% 92%)" strokeWidth="2.5" />
+      <circle
+        cx="18" cy="18" r={r}
+        fill="none"
+        stroke={color}
+        strokeWidth="2.5"
+        strokeDasharray={`${fill} ${circ}`}
+        strokeLinecap="round"
+        transform="rotate(-90 18 18)"
+      />
+      <text x="18" y="22" textAnchor="middle" style={{ fontSize: 9, fontWeight: 700, fill: color, fontFamily: "var(--font-inter)" }}>
+        {value}%
+      </text>
+    </svg>
   );
 }
 
-function QueueRow({ conv, isSelected, onClick }) {
-  const isEscalated = conv.status === "escalated";
+// ── Conversation row ──
+function ConvRow({ conv, isSelected, onClick }) {
+  const st = STATUS_CONFIG[conv.status];
   return (
     <button
       onClick={onClick}
-      className="w-full text-left px-4 py-3.5 flex items-start gap-3.5 transition-all duration-100 border-l-2 border-b"
+      className="w-full text-left flex items-start gap-3 px-4 py-3.5 border-b transition-all duration-100"
       style={{
-        borderLeftColor: isSelected ? "hsl(220 25% 12%)" : "transparent",
-        borderBottomColor: "hsl(220 16% 92%)",
+        borderBottomColor: "hsl(220 16% 91%)",
         background: isSelected ? "white" : "transparent",
+        borderLeft: `2.5px solid ${isSelected ? "hsl(220 25% 16%)" : "transparent"}`,
       }}
     >
-      {/* Status dot */}
-      <div className="flex-shrink-0 mt-1">
-        <div
-          className="w-1.5 h-1.5 rounded-full"
-          style={{
-            background: isEscalated
-              ? conv.priority === "high"
-                ? "hsl(0 65% 52%)"
-                : "hsl(38 75% 48%)"
-              : "hsl(142 55% 46%)",
-          }}
-        />
+      {/* Avatar */}
+      <div
+        className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 text-[10px] font-bold"
+        style={{ background: isSelected ? "hsl(220 25% 14%)" : "hsl(220 16% 90%)", color: isSelected ? "white" : "hsl(220 18% 40%)" }}
+      >
+        {conv.name.charAt(0)}
       </div>
 
-      {/* Content */}
       <div className="flex-1 min-w-0">
-        <div className="flex items-center justify-between gap-2 mb-0.5">
-          <p
-            className="text-[12px] font-semibold leading-snug tracking-[-0.01em]"
-            style={{ color: isSelected ? "hsl(220 25% 10%)" : "hsl(220 18% 20%)" }}
-          >
+        <div className="flex items-center justify-between mb-0.5">
+          <p className="text-[11.5px] font-semibold tracking-[-0.01em] truncate" style={{ color: "hsl(220 25% 12%)" }}>
             {conv.name}
           </p>
-          <span className="text-[9px] flex-shrink-0" style={{ color: "hsl(220 12% 62%)" }}>
-            {conv.time}
-          </span>
+          <span className="text-[9px] flex-shrink-0 ml-1" style={{ color: "hsl(220 12% 60%)" }}>{conv.time}</span>
         </div>
-        <p className="text-[11px] leading-snug truncate mb-1.5" style={{ color: "hsl(220 12% 52%)" }}>
+        <p className="text-[10.5px] leading-snug truncate mb-1.5" style={{ color: "hsl(220 12% 52%)" }}>
           {conv.preview}
         </p>
         <div className="flex items-center gap-1.5">
           <span
-            className="text-[9px] font-medium px-1.5 py-0.5 rounded"
-            style={{ background: "hsl(220 16% 92%)", color: "hsl(220 12% 48%)" }}
+            className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full"
+            style={{ background: `${conv.channelColor}14`, color: conv.channelColor }}
           >
             {conv.channel}
           </span>
-          {isEscalated ? (
-            <span
-              className="text-[9px] font-semibold px-1.5 py-0.5 rounded"
-              style={{
-                background: conv.priority === "high" ? "hsl(0 70% 96%)" : "hsl(38 80% 95%)",
-                color: conv.priority === "high" ? "hsl(0 65% 40%)" : "hsl(38 70% 36%)",
-              }}
-            >
-              {conv.priority === "high" ? "High priority" : "Escalated"}
-            </span>
-          ) : (
-            <span
-              className="text-[9px] font-semibold px-1.5 py-0.5 rounded"
-              style={{ background: "hsl(142 55% 95%)", color: "hsl(142 55% 33%)" }}
-            >
-              AI resolved
-            </span>
-          )}
+          <span
+            className="text-[9px] font-medium px-1.5 py-0.5 rounded-full"
+            style={{ background: st.bg, color: st.color }}
+          >
+            {st.label}
+          </span>
         </div>
       </div>
     </button>
   );
 }
 
+// ── Main detail panel ──
 function DetailPanel({ detail }) {
   if (!detail) return null;
+  const st = STATUS_CONFIG[detail.status];
+  const isResolved = detail.status === "ai_resolved";
+
   return (
     <AnimatePresence mode="wait">
       <motion.div
-        key={detail.name + detail.time}
-        initial={{ opacity: 0, x: 10 }}
+        key={detail.name}
+        initial={{ opacity: 0, x: 8 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.18, ease: "easeOut" }}
-        className="flex flex-col h-full"
+        transition={{ duration: 0.2, ease: "easeOut" }}
+        className="flex flex-col h-full overflow-auto"
       >
-        {/* Customer block */}
-        <div className="px-5 py-4 border-b" style={{ borderColor: "hsl(220 16% 91%)" }}>
-          <div className="flex items-start justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <div
-                className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
-                style={{ background: "hsl(220 16% 92%)" }}
-              >
-                <User className="w-3.5 h-3.5" style={{ color: "hsl(220 12% 46%)" }} />
+        {/* Header */}
+        <div className="px-5 py-3.5 border-b flex items-center justify-between gap-3" style={{ borderColor: "hsl(220 16% 91%)" }}>
+          <div className="flex items-center gap-2.5">
+            <div
+              className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold flex-shrink-0"
+              style={{ background: "hsl(220 25% 14%)", color: "white" }}
+            >
+              {detail.name.charAt(0)}
+            </div>
+            <div>
+              <p className="text-[12.5px] font-semibold tracking-[-0.01em]" style={{ color: "hsl(220 25% 10%)" }}>
+                {detail.name}
+              </p>
+              <div className="flex items-center gap-1.5 mt-0.5">
+                <span
+                  className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full"
+                  style={{ background: `${detail.channelColor}14`, color: detail.channelColor }}
+                >
+                  {detail.channel}
+                </span>
+                <span
+                  className="text-[9px] font-medium px-1.5 py-0.5 rounded-full"
+                  style={{ background: st.bg, color: st.color, border: `1px solid ${st.border}` }}
+                >
+                  {st.label}
+                </span>
               </div>
-              <div>
-                <p className="text-[13px] font-semibold tracking-[-0.01em]" style={{ color: "hsl(220 25% 10%)" }}>
-                  {detail.name}
-                </p>
-                <div className="flex items-center gap-1.5 mt-0.5">
-                  <Phone className="w-2.5 h-2.5" style={{ color: "hsl(220 12% 60%)" }} />
-                  <p className="text-[10px]" style={{ color: "hsl(220 12% 54%)" }}>{detail.phone}</p>
-                  <span className="text-[9px] font-medium px-1.5 py-0.5 rounded" style={{ background: "hsl(220 16% 92%)", color: "hsl(220 12% 48%)" }}>
-                    {detail.channel}
-                  </span>
+            </div>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span
+              className="text-[9px] font-semibold px-2 py-1 rounded-md"
+              style={{ background: "hsl(220 55% 97%)", color: "hsl(220 50% 46%)", border: "1px solid hsl(220 40% 90%)" }}
+            >
+              {detail.intent}
+            </span>
+          </div>
+        </div>
+
+        {/* Customer message bubble */}
+        <div className="px-5 pt-4 pb-3">
+          <p className="text-[9px] font-bold tracking-[0.1em] uppercase mb-2.5" style={{ color: "hsl(220 12% 60%)" }}>
+            Customer
+          </p>
+          <div
+            className="px-3.5 py-3 rounded-2xl rounded-tl-sm text-[12px] leading-relaxed"
+            style={{
+              background: "hsl(220 20% 96%)",
+              border: "1px solid hsl(220 16% 90%)",
+              color: "hsl(220 18% 22%)",
+              maxWidth: "88%",
+            }}
+          >
+            {detail.customerMsg}
+          </div>
+        </div>
+
+        {/* AI Draft Reply — hero of the panel */}
+        <div className="px-5 pb-4 flex-1">
+          <div
+            className="rounded-2xl overflow-hidden"
+            style={{
+              border: "1px solid hsl(220 30% 88%)",
+              background: "linear-gradient(160deg, hsl(220 30% 98.5%) 0%, hsl(220 20% 97%) 100%)",
+            }}
+          >
+            {/* Draft header */}
+            <div
+              className="flex items-center justify-between px-4 py-2.5 border-b"
+              style={{ borderColor: "hsl(220 20% 91%)", background: "hsl(220 25% 98%)" }}
+            >
+              <div className="flex items-center gap-2">
+                <div
+                  className="w-5 h-5 rounded-md flex items-center justify-center"
+                  style={{ background: "hsl(220 25% 14%)" }}
+                >
+                  <Zap className="w-2.5 h-2.5" style={{ color: "white" }} />
+                </div>
+                <span className="text-[10.5px] font-semibold tracking-[-0.01em]" style={{ color: "hsl(220 25% 14%)" }}>
+                  AI Drafted Reply
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                {/* Confidence */}
+                <ConfidenceRing value={detail.confidence} />
+                <div>
+                  <p className="text-[9px] font-bold leading-none" style={{ color: "hsl(220 18% 24%)" }}>
+                    Confidence
+                  </p>
+                  <p className="text-[8.5px] mt-0.5 leading-none" style={{ color: "hsl(220 12% 56%)" }}>
+                    {detail.intent}
+                  </p>
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-1.5">
-              {detail.priority && (
-                <span
-                  className="text-[9px] font-semibold px-2 py-1 rounded-full"
-                  style={{
-                    background: detail.priority === "high" ? "hsl(0 70% 96%)" : "hsl(38 80% 95%)",
-                    color: detail.priority === "high" ? "hsl(0 65% 40%)" : "hsl(38 70% 36%)",
-                    border: `1px solid ${detail.priority === "high" ? "hsl(0 60% 89%)" : "hsl(38 65% 86%)"}`,
-                  }}
-                >
-                  {detail.priority === "high" ? "High priority" : "Medium"}
-                </span>
-              )}
-              <span className="text-[9px]" style={{ color: "hsl(220 12% 62%)" }}>{detail.time}</span>
+
+            {/* Draft body */}
+            <div className="px-4 py-3.5">
+              <p className="text-[12px] leading-[1.75]" style={{ color: "hsl(220 18% 22%)" }}>
+                {detail.aiDraft}
+              </p>
             </div>
-          </div>
-        </div>
 
-        {/* Inquiry */}
-        <div className="px-5 py-4 border-b" style={{ borderColor: "hsl(220 16% 91%)" }}>
-          <p className="text-[9px] font-bold tracking-[0.1em] uppercase mb-2" style={{ color: "hsl(220 12% 58%)" }}>
-            Customer Inquiry
-          </p>
-          <p className="text-[12px] leading-relaxed" style={{ color: "hsl(220 18% 22%)" }}>
-            {detail.inquiry}
-          </p>
-        </div>
-
-        {/* AI Reply */}
-        <div className="px-5 py-4 border-b flex-1" style={{ borderColor: "hsl(220 16% 91%)" }}>
-          <div className="flex items-center gap-1.5 mb-2.5">
-            <Zap className="w-3 h-3" style={{ color: "hsl(220 20% 40%)" }} />
-            <p className="text-[9px] font-bold tracking-[0.1em] uppercase" style={{ color: "hsl(220 12% 58%)" }}>
-              AI Generated Reply
-            </p>
-            <span
-              className="text-[8px] font-semibold px-1.5 py-0.5 rounded ml-auto"
-              style={{ background: "hsl(220 16% 93%)", color: "hsl(220 12% 50%)" }}
+            {/* Source */}
+            <div
+              className="flex items-center gap-1.5 px-4 py-2 border-t"
+              style={{ borderColor: "hsl(220 20% 91%)" }}
             >
-              Auto-drafted
-            </span>
-          </div>
-          <div
-            className="px-3.5 py-3 rounded-xl text-[12px] leading-relaxed mb-3"
-            style={{
-              background: "hsl(220 18% 97%)",
-              border: "1px solid hsl(220 16% 90%)",
-              color: "hsl(220 18% 22%)",
-            }}
-          >
-            {detail.aiReply}
-          </div>
-          <div className="flex items-center gap-1.5">
-            <BookOpen className="w-3 h-3" style={{ color: "hsl(220 12% 64%)" }} />
-            <p className="text-[10px]" style={{ color: "hsl(220 12% 58%)" }}>
-              Source: {detail.source}
-            </p>
-          </div>
-        </div>
-
-        {/* Handoff notice */}
-        {detail.handoff && (
-          <div
-            className="mx-5 my-3 flex items-start gap-2.5 px-3.5 py-3 rounded-xl"
-            style={{ background: "hsl(38 80% 97%)", border: "1px solid hsl(38 65% 88%)" }}
-          >
-            <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" style={{ color: "hsl(38 72% 44%)" }} />
-            <div>
-              <p className="text-[11px] font-semibold" style={{ color: "hsl(38 58% 30%)" }}>
-                Escalated for human follow-up
-              </p>
-              <p className="text-[10px] mt-0.5" style={{ color: "hsl(38 45% 48%)" }}>
-                {detail.handoffReason}
+              <BookOpen className="w-2.5 h-2.5 flex-shrink-0" style={{ color: "hsl(220 12% 64%)" }} />
+              <p className="text-[9.5px]" style={{ color: "hsl(220 12% 56%)" }}>
+                Source: {detail.source}
               </p>
             </div>
-          </div>
-        )}
 
-        {/* Actions */}
-        <div
-          className="flex items-center gap-2 px-5 py-3.5 border-t flex-shrink-0"
-          style={{ borderColor: "hsl(220 16% 91%)", background: "hsl(220 18% 98.5%)" }}
-        >
-          <button
-            className="text-[11px] font-semibold px-3.5 py-1.5 rounded-lg"
-            style={{ background: "hsl(220 25% 11%)", color: "white" }}
-          >
-            Assign to agent
-          </button>
-          <button
-            className="text-[11px] font-semibold px-3.5 py-1.5 rounded-lg"
-            style={{ background: "hsl(220 16% 93%)", color: "hsl(220 18% 24%)", border: "1px solid hsl(220 16% 88%)" }}
-          >
-            Mark resolved
-          </button>
+            {/* Actions */}
+            <div
+              className="flex items-center gap-2 px-4 py-3 border-t"
+              style={{ borderColor: "hsl(220 20% 91%)", background: "hsl(220 18% 98%)" }}
+            >
+              {isResolved ? (
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5" style={{ color: "hsl(142 50% 44%)" }} />
+                  <span className="text-[11px] font-semibold" style={{ color: "hsl(142 50% 38%)" }}>
+                    Sent by AI · Resolved
+                  </span>
+                </div>
+              ) : (
+                <>
+                  <button
+                    className="flex items-center gap-1.5 text-[11px] font-semibold px-3.5 py-1.5 rounded-lg transition-colors"
+                    style={{ background: "hsl(220 25% 12%)", color: "white" }}
+                  >
+                    <CheckCircle2 className="w-3 h-3" />
+                    Approve & Send
+                  </button>
+                  <button
+                    className="flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-lg"
+                    style={{ background: "hsl(220 16% 93%)", color: "hsl(220 18% 28%)", border: "1px solid hsl(220 16% 87%)" }}
+                  >
+                    <Pencil className="w-2.5 h-2.5" />
+                    Edit
+                  </button>
+                  <button
+                    className="flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-lg ml-auto"
+                    style={{ background: "hsl(38 80% 96%)", color: "hsl(38 60% 36%)", border: "1px solid hsl(38 55% 88%)" }}
+                  >
+                    <ArrowUpRight className="w-2.5 h-2.5" />
+                    Escalate
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
         </div>
       </motion.div>
     </AnimatePresence>
@@ -414,10 +384,9 @@ export default function ControlLayer() {
     <section className="py-24 md:py-32 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-background to-background pointer-events-none" />
 
-
       <div className="relative max-w-[1200px] mx-auto px-8">
 
-        {/* ── Section header ── */}
+        {/* ── Section header — UNTOUCHED ── */}
         <motion.div
           ref={headerRef}
           animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 18 }}
@@ -444,7 +413,7 @@ export default function ControlLayer() {
           </div>
         </motion.div>
 
-        {/* ── Dashboard chrome ── */}
+        {/* ── Demo card ── */}
         <motion.div
           ref={dashRef}
           animate={{ opacity: dashVisible ? 1 : 0, y: dashVisible ? 0 : 20 }}
@@ -460,7 +429,7 @@ export default function ControlLayer() {
           {/* Inner top highlight */}
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent pointer-events-none z-10" />
 
-          {/* ── Browser bar ── */}
+          {/* Browser chrome */}
           <div
             className="flex items-center gap-4 px-5 py-3 border-b"
             style={{ background: "hsl(220 18% 98.5%)", borderColor: "hsl(220 16% 87%)" }}
@@ -482,7 +451,7 @@ export default function ControlLayer() {
                 }}
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
-                app.kanaung.ai / conversations
+                app.kanaung.ai / inbox
               </div>
             </div>
             <div className="flex items-center gap-2.5 flex-shrink-0">
@@ -499,45 +468,100 @@ export default function ControlLayer() {
             </div>
           </div>
 
-          {/* ── Top bar inside app ── */}
-          <div
-            className="flex items-center justify-between px-6 py-3.5 border-b"
-            style={{ background: "hsl(220 18% 98.5%)", borderColor: "hsl(220 16% 89%)" }}
-          >
-            <div>
-              <p className="text-[14px] font-semibold tracking-[-0.015em]" style={{ color: "hsl(220 25% 10%)" }}>
-                Conversations
-              </p>
-              <p className="text-[11px] mt-0.5" style={{ color: "hsl(220 12% 56%)" }}>
-                47 today · 3 escalated · 44 AI resolved
-              </p>
-            </div>
-            <button
-              className="text-[11px] font-semibold px-4 py-2 rounded-lg"
-              style={{ background: "hsl(220 25% 11%)", color: "white" }}
-            >
-              Export report
-            </button>
-          </div>
+          {/* App layout: sidebar + queue column + conv list + detail */}
+          <div className="flex" style={{ minHeight: 500 }}>
 
-          {/* ── Summary strip ── */}
-          <SummaryStrip />
-
-          {/* ── Main area: queue + detail ── */}
-          <div className="flex" style={{ minHeight: 420 }}>
-
-            {/* Queue */}
+            {/* ── Far-left slim sidebar ── */}
             <div
-              className="w-72 flex-shrink-0 flex flex-col border-r overflow-auto"
-              style={{ background: "hsl(220 18% 97.5%)", borderColor: "hsl(220 16% 88%)" }}
+              className="flex-shrink-0 flex flex-col items-center py-4 gap-1 border-r"
+              style={{ width: 52, background: "hsl(220 22% 13%)", borderColor: "hsl(220 16% 87%)" }}
             >
-              <div className="px-4 py-3 border-b" style={{ borderColor: "hsl(220 16% 90%)" }}>
-                <p className="text-[9px] font-bold tracking-[0.12em] uppercase" style={{ color: "hsl(220 12% 58%)" }}>
-                  Queue · {QUEUE.length} conversations
+              {/* Logo mark */}
+              <div className="mb-3 mt-1">
+                <div
+                  className="w-7 h-7 rounded-lg flex items-center justify-center"
+                  style={{ background: "hsl(352 72% 44%)" }}
+                >
+                  <span className="text-white font-bold text-[10px]" style={{ fontFamily: "var(--font-sora)" }}>K</span>
+                </div>
+              </div>
+
+              {NAV.map(({ icon: Icon, label, active }) => (
+                <div
+                  key={label}
+                  title={label}
+                  className="w-8 h-8 rounded-lg flex items-center justify-center cursor-pointer transition-colors"
+                  style={{
+                    background: active ? "hsl(220 25% 24%)" : "transparent",
+                  }}
+                >
+                  <Icon
+                    className="w-3.5 h-3.5"
+                    style={{ color: active ? "white" : "hsl(220 16% 52%)" }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* ── Queue / category column ── */}
+            <div
+              className="flex-shrink-0 flex flex-col border-r"
+              style={{ width: 168, background: "hsl(220 20% 97%)", borderColor: "hsl(220 16% 89%)" }}
+            >
+              <div className="px-3.5 pt-4 pb-3">
+                <p className="text-[9px] font-bold tracking-[0.1em] uppercase" style={{ color: "hsl(220 12% 56%)" }}>
+                  Inbox
                 </p>
               </div>
-              {QUEUE.map((conv) => (
-                <QueueRow
+
+              {/* All conversations */}
+              <button className="flex items-center justify-between px-3.5 py-2 mx-2 rounded-lg mb-1"
+                style={{ background: "hsl(220 20% 92%)" }}>
+                <span className="text-[11px] font-semibold" style={{ color: "hsl(220 25% 14%)" }}>All</span>
+                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full" style={{ background: "hsl(220 25% 20%)", color: "white" }}>52</span>
+              </button>
+
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat.id}
+                  className="flex items-center justify-between px-3.5 py-2 mx-2 rounded-lg mb-0.5 hover:bg-foreground/[0.03] transition-colors"
+                >
+                  <span className="text-[10.5px]" style={{ color: "hsl(220 18% 36%)" }}>{cat.label}</span>
+                  <span
+                    className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full min-w-[18px] text-center"
+                    style={{ background: `${cat.color}18`, color: cat.color }}
+                  >
+                    {cat.count}
+                  </span>
+                </button>
+              ))}
+
+              {/* Channels */}
+              <div className="mt-4 mx-3.5">
+                <p className="text-[8.5px] font-bold tracking-[0.1em] uppercase mb-2" style={{ color: "hsl(220 12% 64%)" }}>
+                  Channels
+                </p>
+                {CHANNEL_PILLS.map((ch) => (
+                  <div key={ch.label} className="flex items-center gap-2 py-1.5">
+                    <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: ch.color }} />
+                    <span className="text-[10px]" style={{ color: "hsl(220 14% 44%)" }}>{ch.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* ── Conversation list ── */}
+            <div
+              className="flex-shrink-0 flex flex-col border-r"
+              style={{ width: 230, background: "hsl(220 18% 97.5%)", borderColor: "hsl(220 16% 89%)" }}
+            >
+              <div className="px-4 py-3 border-b flex items-center justify-between" style={{ borderColor: "hsl(220 16% 91%)" }}>
+                <p className="text-[9px] font-bold tracking-[0.1em] uppercase" style={{ color: "hsl(220 12% 58%)" }}>
+                  Needs Review · 4
+                </p>
+              </div>
+              {CONVERSATIONS.map((conv) => (
+                <ConvRow
                   key={conv.id}
                   conv={conv}
                   isSelected={selectedId === conv.id}
@@ -546,7 +570,7 @@ export default function ControlLayer() {
               ))}
             </div>
 
-            {/* Detail */}
+            {/* ── Main detail / AI reply panel ── */}
             <div className="flex-1 min-w-0 flex flex-col" style={{ background: "white" }}>
               <DetailPanel detail={DETAIL[selectedId]} />
             </div>
