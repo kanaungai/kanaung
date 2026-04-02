@@ -45,34 +45,34 @@ const CHANNEL_PILLS = [
 const CONVERSATIONS = [
   {
     id: 1,
-    name: "U Kyaw Zin",
-    preview: "Mitsubishi L200 spare parts — do you have stock?",
+    name: "ဦးကျော်ဇင်",
+    preview: "Mitsubishi L200 spare parts တွေ stock ရှိသေးလား? အမြန်လိုအပ်နေတယ်",
     channel: "Messenger",
     channelColor: "#006AFF",
     status: "needs_review",
-    time: "4m ago",
+    time: "မိနစ် ၄",
     intent: "Parts Enquiry",
     confidence: 72,
   },
   {
     id: 2,
-    name: "Ma Thida",
+    name: "မသီတာ",
     preview: "EX55 model ရှိသေးလား? ဈေးနှုန်းပြောပြပါ",
     channel: "Viber",
     channelColor: "#7360F2",
     status: "needs_review",
-    time: "22m ago",
+    time: "မိနစ် ၂၂",
     intent: "Stock Check",
     confidence: 88,
   },
   {
     id: 3,
-    name: "Ko Aung Naing",
-    preview: "Mandalay delivery — ဘယ်လောက်ကြာလဲ?",
+    name: "ကိုအောင်နိုင်",
+    preview: "မန္တလေးကို delivery ဘယ်လောက်ကြာမလဲ?",
     channel: "WhatsApp",
     channelColor: "#25D366",
     status: "ai_resolved",
-    time: "1h ago",
+    time: "၁ နာရီ",
     intent: "Delivery Info",
     confidence: 95,
   },
@@ -81,19 +81,19 @@ const CONVERSATIONS = [
 // ── Conversation detail ──
 const DETAIL = {
   1: {
-    name: "U Kyaw Zin",
+    name: "ဦးကျော်ဇင်",
     channel: "Messenger",
     channelColor: "#006AFF",
     intent: "Parts Enquiry",
     confidence: 72,
     status: "needs_review",
-    customerMsg: "Hello, I urgently need Mitsubishi L200 spare parts. Do you have them in stock? Please let me know as soon as possible — my truck is down.",
-    aiDraft: "Thank you for reaching out. We carry a range of Mitsubishi L200 spare parts and can check availability right away. Could you let us know which specific parts you need? Once we confirm, we can provide pricing and estimated delivery time.",
+    customerMsg: "ဟယ်လို၊ Mitsubishi L200 spare parts တွေ အရမ်းအမြန်လိုအပ်နေတယ်။ Stock ရှိသေးလား? ကျွန်တော့်ကား ပျက်နေလို့ အမြန်ပြောပြပါ။",
+    aiDraft: "ဆက်သွယ်ပေးတဲ့အတွက် ကျေးဇူးတင်ပါတယ်။ Mitsubishi L200 spare parts တွေ ကျွန်တော်တို့မှာ ရှိပါတယ်။ ဘယ် parts တွေ လိုအပ်တယ်ဆိုတာ ပြောပြပါ — ဈေးနှုန်းနဲ့ delivery အချိန် အသေးစိတ် အကြောင်းပြန်ပေးပါ့မယ်။",
     source: "Parts Catalog · Mitsubishi L200",
     handoff: false,
   },
   2: {
-    name: "Ma Thida",
+    name: "မသီတာ",
     channel: "Viber",
     channelColor: "#7360F2",
     intent: "Stock Check",
@@ -105,14 +105,14 @@ const DETAIL = {
     handoff: false,
   },
   3: {
-    name: "Ko Aung Naing",
+    name: "ကိုအောင်နိုင်",
     channel: "WhatsApp",
     channelColor: "#25D366",
     intent: "Delivery Info",
     confidence: 95,
     status: "ai_resolved",
-    customerMsg: "Mandalay ကို delivery ဘယ်လောက်ကြာမလဲ? မနက်ဖြန် ရနိုင်မလား?",
-    aiDraft: "Mandalay ကို ပုံမှန် ၃–၅ ရက်အတွင်း ရောက်ပါတယ်။ Urgent delivery ဆိုရင် express option ကို ၂ ရက်အတွင်း စီစဉ်ပေးနိုင်ပါတယ်။ Order ထည့်ပြီးနောက် tracking link ပို့ပေးပါ့မယ်။",
+    customerMsg: "မန္တလေးကို delivery ဘယ်လောက်ကြာမလဲ? မနက်ဖြန် ရနိုင်မလား?",
+    aiDraft: "မန္တလေးကို ပုံမှန် ၃–၅ ရက်အတွင်း ရောက်ပါတယ်။ Urgent delivery ဆိုရင် express option ကို ၂ ရက်အတွင်း စီစဉ်ပေးနိုင်ပါတယ်။ Order ထည့်ပြီးနောက် tracking link ပို့ပေးပါ့မယ်။",
     source: "Delivery Policy · Upcountry",
     handoff: false,
   },
@@ -469,7 +469,7 @@ export default function ControlLayer() {
           </div>
 
           {/* App layout: sidebar + queue column + conv list + detail */}
-          <div className="flex" style={{ minHeight: 500 }}>
+          <div className="flex" style={{ minHeight: 580 }}>
 
             {/* ── Far-left slim sidebar ── */}
             <div
@@ -506,7 +506,7 @@ export default function ControlLayer() {
             {/* ── Queue / category column ── */}
             <div
               className="flex-shrink-0 flex flex-col border-r"
-              style={{ width: 168, background: "hsl(220 20% 97%)", borderColor: "hsl(220 16% 89%)" }}
+              style={{ width: 188, background: "hsl(220 20% 97%)", borderColor: "hsl(220 16% 89%)" }}
             >
               <div className="px-3.5 pt-4 pb-3">
                 <p className="text-[9px] font-bold tracking-[0.1em] uppercase" style={{ color: "hsl(220 12% 56%)" }}>
@@ -553,7 +553,7 @@ export default function ControlLayer() {
             {/* ── Conversation list ── */}
             <div
               className="flex-shrink-0 flex flex-col border-r"
-              style={{ width: 230, background: "hsl(220 18% 97.5%)", borderColor: "hsl(220 16% 89%)" }}
+              style={{ width: 260, background: "hsl(220 18% 97.5%)", borderColor: "hsl(220 16% 89%)" }}
             >
               <div className="px-4 py-3 border-b flex items-center justify-between" style={{ borderColor: "hsl(220 16% 91%)" }}>
                 <p className="text-[9px] font-bold tracking-[0.1em] uppercase" style={{ color: "hsl(220 12% 58%)" }}>
