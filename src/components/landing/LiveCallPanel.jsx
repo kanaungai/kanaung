@@ -185,7 +185,7 @@ export default function LiveCallPanel() {
     const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
     async function runConversation() {
-      await sleep(1200); // initial pause before conversation starts
+      await sleep(1500); // initial pause before conversation starts
 
       for (let i = 0; i < CONVERSATION.length; i++) {
         if (cancelled) return;
@@ -194,35 +194,38 @@ export default function LiveCallPanel() {
         if (msg.role === "customer") {
           // Show customer message
           setVisibleMessages((prev) => [...prev, msg]);
-          // Pause after reading customer message before AI starts typing
-          await sleep(700);
+          // Pause so user can read it, then AI begins typing
+          await sleep(1000 + Math.random() * 200);
 
         } else {
           // AI turn: 3-phase sequence
-          // Phase 1 — typing dots appear
+
+          // Phase 1 — typing dots appear, give React a tick to paint them
           setIsTyping(true);
-          // Give React a tick to paint the dots before we start timing
           await sleep(16);
           if (cancelled) return;
 
-          // Phase 2 — keep dots visible (1400–1800ms so user clearly sees them)
-          const typingDuration = 1400 + Math.random() * 400;
+          // Phase 2 — keep dots visible long enough to clearly notice
+          // Scale with message length for believability
+          const charCount = msg.text.length;
+          const typingDuration = 1800 + Math.min(charCount * 8, 600) + Math.random() * 400;
           await sleep(typingDuration);
           if (cancelled) return;
 
-          // Phase 3 — hide dots, tiny breath, then show message
+          // Phase 3 — hide dots, brief breath, show AI message
           setIsTyping(false);
-          await sleep(120);
+          await sleep(150);
           if (cancelled) return;
           setVisibleMessages((prev) => [...prev, msg]);
 
-          // Post-message pause before next customer message
-          await sleep(1100 + Math.random() * 300);
+          // Post-AI-message reading pause — longer for longer messages
+          const readPause = 1600 + Math.min(charCount * 10, 600) + Math.random() * 400;
+          await sleep(readPause);
         }
       }
 
-      // Hold at end, then reset and loop
-      await sleep(4000);
+      // Hold conversation at end before looping
+      await sleep(5000);
       if (!cancelled) {
         setVisibleMessages([]);
         setIsTyping(false);
