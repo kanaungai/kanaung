@@ -193,23 +193,27 @@ export default function LiveCallPanel() {
         const delay = DELAYS[i] ?? 2000;
 
         if (msg.role === "ai") {
-          // Show typing dots for ~60% of the delay
-          const typingMs = Math.min(Math.floor(delay * 0.6), 2400);
-          if (!cancelled) setIsTyping(true);
+          // Phase 1: show typing dots — give React a full frame to render them first
+          setIsTyping(true);
+          await sleep(50); // let React render the dots
+          if (cancelled) return;
+          // Phase 2: keep dots visible for a clear duration
+          const typingMs = 1500;
           await sleep(typingMs);
           if (cancelled) return;
+          // Phase 3: hide dots, wait one frame, then show message
           setIsTyping(false);
-          // Small gap after dots disappear before bubble appears
-          await sleep(120);
+          await sleep(80);
+          if (cancelled) return;
+          setVisibleMessages((prev) => [...prev, msg]);
+          await sleep(600);
         } else {
-          // Customer: just wait before their message appears
+          // Customer: wait then show message
           await sleep(delay);
+          if (cancelled) return;
+          setVisibleMessages((prev) => [...prev, msg]);
+          await sleep(600);
         }
-
-        if (cancelled) return;
-        setVisibleMessages((prev) => [...prev, msg]);
-        // Small pause between consecutive messages
-        await sleep(400);
       }
 
       // Pause at end then restart
@@ -335,28 +339,45 @@ export default function LiveCallPanel() {
           </AnimatePresence>
 
           {/* Typing dots */}
+          <style>{`
+            @keyframes typingBounce {
+              0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+              30% { transform: translateY(-5px); opacity: 1; }
+            }
+          `}</style>
           <AnimatePresence>
             {isTyping && (
               <motion.div
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.15 }}
                 className="flex items-end gap-2 justify-start"
               >
                 <AIAvatar />
                 <div
-                  className="px-3.5 py-2.5 rounded-2xl rounded-bl-sm flex gap-1.5 items-center"
                   style={{
                     background: "rgba(255,255,255,0.055)",
-                    border: "1px solid rgba(255,255,255,0.07)",
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    padding: "10px 14px",
+                    borderRadius: "16px 16px 16px 4px",
+                    display: "flex",
+                    gap: "5px",
+                    alignItems: "center",
                   }}
                 >
-                  {[0, 140, 280].map((d, i) => (
+                  {[0, 150, 300].map((delay, i) => (
                     <span
                       key={i}
-                      className="w-1.5 h-1.5 rounded-full bg-white/28 animate-bounce"
-                      style={{ animationDelay: `${d}ms` }}
+                      style={{
+                        display: "inline-block",
+                        width: 7,
+                        height: 7,
+                        borderRadius: "50%",
+                        background: "rgba(255,255,255,0.75)",
+                        animation: `typingBounce 1.2s ease-in-out infinite`,
+                        animationDelay: `${delay}ms`,
+                      }}
                     />
                   ))}
                 </div>
