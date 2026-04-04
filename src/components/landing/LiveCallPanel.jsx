@@ -53,7 +53,7 @@ function EvidenceFooter({ evidence }) {
       transition={{ duration: 0.28, delay: 0.22 }}
       style={{
         marginTop: 5,
-        borderRadius: 6,
+        borderRadius: 8,
         overflow: "hidden",
         border: "1px solid rgba(255,255,255,0.07)",
         background: "rgba(255,255,255,0.03)",
@@ -290,10 +290,10 @@ export default function LiveCallPanel() {
 
       {/* Panel */}
       <div
-        className="relative rounded-[18px] overflow-hidden shadow-2xl shadow-black/40"
+        className="relative rounded-[24px] overflow-hidden shadow-2xl shadow-black/40"
         style={{
           background: "linear-gradient(145deg, #111117 0%, #0d0d12 60%, #0f0e14 100%)",
-          border: "1px solid rgba(255,255,255,0.08)",
+          border: "1px solid rgba(255,255,255,0.07)",
         }}
       >
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
@@ -329,23 +329,11 @@ export default function LiveCallPanel() {
           </div>
 
           <div
-            className="flex items-center gap-1.5 px-2.5 py-1"
-            style={{
-              background: "hsl(142 55% 14%)",
-              border: "1px solid hsl(142 50% 22%)",
-              borderRadius: 6,
-            }}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full"
+            style={{ background: "rgba(34,197,94,0.07)", border: "1px solid rgba(34,197,94,0.14)" }}
           >
-            <span
-              className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-              style={{ background: "hsl(142 60% 46%)", boxShadow: "0 0 5px hsl(142 60% 46% / 0.6)" }}
-            />
-            <span
-              className="text-[9px] font-bold tracking-[0.12em] uppercase"
-              style={{ color: "hsl(142 55% 60%)" }}
-            >
-              Live
-            </span>
+            <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+            <span className="text-[9px] font-bold text-green-400 tracking-[0.1em] uppercase">Live</span>
           </div>
         </div>
 
@@ -369,7 +357,7 @@ export default function LiveCallPanel() {
                 <div className={`flex flex-col ${msg.role === "ai" ? "items-start" : "items-end"} max-w-[82%]`}>
                   <div
                     className={`px-3.5 py-2.5 text-[12.5px] leading-[1.72] font-inter ${
-                      msg.role === "ai" ? "rounded-xl rounded-bl-sm" : "rounded-xl rounded-br-sm"
+                      msg.role === "ai" ? "rounded-2xl rounded-bl-sm" : "rounded-2xl rounded-br-sm"
                     }`}
                     style={
                       msg.role === "ai"
@@ -424,7 +412,7 @@ export default function LiveCallPanel() {
                     background: "rgba(255,255,255,0.055)",
                     border: "1px solid rgba(255,255,255,0.1)",
                     padding: "10px 14px",
-                    borderRadius: "12px 12px 12px 4px",
+                    borderRadius: "16px 16px 16px 4px",
                     display: "flex",
                     gap: "5px",
                     alignItems: "center",
