@@ -14,10 +14,34 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col justify-center pt-20 pb-16 overflow-hidden">
 
-      {/* Base surface — clean warm-neutral ground */}
+      {/* Base surface */}
       <div className="absolute inset-0 bg-[hsl(220_22%_97%)] pointer-events-none" />
 
-      {/* Pinstripes — thin vertical lines, architectural, crisp */}
+      {/* Warm radial glow — primary atmosphere, left-center behind text */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: "-15%",
+          left: "-15%",
+          width: "80%",
+          height: "110%",
+          background: "radial-gradient(ellipse at 40% 45%, hsl(28 70% 91% / 0.95) 0%, hsl(26 50% 94% / 0.65) 35%, transparent 65%)",
+        }}
+      />
+
+      {/* Secondary glow — right side cool depth */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: "-20%",
+          right: "-10%",
+          width: "60%",
+          height: "85%",
+          background: "radial-gradient(ellipse at 60% 35%, hsl(220 35% 92% / 0.7) 0%, transparent 58%)",
+        }}
+      />
+
+      {/* Pinstripes — crisp vertical structure, fades over content areas */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -25,36 +49,19 @@ export default function Hero() {
             90deg,
             transparent,
             transparent 39px,
-            hsl(220 20% 70% / 0.07) 39px,
-            hsl(220 20% 70% / 0.07) 40px
+            hsl(220 25% 55% / 0.11) 39px,
+            hsl(220 25% 55% / 0.11) 40px
           )`,
-          maskImage: "linear-gradient(to bottom, transparent 0%, black 8%, black 80%, transparent 100%)",
-          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 8%, black 80%, transparent 100%)",
-        }}
-      />
-
-      {/* Warm radial glow — left-center, behind text block */}
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          top: "5%",
-          left: "-10%",
-          width: "70%",
-          height: "90%",
-          background: "radial-gradient(ellipse at 38% 42%, hsl(28 60% 94% / 0.85) 0%, hsl(25 40% 96% / 0.5) 38%, transparent 68%)",
-          filter: "blur(0px)",
-        }}
-      />
-
-      {/* Secondary cool-toned glow — right side, very faint depth */}
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          top: "-10%",
-          right: "-5%",
-          width: "55%",
-          height: "80%",
-          background: "radial-gradient(ellipse at 65% 30%, hsl(220 30% 94% / 0.6) 0%, transparent 60%)",
+          maskImage: `
+            radial-gradient(ellipse 55% 80% at 28% 50%, transparent 30%, black 70%),
+            linear-gradient(to bottom, transparent 0%, black 10%, black 82%, transparent 100%)
+          `,
+          WebkitMaskImage: `
+            radial-gradient(ellipse 55% 80% at 28% 50%, transparent 30%, black 70%),
+            linear-gradient(to bottom, transparent 0%, black 10%, black 82%, transparent 100%)
+          `,
+          maskComposite: "intersect",
+          WebkitMaskComposite: "destination-in",
         }}
       />
 
