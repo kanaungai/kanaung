@@ -27,19 +27,19 @@ export default function WhyDifferent() {
           transition={REVEAL.primary}
           className="mb-16 md:mb-20"
         >
-          <p className="text-[11px] font-semibold tracking-[0.12em] uppercase text-white/30 mb-6">
+          <p className="text-[10px] font-semibold tracking-[0.16em] uppercase text-white/25 mb-6 font-inter">
             {tx.why_eyebrow}
           </p>
           <div className="w-full h-px bg-white/8 mb-10" />
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
-            <h2 className="font-sora text-[36px] md:text-[44px] xl:text-[50px] font-bold tracking-[-0.03em] leading-[1.06] text-white">
+            <h2 className="font-sora text-[36px] md:text-[46px] xl:text-[52px] font-bold tracking-[-0.04em] leading-[1.03] text-white">
               {tx.why_h2}
             </h2>
             <motion.p
               animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 12 }}
               initial={{ opacity: 0, y: 12 }}
               transition={{ ...REVEAL.primary, delay: 0.12 }}
-              className="text-[16px] text-white/50 leading-[1.8] md:pt-2 max-w-md font-inter"
+              className="text-[15px] text-white/45 leading-[1.8] md:pt-2 max-w-md font-inter tracking-[-0.005em]"
             >
               {tx.why_sub}
             </motion.p>
@@ -58,12 +58,12 @@ export default function WhyDifferent() {
         >
           <div className="p-8 md:p-12 border-b md:border-b-0 md:border-r border-white/[0.07]">
             <div className="mb-8">
-              <span className="text-[11px] font-semibold tracking-[0.1em] uppercase text-white/25">
-                {tx.why_trad_label}
-              </span>
-              <h3 className="font-sora text-[20px] font-semibold tracking-[-0.02em] text-white/30 mt-2">
-                {tx.why_trad_title}
-              </h3>
+              <span className="text-[10px] font-semibold tracking-[0.14em] uppercase text-white/22 font-inter">
+                  {tx.why_trad_label}
+                </span>
+                <h3 className="font-sora text-[19px] font-bold tracking-[-0.03em] text-white/28 mt-2 leading-snug">
+                  {tx.why_trad_title}
+                </h3>
             </div>
             <ul className="space-y-4">
               {TRADITIONAL.map((point) => (
@@ -71,7 +71,7 @@ export default function WhyDifferent() {
                   <div className="w-5 h-5 rounded-full border border-white/10 bg-white/[0.04] flex items-center justify-center flex-shrink-0 mt-0.5">
                     <X className="w-3 h-3 text-white/20" />
                   </div>
-                  <span className="text-[14px] text-white/30 leading-[1.7] font-inter">{point}</span>
+                  <span className="text-[13.5px] text-white/28 leading-[1.75] font-inter tracking-[-0.005em]">{point}</span>
                 </li>
               ))}
             </ul>
@@ -81,10 +81,10 @@ export default function WhyDifferent() {
             <div className="absolute inset-0 bg-foreground/[0.015] pointer-events-none" />
             <div className="relative">
               <div className="mb-8">
-                <span className="text-[11px] font-semibold tracking-[0.1em] uppercase text-white/30">
+                <span className="text-[10px] font-semibold tracking-[0.14em] uppercase text-white/30 font-inter">
                   {tx.why_kan_label}
                 </span>
-                <h3 className="font-sora text-[20px] font-semibold tracking-[-0.02em] text-white mt-2">
+                <h3 className="font-sora text-[19px] font-bold tracking-[-0.03em] text-white mt-2 leading-snug">
                   {tx.why_kan_title}
                 </h3>
               </div>
@@ -94,7 +94,7 @@ export default function WhyDifferent() {
                     <div className="w-5 h-5 rounded-full border border-white/20 bg-white/[0.07] flex items-center justify-center flex-shrink-0 mt-0.5">
                       <Check className="w-3 h-3 text-white/70" />
                     </div>
-                    <span className="text-[14px] text-white/75 leading-[1.7] font-inter font-medium">{point}</span>
+                    <span className="text-[13.5px] text-white/70 leading-[1.75] font-inter font-medium tracking-[-0.005em]">{point}</span>
                   </li>
                 ))}
               </ul>
@@ -106,7 +106,7 @@ export default function WhyDifferent() {
           animate={{ opacity: cardVisible ? 1 : 0 }}
           initial={{ opacity: 0 }}
           transition={{ ...REVEAL.fade, delay: 0.3 }}
-          className="mt-10 text-center text-[13px] text-white/30 font-inter tracking-wide"
+          className="mt-10 text-center text-[12.5px] text-white/28 font-inter tracking-[0.01em] italic"
         >
           {tx.why_micro}
         </motion.p>

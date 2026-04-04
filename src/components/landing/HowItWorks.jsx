@@ -29,19 +29,19 @@ export default function HowItWorks() {
           transition={REVEAL.primary}
           className="mb-16 md:mb-20"
         >
-          <p className="text-[11px] font-semibold tracking-[0.12em] uppercase text-white/30 mb-6">
+          <p className="text-[10px] font-semibold tracking-[0.16em] uppercase text-white/25 mb-6 font-inter">
             {tx.hiw_eyebrow}
           </p>
           <div className="w-full h-px bg-white/8 mb-10" />
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
-            <h2 className="font-sora text-[36px] md:text-[44px] xl:text-[50px] font-bold tracking-[-0.03em] leading-[1.06] text-white">
+            <h2 className="font-sora text-[36px] md:text-[46px] xl:text-[52px] font-bold tracking-[-0.04em] leading-[1.03] text-white">
               {tx.hiw_h2}
             </h2>
             <motion.p
               animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 12 }}
               initial={{ opacity: 0, y: 12 }}
               transition={{ ...REVEAL.primary, delay: 0.12 }}
-              className="text-[16px] text-white/50 leading-[1.8] md:pt-2 max-w-md font-inter"
+              className="text-[15px] text-white/45 leading-[1.8] md:pt-2 max-w-md font-inter tracking-[-0.005em]"
             >
               {tx.hiw_sub}
             </motion.p>
@@ -69,20 +69,20 @@ export default function HowItWorks() {
                 transition={{ ...REVEAL.card, delay: 0.1 + i * REVEAL.stagger }}
                 className="relative flex flex-col p-8 md:p-10"
               >
-                <span className="font-sora text-[11px] font-bold tracking-[0.12em] uppercase text-white/25 mb-8">
+                <span className="font-inter text-[10px] font-semibold tracking-[0.16em] uppercase text-white/22 mb-8">
                   {step.number}
                 </span>
                 {i < STEPS.length - 1 && (
                   <div className="hidden md:block absolute top-[52px] right-0 translate-x-1/2 w-2 h-2 rounded-full border-2 border-white/15 bg-[hsl(220_25%_6%)] z-10" />
                 )}
-                <h3 className="font-sora text-[18px] font-semibold tracking-[-0.02em] text-white leading-snug mb-4">
+                <h3 className="font-sora text-[17px] font-bold tracking-[-0.03em] text-white leading-[1.25] mb-4">
                   {step.title}
                 </h3>
-                <p className="text-[14px] text-white/45 leading-[1.8] font-inter flex-1">
+                <p className="text-[13.5px] text-white/40 leading-[1.8] font-inter flex-1 tracking-[-0.005em]">
                   {step.description}
                 </p>
                 <div className="mt-8 pt-6 border-t border-white/[0.06]">
-                  <span className="text-[11px] font-semibold tracking-[0.08em] uppercase text-white/25">
+                  <span className="text-[10px] font-semibold tracking-[0.12em] uppercase text-white/22 font-inter">
                     {step.label}
                   </span>
                 </div>

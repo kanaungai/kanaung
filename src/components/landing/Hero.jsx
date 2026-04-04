@@ -40,20 +40,20 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
               className="inline-flex items-center self-start gap-2 px-4 py-2 rounded-full bg-foreground mb-8">
               <span className="w-1.5 h-1.5 rounded-full bg-white/50" />
-              <span className="text-[11px] font-semibold text-background/90 tracking-[0.07em] uppercase">
+              <span className="text-[10px] font-semibold text-background/80 tracking-[0.12em] uppercase font-inter">
                 {tx.hero_eyebrow}
               </span>
             </motion.div>
 
-            <h1 className="font-sora text-[44px] md:text-[52px] xl:text-[60px] font-bold tracking-[-0.03em] leading-[1.04] text-foreground">
+            <h1 className="font-sora text-[46px] md:text-[56px] xl:text-[66px] font-bold tracking-[-0.04em] leading-[1.0] text-foreground">
               {tx.hero_h1_1}<br />
               {tx.hero_h1_2}<br />
               <span className="text-[hsl(var(--foreground))]">{tx.hero_h1_3}</span>
             </h1>
 
-            <p className="mt-7 text-[16px] md:text-[17px] text-muted-foreground leading-[1.75] max-w-[420px] font-inter font-normal">
+            <p className="mt-8 text-[15px] md:text-[16px] text-muted-foreground leading-[1.8] max-w-[400px] font-inter font-normal tracking-[-0.005em]">
               {tx.hero_sub}{" "}
-              <span className="text-foreground/70 font-medium">{tx.hero_sub_bold}</span>
+              <span className="text-foreground/65 font-medium">{tx.hero_sub_bold}</span>
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row gap-3">
@@ -77,10 +77,10 @@ export default function Hero() {
                 { value: lang === "en" ? "Burmese" : "မြန်မာ", label: tx.stat3_label },
               ].map((stat) => (
                 <div key={stat.label} className="flex flex-col gap-0.5">
-                  <span className="font-sora text-[22px] font-bold text-foreground tracking-[-0.02em]">
+                  <span className="font-sora text-[20px] font-bold text-foreground tracking-[-0.03em]">
                     {stat.value}
                   </span>
-                  <span className="text-[12px] text-muted-foreground font-medium tracking-wide">
+                  <span className="text-[11px] text-muted-foreground font-medium tracking-[0.04em] font-inter">
                     {stat.label}
                   </span>
                 </div>

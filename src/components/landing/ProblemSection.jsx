@@ -40,10 +40,10 @@ export default function ProblemSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-14"
         >
-          <h2 className="font-sora text-3xl md:text-4xl font-bold tracking-[-0.025em] text-foreground">
+          <h2 className="font-sora text-[32px] md:text-[40px] font-bold tracking-[-0.04em] leading-[1.05] text-foreground">
             The problem every Myanmar business faces
           </h2>
-          <p className="mt-3 text-muted-foreground max-w-lg mx-auto">
+          <p className="mt-4 text-[14px] text-muted-foreground max-w-lg mx-auto leading-[1.7] tracking-[-0.005em] font-inter">
             Customer communication shouldn't be a bottleneck.
           </p>
         </motion.div>
@@ -61,10 +61,10 @@ export default function ProblemSection() {
               <div className="w-10 h-10 rounded-xl bg-primary/8 flex items-center justify-center mb-4">
                 <problem.icon className="w-5 h-5 text-primary" />
               </div>
-              <h3 className="font-semibold text-foreground mb-2">
+              <h3 className="font-sora font-semibold text-[14px] tracking-[-0.02em] text-foreground mb-2">
                 {problem.title}
               </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-[13px] text-muted-foreground leading-[1.75] font-inter">
                 {problem.description}
               </p>
             </motion.div>

@@ -25,10 +25,10 @@ export default function FinalCTA() {
           <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
 
           <div className="relative px-8 py-16 md:px-16 md:py-20 text-center">
-            <h2 className="font-sora text-3xl md:text-4xl lg:text-5xl font-bold tracking-[-0.03em] text-background max-w-2xl mx-auto leading-[1.06]">
+            <h2 className="font-sora text-[32px] md:text-[42px] lg:text-[50px] font-bold tracking-[-0.04em] text-background max-w-2xl mx-auto leading-[1.02]">
               {tx.cta_h2}
             </h2>
-            <p className="mt-5 text-background/70 max-w-lg mx-auto text-lg">
+            <p className="mt-6 text-background/60 max-w-lg mx-auto text-[15px] leading-[1.8] font-inter tracking-[-0.005em]">
               {tx.cta_sub}
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
@@ -49,7 +49,7 @@ export default function FinalCTA() {
                 {tx.cta_btn2}
               </Button>
             </div>
-            <p className="mt-8 text-xs text-background/40">
+            <p className="mt-8 text-[11px] text-background/35 font-inter tracking-[0.04em]">
               {tx.cta_note}
             </p>
           </div>

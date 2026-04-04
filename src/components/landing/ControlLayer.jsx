@@ -394,19 +394,19 @@ export default function ControlLayer() {
           transition={REVEAL.primary}
           className="mb-16 md:mb-20"
         >
-          <p className="text-[11px] font-semibold tracking-[0.12em] uppercase text-muted-foreground mb-6">
+          <p className="text-[10px] font-semibold tracking-[0.16em] uppercase text-muted-foreground/60 mb-6 font-inter">
             The Control Layer
           </p>
           <div className="w-full h-px bg-foreground/8 mb-10" />
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
-            <h2 className="font-sora text-[36px] md:text-[44px] xl:text-[50px] font-bold tracking-[-0.03em] leading-[1.06] text-foreground">
+            <h2 className="font-sora text-[36px] md:text-[46px] xl:text-[52px] font-bold tracking-[-0.04em] leading-[1.03] text-foreground">
               The control layer behind every conversation.
             </h2>
             <motion.p
               animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 12 }}
               initial={{ opacity: 0, y: 12 }}
               transition={{ ...REVEAL.primary, delay: 0.12 }}
-              className="text-[16px] text-muted-foreground leading-[1.8] md:pt-2 max-w-md font-inter"
+              className="text-[15px] text-muted-foreground leading-[1.8] md:pt-2 max-w-md font-inter tracking-[-0.005em]"
             >
               Monitor AI-handled conversations, review auto-generated replies, and manage human escalations — all from one operations dashboard built for Myanmar businesses.
             </motion.p>

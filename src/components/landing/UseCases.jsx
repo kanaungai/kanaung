@@ -31,10 +31,10 @@ export default function UseCases() {
           transition={{ duration: 0.6 }}
           className="text-center mb-14"
         >
-          <h2 className="font-sora text-3xl md:text-4xl font-bold tracking-[-0.025em] text-foreground">
+          <h2 className="font-sora text-[32px] md:text-[40px] font-bold tracking-[-0.04em] leading-[1.05] text-foreground">
             Built for high-inquiry Myanmar businesses
           </h2>
-          <p className="mt-3 text-muted-foreground max-w-lg mx-auto">
+          <p className="mt-4 text-[14px] text-muted-foreground max-w-lg mx-auto leading-[1.7] tracking-[-0.005em] font-inter">
             Kanaung is most valuable where customer conversations are frequent, repetitive, and happen in Burmese.
           </p>
         </motion.div>
@@ -52,10 +52,10 @@ export default function UseCases() {
               <div className="w-10 h-10 rounded-lg bg-primary/8 group-hover:bg-primary/12 flex items-center justify-center mb-3 transition-colors">
                 <c.icon className="w-5 h-5 text-primary" />
               </div>
-              <h3 className="font-semibold text-foreground text-sm mb-1">
+              <h3 className="font-sora font-semibold text-[13px] tracking-[-0.02em] text-foreground mb-1">
                 {c.label}
               </h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">
+              <p className="text-[12px] text-muted-foreground leading-[1.7] font-inter">
                 {c.description}
               </p>
             </motion.div>
