@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { BookOpen, CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Package, Truck, BadgeCheck } from "lucide-react";
 
 const CONVERSATION = [
   {
     role: "ai",
     text: "မင်္ဂလာပါ။ ရွှေကြယ် စက်ပစ္စည်းဆိုင်မှ ကြိုဆိုပါတယ်။ ဘာများ ကူညီပေးရမလဲ?",
-    source: null,
+    evidence: null,
   },
   {
     role: "customer",
@@ -15,7 +15,10 @@ const CONVERSATION = [
   {
     role: "ai",
     text: "ဟုတ်ကဲ့၊ EX55 လက်ရှိ stock ရှိပါတယ်။ ကျပ် ၂၈၀ သိန်းမှ စတင်ပြီး အရောင် ၂ မျိုး ရရှိနိုင်ပါတယ်။",
-    source: "Inventory & Price List",
+    evidence: [
+      { icon: "package", label: "Stock", value: "Available" },
+      { icon: "check", label: "Source", value: "Inventory & Price List" },
+    ],
   },
   {
     role: "customer",
@@ -24,7 +27,10 @@ const CONVERSATION = [
   {
     role: "ai",
     text: "ရန်ကုန်အတွင်း ၃–၅ ရက်အတွင်း ရောက်ပါတယ်။ Standard delivery အခမဲ့ ပေးပါတယ်။",
-    source: "Delivery Policy",
+    evidence: [
+      { icon: "truck", label: "Delivery", value: "3–5 days · Free" },
+      { icon: "check", label: "Source", value: "Delivery Policy" },
+    ],
   },
   {
     role: "customer",
@@ -33,7 +39,10 @@ const CONVERSATION = [
   {
     role: "ai",
     text: "ဟုတ်ကဲ့၊ အရစ်ကျ ငွေပေးချေမှု ရရှိနိုင်ပါတယ်။ အသေးစိတ်အတွက် ကျွန်တော်တို့ team နှင့် တိုက်ရိုက် ဆက်သွယ်နိုင်ပါတယ်။",
-    source: "Financing Options",
+    evidence: [
+      { icon: "badge", label: "Policy", value: "Financing available" },
+      { icon: "check", label: "Source", value: "Financing Options" },
+    ],
   },
 ];
 
@@ -60,27 +69,61 @@ function AIAvatar() {
   );
 }
 
-function SourceChip({ source }) {
+const ICON_MAP = {
+  package: Package,
+  truck: Truck,
+  badge: BadgeCheck,
+  check: CheckCircle2,
+};
+
+function EvidenceFooter({ evidence }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 3 }}
+      initial={{ opacity: 0, y: 4 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.22, delay: 0.18 }}
-      className="mt-1.5 flex items-center gap-1.5"
+      transition={{ duration: 0.25, delay: 0.2 }}
+      style={{
+        marginTop: 6,
+        display: "flex",
+        flexDirection: "column",
+        gap: 3,
+        maxWidth: "100%",
+      }}
     >
-      <div
-        className="flex items-center gap-1.5 px-2 py-0.5 rounded-full"
-        style={{
-          background: "rgba(255,255,255,0.04)",
-          border: "1px solid rgba(255,255,255,0.08)",
-        }}
-      >
-        <BookOpen className="w-2 h-2" style={{ color: "rgba(255,255,255,0.28)" }} />
-        <span className="text-[9.5px] font-medium tracking-wide" style={{ color: "rgba(255,255,255,0.28)" }}>
-          {source}
-        </span>
-        <CheckCircle2 className="w-2 h-2" style={{ color: "hsl(142 55% 50% / 0.65)" }} />
-      </div>
+      {evidence.map((item, i) => {
+        const Icon = ICON_MAP[item.icon] || CheckCircle2;
+        const isSource = item.icon === "check";
+        return (
+          <div
+            key={i}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 5,
+              padding: "3px 8px 3px 6px",
+              borderRadius: 6,
+              background: isSource ? "rgba(255,255,255,0.03)" : "rgba(255,255,255,0.05)",
+              border: isSource ? "1px solid rgba(255,255,255,0.06)" : "1px solid rgba(255,255,255,0.09)",
+              alignSelf: "flex-start",
+            }}
+          >
+            <Icon
+              style={{
+                width: 9,
+                height: 9,
+                flexShrink: 0,
+                color: isSource ? "rgba(255,255,255,0.22)" : "hsl(142 55% 50% / 0.8)",
+              }}
+            />
+            <span style={{ fontSize: 9.5, color: "rgba(255,255,255,0.28)", fontWeight: 500, letterSpacing: "0.02em" }}>
+              {item.label}:
+            </span>
+            <span style={{ fontSize: 9.5, color: isSource ? "rgba(255,255,255,0.22)" : "rgba(255,255,255,0.5)", fontWeight: 600 }}>
+              {item.value}
+            </span>
+          </div>
+        );
+      })}
     </motion.div>
   );
 }
@@ -333,7 +376,7 @@ export default function LiveCallPanel() {
                   >
                     {msg.text}
                   </div>
-                  {msg.role === "ai" && msg.source && <SourceChip source={msg.source} />}
+                  {msg.role === "ai" && msg.evidence && <EvidenceFooter evidence={msg.evidence} />}
                 </div>
 
                 {msg.role === "customer" && (
