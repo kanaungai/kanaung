@@ -207,13 +207,12 @@ export default function Industries() {
           transition={REVEAL.card}
           className="grid md:grid-cols-[256px_1fr] gap-3 items-start"
         >
-          {/* ── Left selector — light panel ── */}
+          {/* ── Left selector ── */}
           <div
             className="rounded-2xl overflow-hidden"
             style={{
-              background: "hsl(220 18% 97%)",
-              border: "1px solid hsl(220 16% 88%)",
-              boxShadow: "0 4px 24px hsl(220 25% 5% / 0.25)",
+              background: "hsl(220 22% 9%)",
+              border: "1px solid rgba(255,255,255,0.08)",
             }}
           >
             {/* Mobile: horizontal scroll */}
@@ -226,9 +225,9 @@ export default function Industries() {
                     onClick={() => setSelectedId(ind.id)}
                     className="flex-shrink-0 px-4 py-2 rounded-xl text-[12px] font-semibold transition-all duration-150"
                     style={{
-                      background: isActive ? "hsl(352 72% 38%)" : "transparent",
-                      color: isActive ? "white" : "hsl(220 18% 40%)",
-                      border: `1px solid ${isActive ? "hsl(352 72% 38%)" : "hsl(220 16% 86%)"}`,
+                      background: isActive ? "rgba(255,255,255,0.12)" : "transparent",
+                      color: isActive ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.38)",
+                      border: `1px solid ${isActive ? "rgba(255,255,255,0.16)" : "rgba(255,255,255,0.07)"}`,
                     }}
                   >
                     {ind.name}
@@ -246,24 +245,24 @@ export default function Industries() {
                     key={ind.id}
                     onClick={() => setSelectedId(ind.id)}
                     className="relative w-full text-left px-5 py-3.5 transition-all duration-150"
-                    style={{ background: isActive ? "hsl(352 72% 38% / 0.06)" : "transparent" }}
+                    style={{ background: isActive ? "rgba(255,255,255,0.07)" : "transparent" }}
                   >
                     {/* Active left bar */}
                     {isActive && (
                       <motion.div
                         layoutId="activeBar"
                         className="absolute left-0 top-1.5 bottom-1.5 w-[2.5px] rounded-r-full"
-                        style={{ background: "hsl(352 72% 42%)" }}
+                        style={{ background: "hsl(352 72% 52%)" }}
                         transition={{ type: "spring", stiffness: 500, damping: 32 }}
                       />
                     )}
                     {/* Divider */}
                     {i > 0 && (
-                      <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "hsl(220 16% 90%)" }} />
+                      <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "rgba(255,255,255,0.05)" }} />
                     )}
                     <p
                       className="text-[13px] font-semibold tracking-[-0.01em] leading-snug transition-colors duration-150"
-                      style={{ color: isActive ? "hsl(352 65% 34%)" : "hsl(220 14% 52%)" }}
+                      style={{ color: isActive ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.38)" }}
                     >
                       {ind.name}
                     </p>
@@ -273,7 +272,7 @@ export default function Industries() {
             </div>
           </div>
 
-          {/* ── Right preview panel — dark frame, light answer card inside ── */}
+          {/* ── Right preview panel ── */}
           <div
             className="rounded-2xl overflow-hidden"
             style={{
@@ -289,55 +288,51 @@ export default function Industries() {
                 exit={{ opacity: 0, y: -5 }}
                 transition={{ duration: 0.2, ease: [0.25, 1, 0.4, 1] }}
               >
-                {/* Panel header — industry name + inquiry */}
-                <div className="px-6 pt-6 pb-5">
-                  <div className="flex items-start justify-between gap-4 mb-4">
-                    <p className="font-sora text-[19px] font-extrabold tracking-[-0.03em] leading-tight" style={{ color: "rgba(255,255,255,0.9)" }}>
-                      {selected.name}
-                    </p>
-                    <span
-                      className="text-[9px] font-bold tracking-[0.1em] uppercase px-2.5 py-1 rounded-full flex-shrink-0 mt-0.5"
-                      style={{ background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.35)", border: "1px solid rgba(255,255,255,0.1)" }}
-                    >
-                      {selected.tag.split(" · ")[0]}
-                    </span>
-                  </div>
-                  {/* Inquiry line */}
-                  <p className="text-[12.5px] font-inter leading-[1.65]" style={{ color: "rgba(255,255,255,0.42)" }}>
-                    <span className="text-[10px] font-semibold tracking-[0.06em] uppercase mr-2" style={{ color: "rgba(255,255,255,0.22)" }}>
-                      Asked:
-                    </span>
-                    {selected.inquiry}
+                {/* Panel header */}
+                <div className="px-6 pt-5 pb-4">
+                  <p className="font-sora text-[18px] font-extrabold tracking-[-0.03em] text-white leading-tight">
+                    {selected.name}
+                  </p>
+                  <p className="text-[11px] text-white/35 mt-1 font-inter">
+                    {selected.tag}
                   </p>
                 </div>
 
-                {/* Main answer card — single light surface */}
-                <div className="px-6 pb-6">
-                  <div
-                    className="rounded-2xl px-5 py-4"
-                    style={{
-                      background: "hsl(220 20% 97%)",
-                      border: "1px solid hsl(220 16% 90%)",
-                      boxShadow: "0 2px 12px hsl(220 25% 4% / 0.25)",
-                    }}
-                  >
-                    {/* Answer label */}
-                    <div className="flex items-center gap-2 mb-3">
-                      <img
-                        src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
-                        alt="Kanaung"
-                        className="w-3.5 h-3.5 object-contain flex-shrink-0"
-                        style={{ filter: "brightness(0) saturate(100%) invert(16%) sepia(80%) saturate(900%) hue-rotate(330deg) brightness(80%)" }}
-                      />
-                      <span className="text-[10px] font-bold tracking-[0.06em] uppercase" style={{ color: "hsl(352 65% 40%)" }}>
-                        Kanaung AI
-                      </span>
+                {/* Conversation area — light surfaces on dark bg */}
+                <div className="px-6 pb-5 flex flex-col gap-3">
+
+                  {/* Customer bubble */}
+                  <div className="flex flex-col gap-1.5">
+                    <span className="text-[9.5px] font-semibold tracking-[0.06em] uppercase ml-1" style={{ color: "rgba(255,255,255,0.28)" }}>
+                      Customer
+                    </span>
+                    <div
+                      className="self-start px-4 py-3 rounded-2xl rounded-tl-sm text-[13px] leading-[1.7] font-inter max-w-[90%]"
+                      style={{
+                        background: "rgba(255,255,255,0.10)",
+                        color: "rgba(255,255,255,0.88)",
+                      }}
+                    >
+                      {selected.inquiry}
                     </div>
-                    {/* Answer text */}
-                    <p className="text-[13.5px] leading-[1.75] font-inter" style={{ color: "hsl(220 18% 16%)" }}>
-                      {selected.response}
-                    </p>
                   </div>
+
+                  {/* AI response bubble */}
+                  <div className="flex flex-col gap-1.5">
+                    <span className="text-[9.5px] font-semibold tracking-[0.06em] uppercase ml-1" style={{ color: "hsl(352 60% 62% / 0.7)" }}>
+                      Kanaung AI
+                    </span>
+                    <div
+                      className="self-start px-4 py-3.5 rounded-2xl rounded-tl-sm text-[13px] leading-[1.75] font-inter max-w-[92%]"
+                      style={{
+                        background: "hsl(220 20% 97%)",
+                        color: "hsl(220 18% 18%)",
+                      }}
+                    >
+                      {selected.response}
+                    </div>
+                  </div>
+
                 </div>
 
                 {/* Knowledge source row */}
@@ -345,13 +340,13 @@ export default function Industries() {
                   className="flex items-center gap-2.5 px-6 py-3.5 border-t"
                   style={{ borderColor: "rgba(255,255,255,0.07)" }}
                 >
-                  <BookOpen className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "rgba(255,255,255,0.22)" }} />
-                  <span className="text-[10.5px] font-inter" style={{ color: "rgba(255,255,255,0.28)" }}>
+                  <BookOpen className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "rgba(255,255,255,0.25)" }} />
+                  <span className="text-[10.5px] font-inter" style={{ color: "rgba(255,255,255,0.32)" }}>
                     {selected.knowledge.join(" · ")}
                   </span>
                   <div className="ml-auto flex items-center gap-1.5 flex-shrink-0">
-                    <CheckCircle2 className="w-3 h-3" style={{ color: "hsl(142 55% 50% / 0.6)" }} />
-                    <span className="text-[9.5px] font-semibold" style={{ color: "rgba(255,255,255,0.25)" }}>AI resolved</span>
+                    <CheckCircle2 className="w-3 h-3" style={{ color: "hsl(142 55% 50% / 0.65)" }} />
+                    <span className="text-[9.5px] font-semibold" style={{ color: "rgba(255,255,255,0.28)" }}>AI resolved</span>
                   </div>
                 </div>
 
