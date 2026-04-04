@@ -14,16 +14,49 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col justify-center pt-20 pb-16 overflow-hidden">
 
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,hsl(30_40%_96%)_0%,hsl(220_22%_97%)_60%,hsl(222_24%_95%)_100%)] pointer-events-none" />
-      <div className="absolute -top-32 right-0 w-[700px] h-[700px] bg-primary/[0.045] rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-0 -left-40 w-[600px] h-[500px] bg-blue-500/[0.025] rounded-full blur-[120px] pointer-events-none" />
+      {/* Base surface — clean warm-neutral ground */}
+      <div className="absolute inset-0 bg-[hsl(220_22%_97%)] pointer-events-none" />
+
+      {/* Pinstripes — thin vertical lines, architectural, crisp */}
       <div
-        className="absolute inset-0 opacity-[0.018] pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-          backgroundRepeat: "repeat",
-          backgroundSize: "128px 128px"
-        }} />
+          backgroundImage: `repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 39px,
+            hsl(220 20% 70% / 0.07) 39px,
+            hsl(220 20% 70% / 0.07) 40px
+          )`,
+          maskImage: "linear-gradient(to bottom, transparent 0%, black 8%, black 80%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 8%, black 80%, transparent 100%)",
+        }}
+      />
+
+      {/* Warm radial glow — left-center, behind text block */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: "5%",
+          left: "-10%",
+          width: "70%",
+          height: "90%",
+          background: "radial-gradient(ellipse at 38% 42%, hsl(28 60% 94% / 0.85) 0%, hsl(25 40% 96% / 0.5) 38%, transparent 68%)",
+          filter: "blur(0px)",
+        }}
+      />
+
+      {/* Secondary cool-toned glow — right side, very faint depth */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: "-10%",
+          right: "-5%",
+          width: "55%",
+          height: "80%",
+          background: "radial-gradient(ellipse at 65% 30%, hsl(220 30% 94% / 0.6) 0%, transparent 60%)",
+        }}
+      />
 
       <div className="relative max-w-[1200px] mx-auto px-8 w-full">
         <div className="grid lg:grid-cols-[1fr_1.15fr] gap-10 xl:gap-16 items-center">
