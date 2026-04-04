@@ -37,7 +37,7 @@ const CONVERSATION = [
   },
 ];
 
-const DELAYS = [600, 1800, 2200, 2000, 2400, 1800, 2600];
+const DELAYS = [1000, 3200, 3800, 3400, 4000, 3200, 4200];
 
 // Cycling status labels shown in the generation strip
 const STATUS_LABELS = [
@@ -170,7 +170,7 @@ export default function LiveCallPanel() {
   const isAiTyping =
     currentIndex < CONVERSATION.length &&
     visibleMessages.length > 0 &&
-    visibleMessages[visibleMessages.length - 1]?.role === "customer";
+    CONVERSATION[currentIndex]?.role === "ai";
 
   useEffect(() => {
     if (!isAiTyping) return;
