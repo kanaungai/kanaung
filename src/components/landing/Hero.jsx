@@ -41,19 +41,28 @@ export default function Hero() {
         }}
       />
 
-      {/* Pinstripes — bolder, wider-spaced, architectural */}
+      {/* Grid — vertical + horizontal lines, architectural canvas */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: `repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 59px,
-            hsl(220 25% 45% / 0.13) 59px,
-            hsl(220 25% 45% / 0.13) 60px
-          )`,
-          maskImage: `linear-gradient(to bottom, transparent 0%, black 8%, black 85%, transparent 100%)`,
-          WebkitMaskImage: `linear-gradient(to bottom, transparent 0%, black 8%, black 85%, transparent 100%)`,
+          backgroundImage: `
+            repeating-linear-gradient(
+              90deg,
+              transparent,
+              transparent 79px,
+              hsl(220 25% 40% / 0.10) 79px,
+              hsl(220 25% 40% / 0.10) 80px
+            ),
+            repeating-linear-gradient(
+              0deg,
+              transparent,
+              transparent 79px,
+              hsl(220 25% 40% / 0.07) 79px,
+              hsl(220 25% 40% / 0.07) 80px
+            )
+          `,
+          maskImage: `linear-gradient(to bottom, transparent 0%, black 8%, black 86%, transparent 100%)`,
+          WebkitMaskImage: `linear-gradient(to bottom, transparent 0%, black 8%, black 86%, transparent 100%)`,
         }}
       />
 
