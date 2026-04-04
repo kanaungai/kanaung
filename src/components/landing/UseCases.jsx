@@ -22,7 +22,7 @@ const CASES = [
 
 export default function UseCases() {
   return (
-    <section id="use-cases" className="py-20 md:py-28" style={{ background: "hsl(220 16% 94% / 0.55)" }}>
+    <section id="use-cases" className="py-20 md:py-28 bg-secondary/40">
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

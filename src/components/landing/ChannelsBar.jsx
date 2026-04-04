@@ -135,7 +135,7 @@ export default function ChannelsBar() {
   const { ref, inView } = useScrollReveal({ margin: "-60px" });
 
   return (
-    <section className="py-16 md:py-20 relative" style={{ background: "hsl(220 22% 97% / 0.82)" }}>
+    <section className="py-16 md:py-20 relative">
       <div className="max-w-[1200px] mx-auto px-8">
 
         {/* Overline */}
