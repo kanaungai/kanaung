@@ -161,41 +161,53 @@ function GenerationStrip({ isActive, statusLabel }) {
 export default function LiveCallPanel() {
   const [visibleMessages, setVisibleMessages] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTyping, setIsTyping] = useState(false);
   const [statusLabel, setStatusLabel] = useState(STATUS_LABELS[0]);
   const timeoutRef = useRef(null);
   const statusRef = useRef(null);
   const containerRef = useRef(null);
 
   // Cycle status labels while AI is typing
-  const isAiTyping =
-    currentIndex < CONVERSATION.length &&
-    visibleMessages.length > 0 &&
-    CONVERSATION[currentIndex]?.role === "ai";
-
   useEffect(() => {
-    if (!isAiTyping) return;
+    if (!isTyping) return;
     let idx = 0;
     statusRef.current = setInterval(() => {
       idx = (idx + 1) % STATUS_LABELS.length;
       setStatusLabel(STATUS_LABELS[idx]);
     }, 1600);
     return () => clearInterval(statusRef.current);
-  }, [isAiTyping]);
+  }, [isTyping]);
 
   useEffect(() => {
     if (currentIndex >= CONVERSATION.length) {
       timeoutRef.current = setTimeout(() => {
         setVisibleMessages([]);
         setCurrentIndex(0);
+        setIsTyping(false);
       }, 5500);
       return () => clearTimeout(timeoutRef.current);
     }
 
+    const msg = CONVERSATION[currentIndex];
     const delay = DELAYS[currentIndex] ?? 2000;
-    timeoutRef.current = setTimeout(() => {
-      setVisibleMessages((prev) => [...prev, CONVERSATION[currentIndex]]);
-      setCurrentIndex((i) => i + 1);
-    }, delay);
+
+    if (msg.role === "ai") {
+      // Show typing dots first (for half the delay), then reveal the message
+      const typingDuration = Math.min(delay * 0.55, 2200);
+      setIsTyping(true);
+      timeoutRef.current = setTimeout(() => {
+        setIsTyping(false);
+        setVisibleMessages((prev) => [...prev, msg]);
+        setCurrentIndex((i) => i + 1);
+      }, typingDuration);
+    } else {
+      // Customer messages appear after a short pause, no dots
+      setIsTyping(false);
+      timeoutRef.current = setTimeout(() => {
+        setVisibleMessages((prev) => [...prev, msg]);
+        setCurrentIndex((i) => i + 1);
+      }, delay);
+    }
 
     return () => clearTimeout(timeoutRef.current);
   }, [currentIndex]);
@@ -310,7 +322,7 @@ export default function LiveCallPanel() {
 
           {/* Typing dots */}
           <AnimatePresence>
-            {isAiTyping && (
+            {isTyping && (
               <motion.div
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -340,7 +352,7 @@ export default function LiveCallPanel() {
         </div>
 
         {/* ── Generation strip ── */}
-        <GenerationStrip isActive={isAiTyping} statusLabel={statusLabel} />
+        <GenerationStrip isActive={isTyping} statusLabel={statusLabel} />
 
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent pointer-events-none" />
       </div>
