@@ -1,61 +1,104 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mic, PhoneOff, Volume2, Wifi } from "lucide-react";
+import { BookOpen, CheckCircle2, Send } from "lucide-react";
 
 const CONVERSATION = [
-  { role: "ai", text: "မင်္ဂလာပါ။ ရွှေကြယ် စက်ပစ္စည်းဆိုင်မှ ကြိုဆိုပါတယ်။ ဘာများ ကူညီပေးရမလဲ?" },
-  { role: "customer", text: "Mini Excavator EX55 model ရှိသေးလား?" },
-  { role: "ai", text: "ဟုတ်ကဲ့၊ EX55 လက်ရှိ stock ရှိပါတယ်။ အရောင် ၂ မျိုး ရရှိနိုင်ပါတယ်။" },
-  { role: "customer", text: "ဈေးနှုန်းဘယ်လောက်လဲ?" },
-  { role: "ai", text: "EX55 အတွက် ကျပ် ၂၈၀ သိန်းမှ စတင်ပါတယ်။ အချိုးအစားပေါ် မူတည်ပြီး အသေးစိတ် quote ပေးနိုင်ပါတယ်။" },
-  { role: "customer", text: "ရန်ကုန်ကို ပို့ဆောင်ပေးနိုင်သလား?" },
-  { role: "ai", text: "ဟုတ်ကဲ့၊ ရန်ကုန်အတွင်း ပို့ဆောင်ခ အခမဲ့ ပေးပါတယ်။ အသေးစိတ်အတွက် ဖုန်းနံပါတ် ချန်ထားနိုင်ပါတယ်။" },
+  {
+    role: "customer",
+    text: "Mini Excavator EX55 model ရှိသေးလား? ဈေးနှုန်းပြောပြပါ",
+    source: null,
+  },
+  {
+    role: "ai",
+    text: "ဟုတ်ကဲ့၊ EX55 လက်ရှိ stock ရှိပါတယ်။ ကျပ် ၂၈၀ သိန်းမှ စတင်ပြီး အရောင် ၂ မျိုး ရရှိနိုင်ပါတယ်။",
+    source: "Inventory & Price List",
+  },
+  {
+    role: "customer",
+    text: "ရန်ကုန်ကို delivery ဘယ်လောက်ကြာမလဲ?",
+    source: null,
+  },
+  {
+    role: "ai",
+    text: "ရန်ကုန်အတွင်း ၃–၅ ရက်အတွင်း ရောက်ပါတယ်။ Standard delivery အခမဲ့ ပေးပါတယ်။",
+    source: "Delivery Policy",
+  },
 ];
 
-function WaveBar({ delay, height }) {
-  return (
-    <motion.div
-      className="w-[3px] rounded-full flex-shrink-0"
-      animate={{
-        height: [height * 0.25, height, height * 0.35, height * 0.75, height * 0.15, height * 0.9],
-        opacity: [0.4, 1, 0.5, 0.85, 0.3, 0.95],
-      }}
-      transition={{
-        duration: 1.8,
-        repeat: Infinity,
-        delay,
-        ease: "easeInOut",
-      }}
-      style={{
-        minHeight: 3,
-        background: "linear-gradient(to top, hsl(352 72% 48% / 0.5), hsl(352 65% 62% / 0.9))",
-      }}
-    />
-  );
-}
+// timing: how long to wait before showing each message
+const DELAYS = [900, 2400, 2200, 2600];
 
-function Waveform() {
-  const heights = [8, 16, 28, 20, 36, 24, 16, 32, 20, 10, 28, 18, 36, 14, 24, 30, 18, 34, 10, 26, 20, 30, 16, 24, 18, 28, 12, 20, 26, 32, 10, 22, 18, 34, 14, 24];
+function AIAvatar({ small = false }) {
+  const size = small ? "w-6 h-6" : "w-8 h-8";
+  const imgSize = small ? "w-3.5 h-3.5" : "w-4.5 h-4.5";
   return (
-    <div className="flex items-center justify-center gap-[3px] h-12">
-      {heights.map((h, i) => (
-        <WaveBar key={i} delay={i * 0.048} height={h} />
-      ))}
+    <div className={`${size} rounded-xl bg-primary/20 border border-primary/20 flex items-center justify-center flex-shrink-0`}>
+      <img
+        src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
+        alt="AI"
+        className={`${imgSize} object-contain`}
+        style={{ filter: "brightness(0) invert(1) opacity(0.85)" }}
+      />
     </div>
   );
 }
 
-function AIAvatar() {
+function SourceChip({ source }) {
   return (
-    <div className="relative w-10 h-10 flex-shrink-0">
-      <div className="absolute inset-0 rounded-2xl bg-primary/20 blur-md" />
-      <div className="relative w-10 h-10 rounded-2xl bg-[#1a1015] border border-primary/25 flex items-center justify-center overflow-hidden">
-        <img
-          src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
-          alt="Kanaung"
-          className="w-6 h-6 object-contain"
-          style={{ filter: "brightness(0) invert(1) opacity(0.9)" }}
-        />
+    <motion.div
+      initial={{ opacity: 0, y: 4 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25, delay: 0.15 }}
+      className="mt-2 flex items-center gap-1.5 self-start"
+    >
+      <div
+        className="flex items-center gap-1.5 px-2.5 py-1 rounded-full"
+        style={{
+          background: "rgba(255,255,255,0.04)",
+          border: "1px solid rgba(255,255,255,0.08)",
+        }}
+      >
+        <BookOpen className="w-2.5 h-2.5" style={{ color: "rgba(255,255,255,0.3)" }} />
+        <span className="text-[10px] font-medium tracking-wide" style={{ color: "rgba(255,255,255,0.3)" }}>
+          {source}
+        </span>
+        <CheckCircle2 className="w-2.5 h-2.5" style={{ color: "hsl(142 55% 52% / 0.7)" }} />
+      </div>
+    </motion.div>
+  );
+}
+
+function TypingIndicator() {
+  return (
+    <div className="flex items-end gap-2.5 justify-start">
+      <AIAvatar small />
+      <div className="flex flex-col gap-1.5">
+        {/* Status line */}
+        <div className="flex items-center gap-1.5">
+          <span
+            className="w-1.5 h-1.5 rounded-full animate-pulse"
+            style={{ background: "hsl(352 72% 52%)" }}
+          />
+          <span className="text-[10px] font-medium tracking-wide" style={{ color: "rgba(255,255,255,0.28)" }}>
+            Generating reply…
+          </span>
+        </div>
+        {/* Dots bubble */}
+        <div
+          className="px-4 py-3 rounded-2xl rounded-bl-md flex gap-1.5 items-center w-fit"
+          style={{
+            background: "rgba(255,255,255,0.055)",
+            border: "1px solid rgba(255,255,255,0.07)",
+          }}
+        >
+          {[0, 150, 300].map((d, i) => (
+            <span
+              key={i}
+              className="w-1.5 h-1.5 rounded-full bg-white/30 animate-bounce"
+              style={{ animationDelay: `${d}ms` }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -68,17 +111,15 @@ export default function LiveCallPanel() {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    const delays = [1200, 2800, 2400, 2600, 3200, 2600, 2800];
-
     if (currentIndex >= CONVERSATION.length) {
       timeoutRef.current = setTimeout(() => {
         setVisibleMessages([]);
         setCurrentIndex(0);
-      }, 5000);
+      }, 5500);
       return () => clearTimeout(timeoutRef.current);
     }
 
-    const delay = delays[currentIndex] || 2000;
+    const delay = DELAYS[currentIndex] ?? 2000;
     timeoutRef.current = setTimeout(() => {
       setVisibleMessages((prev) => [...prev, CONVERSATION[currentIndex]]);
       setCurrentIndex((i) => i + 1);
@@ -100,105 +141,109 @@ export default function LiveCallPanel() {
 
   return (
     <div className="relative w-full">
-      {/* Multi-layer premium glow */}
-      <div className="absolute -inset-4 rounded-[36px] bg-primary/[0.08] blur-3xl pointer-events-none" />
-      <div className="absolute -inset-1 rounded-[32px] bg-gradient-to-br from-primary/10 via-transparent to-blue-500/5 blur-xl pointer-events-none" />
+      {/* Ambient glow */}
+      <div className="absolute -inset-4 rounded-[36px] bg-primary/[0.07] blur-3xl pointer-events-none" />
+      <div className="absolute -inset-1 rounded-[32px] bg-gradient-to-br from-primary/8 via-transparent to-blue-500/4 blur-xl pointer-events-none" />
 
-      {/* Main panel */}
-      <div className="relative rounded-[28px] overflow-hidden shadow-2xl shadow-black/40"
+      {/* Panel */}
+      <div
+        className="relative rounded-[28px] overflow-hidden shadow-2xl shadow-black/40"
         style={{
           background: "linear-gradient(145deg, #111117 0%, #0d0d12 50%, #0f0e14 100%)",
           border: "1px solid rgba(255,255,255,0.07)",
         }}
       >
-        {/* Inner top highlight */}
+        {/* Top highlight */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
 
         {/* ── Header ── */}
-        <div className="px-6 pt-6 pb-5 flex items-center justify-between"
+        <div
+          className="px-5 pt-5 pb-4 flex items-center justify-between"
           style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}
         >
-          <div className="flex items-center gap-3.5">
-            <AIAvatar />
+          <div className="flex items-center gap-3">
+            <div className="relative w-9 h-9 flex-shrink-0">
+              <div className="absolute inset-0 rounded-2xl bg-primary/20 blur-md" />
+              <div className="relative w-9 h-9 rounded-2xl bg-[#1a1015] border border-primary/25 flex items-center justify-center overflow-hidden">
+                <img
+                  src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
+                  alt="Kanaung"
+                  className="w-5 h-5 object-contain"
+                  style={{ filter: "brightness(0) invert(1) opacity(0.9)" }}
+                />
+              </div>
+            </div>
             <div>
-              <div className="font-sora text-[14px] font-semibold text-white leading-tight tracking-[-0.01em]">
+              <div className="font-sora text-[13.5px] font-semibold text-white leading-tight tracking-[-0.01em]">
                 Kanaung AI
               </div>
-              <div className="text-[11px] text-white/35 mt-0.5 tracking-wide">
+              <div className="text-[10.5px] text-white/30 mt-0.5 tracking-wide font-inter">
                 ရွှေကြယ် စက်ပစ္စည်း
               </div>
             </div>
           </div>
 
-          {/* Status pill */}
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"
-              style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.15)" }}
+            <div
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full"
+              style={{ background: "rgba(34,197,94,0.07)", border: "1px solid rgba(34,197,94,0.14)" }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-[10px] font-bold text-green-400 tracking-[0.1em] uppercase">Live</span>
+              <span className="text-[9.5px] font-bold text-green-400 tracking-[0.1em] uppercase">Live</span>
             </div>
           </div>
         </div>
 
-        {/* ── Messages area ── */}
+        {/* ── Messages ── */}
         <div
           ref={containerRef}
-          className="px-6 py-5 space-y-4 overflow-y-auto scrollbar-none"
-          style={{
-            height: "380px",
-            scrollbarWidth: "none",
-          }}
+          className="px-5 py-5 space-y-4 overflow-y-auto"
+          style={{ height: "340px", scrollbarWidth: "none" }}
         >
           <AnimatePresence initial={false}>
             {visibleMessages.map((msg, i) => (
               <motion.div
-               key={i}
-               initial={{ opacity: 0, y: 8, scale: 0.96 }}
-               animate={{ opacity: 1, y: 0, scale: 1 }}
-               transition={{ duration: 0.32, ease: [0.25, 1, 0.4, 1] }}
-               className={`flex items-end gap-2.5 ${msg.role === "ai" ? "justify-start" : "justify-end"}`}
+                key={i}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, ease: [0.25, 1, 0.4, 1] }}
+                className={`flex items-end gap-2.5 ${msg.role === "ai" ? "justify-start" : "justify-end"}`}
               >
-                {msg.role === "ai" && (
-                  <div className="w-7 h-7 rounded-xl bg-primary/20 border border-primary/20 flex items-center justify-center flex-shrink-0 mb-0.5">
-                    <img
-                      src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
-                      alt="AI"
-                      className="w-4 h-4 object-contain"
-                      style={{ filter: "brightness(0) invert(1) opacity(0.8)" }}
-                    />
+                {msg.role === "ai" && <AIAvatar small />}
+
+                <div className={`flex flex-col ${msg.role === "ai" ? "items-start" : "items-end"} max-w-[78%]`}>
+                  <div
+                    className={`px-4 py-3 text-[13px] leading-[1.7] font-inter ${
+                      msg.role === "ai"
+                        ? "rounded-2xl rounded-bl-md text-white/80"
+                        : "rounded-2xl rounded-br-md text-white"
+                    }`}
+                    style={
+                      msg.role === "ai"
+                        ? {
+                            background: "rgba(255,255,255,0.055)",
+                            border: "1px solid rgba(255,255,255,0.07)",
+                          }
+                        : {
+                            background: "linear-gradient(135deg, hsl(352 72% 44%) 0%, hsl(352 65% 38%) 100%)",
+                            boxShadow: "0 4px 16px hsl(352 72% 38% / 0.22)",
+                          }
+                    }
+                  >
+                    {msg.text}
                   </div>
-                )}
-                <div
-                  className={`max-w-[78%] px-4 py-3 text-[13.5px] leading-[1.65] font-inter ${
-                    msg.role === "ai"
-                      ? "rounded-2xl rounded-bl-md text-white/80"
-                      : "rounded-2xl rounded-br-md text-white"
-                  }`}
-                  style={
-                    msg.role === "ai"
-                      ? {
-                          background: "rgba(255,255,255,0.055)",
-                          border: "1px solid rgba(255,255,255,0.07)",
-                        }
-                      : {
-                          background: "linear-gradient(135deg, hsl(352 72% 44%) 0%, hsl(352 65% 38%) 100%)",
-                          boxShadow: "0 4px 20px hsl(352 72% 38% / 0.25)",
-                        }
-                  }
-                >
-                  {msg.text}
+                  {msg.role === "ai" && msg.source && <SourceChip source={msg.source} />}
                 </div>
+
                 {msg.role === "customer" && (
-                  <div className="w-7 h-7 rounded-xl bg-white/8 border border-white/10 flex items-center justify-center flex-shrink-0 mb-0.5">
-                    <span className="text-[10px] font-bold text-white/50">U</span>
+                  <div className="w-6 h-6 rounded-xl bg-white/8 border border-white/10 flex items-center justify-center flex-shrink-0 mb-0.5">
+                    <span className="text-[9px] font-bold text-white/40">U</span>
                   </div>
                 )}
               </motion.div>
             ))}
           </AnimatePresence>
 
-          {/* Typing indicator */}
           <AnimatePresence>
             {isAiTyping && (
               <motion.div
@@ -206,99 +251,36 @@ export default function LiveCallPanel() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.2 }}
-                className="flex items-end gap-2.5 justify-start"
               >
-                <div className="w-7 h-7 rounded-xl bg-primary/20 border border-primary/20 flex items-center justify-center flex-shrink-0">
-                  <img
-                    src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
-                    alt="AI"
-                    className="w-4 h-4 object-contain"
-                    style={{ filter: "brightness(0) invert(1) opacity(0.8)" }}
-                  />
-                </div>
-                <div
-                  className="px-4 py-3 rounded-2xl rounded-bl-md flex gap-1.5 items-center"
-                  style={{
-                    background: "rgba(255,255,255,0.055)",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                  }}
-                >
-                  {[0, 150, 300].map((d, i) => (
-                    <span
-                      key={i}
-                      className="w-1.5 h-1.5 rounded-full bg-white/35 animate-bounce"
-                      style={{ animationDelay: `${d}ms` }}
-                    />
-                  ))}
-                </div>
+                <TypingIndicator />
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        {/* ── AI status label ── */}
+        {/* ── Input bar ── */}
         <div
-          className="px-6 py-3 flex items-center justify-between"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
+          className="px-5 pb-5 pt-3"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
         >
-          <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            <span className="text-[11px] font-medium text-white/30 tracking-wide">
-              AI is responding
-            </span>
-          </div>
-          <div className="flex items-center gap-1 text-white/20">
-            <Wifi className="w-3 h-3" />
-            <span className="text-[10px] font-medium tracking-wide">Secure</span>
-          </div>
-        </div>
-
-        {/* ── Waveform ── */}
-        <div className="px-6 pb-4">
           <div
-            className="rounded-2xl px-5 py-4"
+            className="flex items-center gap-3 px-4 py-3 rounded-2xl"
             style={{
-              background: "rgba(255,255,255,0.03)",
-              border: "1px solid rgba(255,255,255,0.06)",
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(255,255,255,0.07)",
             }}
           >
-            <Waveform />
+            <span className="text-[12px] text-white/20 flex-1 font-inter">Message in Burmese…</span>
+            <div
+              className="w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0"
+              style={{ background: "hsl(352 72% 40% / 0.8)" }}
+            >
+              <Send className="w-3 h-3 text-white/80" />
+            </div>
           </div>
         </div>
 
-        {/* ── Controls ── */}
-        <div
-          className="px-6 pb-6 flex items-center justify-between"
-        >
-          <div className="flex items-center gap-1.5">
-            <div className="w-2 h-2 rounded-full bg-primary/60 animate-pulse" />
-            <div className="w-1.5 h-1.5 rounded-full bg-primary/40 animate-pulse" style={{ animationDelay: "300ms" }} />
-            <div className="w-1 h-1 rounded-full bg-primary/20 animate-pulse" style={{ animationDelay: "600ms" }} />
-          </div>
-
-          <div className="flex items-center gap-2.5">
-            <button
-              className="w-9 h-9 rounded-2xl flex items-center justify-center transition-all duration-200 hover:scale-105"
-              style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}
-            >
-              <Volume2 className="w-3.5 h-3.5 text-white/40" />
-            </button>
-            <button
-              className="w-9 h-9 rounded-2xl flex items-center justify-center transition-all duration-200 hover:scale-105"
-              style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}
-            >
-              <Mic className="w-3.5 h-3.5 text-white/40" />
-            </button>
-            <button
-              className="w-9 h-9 rounded-2xl flex items-center justify-center transition-all duration-200 hover:scale-105"
-              style={{ background: "rgba(239,68,68,0.12)", border: "1px solid rgba(239,68,68,0.2)" }}
-            >
-              <PhoneOff className="w-3.5 h-3.5 text-red-400" />
-            </button>
-          </div>
-        </div>
-
-        {/* Bottom inner highlight */}
+        {/* Bottom highlight */}
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent pointer-events-none" />
       </div>
     </div>
