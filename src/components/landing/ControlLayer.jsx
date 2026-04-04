@@ -399,7 +399,7 @@ export default function ControlLayer() {
           </p>
           <div className="w-full h-px bg-foreground/8 mb-10" />
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
-            <h2 className="font-sora text-[36px] md:text-[48px] xl:text-[56px] font-extrabold tracking-[-0.05em] leading-[0.97] text-foreground">
+            <h2 className="font-sora text-[30px] md:text-[48px] xl:text-[56px] font-extrabold tracking-[-0.05em] leading-[0.97] text-foreground">
               The control layer behind every conversation.
             </h2>
             <motion.p
@@ -413,13 +413,131 @@ export default function ControlLayer() {
           </div>
         </motion.div>
 
-        {/* ── Demo card ── */}
+        {/* ── Mobile-only focused card ── */}
+        <motion.div
+          animate={{ opacity: dashVisible ? 1 : 0, y: dashVisible ? 0 : 20 }}
+          initial={{ opacity: 0, y: 20 }}
+          transition={REVEAL.card}
+          className="md:hidden relative rounded-2xl overflow-hidden"
+          style={{
+            border: "1px solid hsl(220 16% 84%)",
+            boxShadow: "0 0 0 1px hsl(220 20% 95%), 0 24px 60px -12px hsl(220 25% 15% / 0.12)",
+            background: "hsl(220 18% 97%)",
+          }}
+        >
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent pointer-events-none z-10" />
+
+          {/* Browser chrome — simplified */}
+          <div
+            className="flex items-center gap-3 px-4 py-2.5 border-b"
+            style={{ background: "hsl(220 18% 98.5%)", borderColor: "hsl(220 16% 87%)" }}
+          >
+            <div className="flex items-center gap-1.5 flex-shrink-0">
+              {[0, 1, 2].map((i) => (
+                <div key={i} className="w-2 h-2 rounded-full" style={{ background: "hsl(220 10% 81%)" }} />
+              ))}
+            </div>
+            <div
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-mono flex-1"
+              style={{ background: "hsl(220 16% 94%)", border: "1px solid hsl(220 16% 88%)", color: "hsl(220 12% 52%)" }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
+              app.kanaung.ai / inbox
+            </div>
+          </div>
+
+          {/* Conversation detail — full width on mobile */}
+          <div style={{ background: "white" }}>
+            {/* Conversation header */}
+            <div className="px-4 py-3 border-b flex items-center justify-between" style={{ borderColor: "hsl(220 16% 91%)", background: "hsl(220 18% 98.5%)" }}>
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0" style={{ background: "hsl(220 25% 14%)", color: "white" }}>
+                  မ
+                </div>
+                <div>
+                  <p className="text-[12px] font-semibold tracking-[-0.01em]" style={{ color: "hsl(220 25% 10%)" }}>မသီတာ</p>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full" style={{ background: "#7360F214", color: "#7360F2" }}>Viber</span>
+                    <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-full" style={{ background: "hsl(38 80% 96%)", color: "hsl(38 65% 38%)", border: "1px solid hsl(38 60% 88%)" }}>Needs Review</span>
+                  </div>
+                </div>
+              </div>
+              <span className="text-[9px] font-semibold px-2 py-1 rounded-md" style={{ background: "hsl(220 55% 97%)", color: "hsl(220 50% 46%)", border: "1px solid hsl(220 40% 90%)" }}>
+                Stock Check
+              </span>
+            </div>
+
+            {/* Customer message */}
+            <div className="px-4 pt-4 pb-3">
+              <p className="text-[9px] font-bold tracking-[0.1em] uppercase mb-2" style={{ color: "hsl(220 12% 60%)" }}>Customer</p>
+              <div
+                className="px-3.5 py-2.5 rounded-2xl rounded-tl-sm text-[12.5px] leading-relaxed"
+                style={{ background: "hsl(220 20% 96%)", border: "1px solid hsl(220 16% 90%)", color: "hsl(220 18% 22%)", maxWidth: "85%" }}
+              >
+                EX55 model ရှိသေးလား? ဈေးနှုန်းပြောပြပါ
+              </div>
+            </div>
+
+            {/* AI Draft — hero */}
+            <div className="px-4 pb-5">
+              <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid hsl(220 30% 88%)", background: "linear-gradient(160deg, hsl(220 30% 98.5%) 0%, hsl(220 20% 97%) 100%)" }}>
+                {/* Draft header */}
+                <div className="flex items-center justify-between px-4 py-2.5 border-b" style={{ borderColor: "hsl(220 20% 91%)", background: "hsl(220 25% 98%)" }}>
+                  <div className="flex items-center gap-2">
+                    <div className="w-5 h-5 rounded-md flex items-center justify-center" style={{ background: "hsl(220 25% 14%)" }}>
+                      <Zap className="w-2.5 h-2.5 text-white" />
+                    </div>
+                    <span className="text-[10.5px] font-semibold tracking-[-0.01em]" style={{ color: "hsl(220 25% 14%)" }}>AI Drafted Reply</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <ConfidenceRing value={88} />
+                    <div>
+                      <p className="text-[9px] font-bold leading-none" style={{ color: "hsl(220 18% 24%)" }}>Confidence</p>
+                      <p className="text-[8.5px] mt-0.5 leading-none" style={{ color: "hsl(220 12% 56%)" }}>Stock Check</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Draft body */}
+                <div className="px-4 py-3.5">
+                  <p className="text-[12px] leading-[1.75]" style={{ color: "hsl(220 18% 22%)" }}>
+                    EX55 model လက်ရှိ stock ရှိပါတယ်။ ကျပ် ၂၈၀ သိန်းမှ စတင်ပါတယ်။ အရောင် ၂ မျိုး ရရှိနိုင်ပြီး financing option များလည်း ရှိပါတယ်။ အသေးစိတ် သိချင်ပါက ဆက်သွယ်ပေးပါ။
+                  </p>
+                </div>
+
+                {/* Source */}
+                <div className="flex items-center gap-1.5 px-4 py-2 border-t" style={{ borderColor: "hsl(220 20% 91%)" }}>
+                  <BookOpen className="w-2.5 h-2.5 flex-shrink-0" style={{ color: "hsl(220 12% 64%)" }} />
+                  <p className="text-[9.5px]" style={{ color: "hsl(220 12% 56%)" }}>Source: Product Catalog · EX55 Specifications</p>
+                </div>
+
+                {/* Actions */}
+                <div className="flex items-center gap-2 px-4 py-3 border-t" style={{ borderColor: "hsl(220 20% 91%)", background: "hsl(220 18% 98%)" }}>
+                  <button className="flex items-center gap-1.5 text-[11px] font-semibold px-3.5 py-1.5 rounded-lg" style={{ background: "hsl(220 25% 12%)", color: "white" }}>
+                    <CheckCircle2 className="w-3 h-3" />
+                    Approve & Send
+                  </button>
+                  <button className="flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-lg" style={{ background: "hsl(220 16% 93%)", color: "hsl(220 18% 28%)", border: "1px solid hsl(220 16% 87%)" }}>
+                    <Pencil className="w-2.5 h-2.5" />
+                    Edit
+                  </button>
+                  <button className="flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-lg ml-auto" style={{ background: "hsl(38 80% 96%)", color: "hsl(38 60% 36%)", border: "1px solid hsl(38 55% 88%)" }}>
+                    <ArrowUpRight className="w-2.5 h-2.5" />
+                    Escalate
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* ── Desktop-only demo card ── */}
         <motion.div
           ref={dashRef}
           animate={{ opacity: dashVisible ? 1 : 0, y: dashVisible ? 0 : 20 }}
           initial={{ opacity: 0, y: 20 }}
           transition={REVEAL.card}
-          className="relative rounded-2xl overflow-hidden"
+          className="hidden md:block relative rounded-2xl overflow-hidden"
           style={{
             border: "1px solid hsl(220 16% 84%)",
             boxShadow: "0 0 0 1px hsl(220 20% 95%), 0 32px 80px -16px hsl(220 25% 15% / 0.13), 0 8px 24px -4px hsl(220 25% 15% / 0.05)",
