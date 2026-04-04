@@ -164,60 +164,65 @@ export default function LiveCallPanel() {
   const [isTyping, setIsTyping] = useState(false);
   const [statusLabel, setStatusLabel] = useState(STATUS_LABELS[0]);
   const containerRef = useRef(null);
-  const statusRef = useRef(null);
+  const statusCycleRef = useRef(null);
 
-  // Cycle status labels while AI is typing
+  // Cycle status labels only while AI is typing
   useEffect(() => {
-    if (!isTyping) return;
+    if (!isTyping) {
+      clearInterval(statusCycleRef.current);
+      return;
+    }
     let idx = 0;
-    statusRef.current = setInterval(() => {
+    statusCycleRef.current = setInterval(() => {
       idx = (idx + 1) % STATUS_LABELS.length;
       setStatusLabel(STATUS_LABELS[idx]);
-    }, 1600);
-    return () => clearInterval(statusRef.current);
+    }, 1400);
+    return () => clearInterval(statusCycleRef.current);
   }, [isTyping]);
 
-  // Drive the whole conversation with a single sequential async loop
   useEffect(() => {
     let cancelled = false;
-
     const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
     async function runConversation() {
-      // Initial pause before anything starts
-      await sleep(800);
-      if (cancelled) return;
+      await sleep(1200); // initial pause before conversation starts
 
       for (let i = 0; i < CONVERSATION.length; i++) {
+        if (cancelled) return;
         const msg = CONVERSATION[i];
-        const delay = DELAYS[i] ?? 2000;
 
-        if (msg.role === "ai") {
-          // Phase 1: show typing dots — give React a full frame to render them first
-          setIsTyping(true);
-          await sleep(50); // let React render the dots
-          if (cancelled) return;
-          // Phase 2: keep dots visible for a clear duration
-          const typingMs = 1500;
-          await sleep(typingMs);
-          if (cancelled) return;
-          // Phase 3: hide dots, wait one frame, then show message
-          setIsTyping(false);
-          await sleep(80);
-          if (cancelled) return;
+        if (msg.role === "customer") {
+          // Show customer message
           setVisibleMessages((prev) => [...prev, msg]);
-          await sleep(600);
+          // Pause after reading customer message before AI starts typing
+          await sleep(700);
+
         } else {
-          // Customer: wait then show message
-          await sleep(delay);
+          // AI turn: 3-phase sequence
+          // Phase 1 — typing dots appear
+          setIsTyping(true);
+          // Give React a tick to paint the dots before we start timing
+          await sleep(16);
+          if (cancelled) return;
+
+          // Phase 2 — keep dots visible (1400–1800ms so user clearly sees them)
+          const typingDuration = 1400 + Math.random() * 400;
+          await sleep(typingDuration);
+          if (cancelled) return;
+
+          // Phase 3 — hide dots, tiny breath, then show message
+          setIsTyping(false);
+          await sleep(120);
           if (cancelled) return;
           setVisibleMessages((prev) => [...prev, msg]);
-          await sleep(600);
+
+          // Post-message pause before next customer message
+          await sleep(1100 + Math.random() * 300);
         }
       }
 
-      // Pause at end then restart
-      await sleep(5000);
+      // Hold at end, then reset and loop
+      await sleep(4000);
       if (!cancelled) {
         setVisibleMessages([]);
         setIsTyping(false);
@@ -226,7 +231,6 @@ export default function LiveCallPanel() {
     }
 
     runConversation();
-
     return () => { cancelled = true; };
   }, [runKey]);
 
