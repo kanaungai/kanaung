@@ -41,11 +41,15 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
-      scrolled ?
-      "bg-background/80 backdrop-blur-3xl border-b border-foreground/[0.05] shadow-sm" :
-      "bg-transparent"}`
-      }>
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
+      style={{
+        background: scrolled ? "rgba(251, 250, 249, 0.92)" : "transparent",
+        backdropFilter: scrolled ? "blur(20px)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(20px)" : "none",
+        borderBottom: scrolled ? "1px solid rgba(30, 25, 20, 0.08)" : "none",
+        boxShadow: scrolled ? "0 1px 0 rgba(30,25,20,0.04), 0 4px 16px -4px rgba(30,25,20,0.06)" : "none",
+      }}
+    >
       
       <div className="max-w-6xl mx-auto px-8 h-[72px] flex items-center justify-between">
         {/* Logo */}
@@ -67,7 +71,10 @@ export default function Navbar() {
           <button
             key={link.id}
             onClick={() => handleLink(link)}
-            className="px-4 py-2 text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-lg hover:bg-foreground/[0.04] tracking-[-0.01em]">
+            className="px-4 py-2 text-[13px] font-medium transition-colors duration-200 rounded-lg hover:bg-foreground/[0.05] tracking-[-0.01em]"
+            style={{ color: "hsl(220 18% 28%)" }}
+            onMouseEnter={e => e.currentTarget.style.color = "hsl(220 25% 8%)"}
+            onMouseLeave={e => e.currentTarget.style.color = "hsl(220 18% 28%)"}>
             
               {link.label}
             </button>
@@ -78,13 +85,14 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-3">
           <button
             onClick={toggle}
-            className="flex items-center gap-1.5 px-3 h-[34px] rounded-full border border-foreground/12 hover:bg-foreground/[0.04] transition-all duration-200 text-[12px] font-semibold text-muted-foreground hover:text-foreground tracking-wide"
+            className="flex items-center gap-1.5 px-3 h-[34px] rounded-full transition-all duration-200 text-[12px] font-semibold tracking-wide"
+            style={{ border: "1px solid rgba(30,25,20,0.12)", color: "hsl(220 18% 32%)" }}
             title="Switch language">
             
             
             <span>{lang === "en" ? "မြန်မာ" : "EN"}</span>
           </button>
-          <a href="#" className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors tracking-[-0.01em]">
+          <a href="#" className="text-[13px] font-medium transition-colors tracking-[-0.01em]" style={{ color: "hsl(220 18% 32%)" }}>
             {tx.nav_signin}
           </a>
           <button
