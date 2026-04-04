@@ -341,7 +341,7 @@ export default function LiveCallPanel() {
         <div
           ref={containerRef}
           className="px-5 pt-5 pb-3 space-y-4 overflow-y-auto"
-          style={{ height: "390px", scrollbarWidth: "none" }}
+          style={{ height: "520px", scrollbarWidth: "none" }}
         >
           <AnimatePresence initial={false}>
             {visibleMessages.map((msg, i) => (
