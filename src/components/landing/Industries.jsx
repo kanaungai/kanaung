@@ -207,12 +207,13 @@ export default function Industries() {
           transition={REVEAL.card}
           className="grid md:grid-cols-[256px_1fr] gap-3 items-start"
         >
-          {/* ── Left selector ── */}
+          {/* ── Left selector — light panel ── */}
           <div
             className="rounded-2xl overflow-hidden"
             style={{
-              background: "hsl(220 22% 9%)",
-              border: "1px solid rgba(255,255,255,0.08)",
+              background: "hsl(220 18% 97%)",
+              border: "1px solid hsl(220 16% 88%)",
+              boxShadow: "0 4px 24px hsl(220 25% 5% / 0.25)",
             }}
           >
             {/* Mobile: horizontal scroll */}
@@ -225,9 +226,9 @@ export default function Industries() {
                     onClick={() => setSelectedId(ind.id)}
                     className="flex-shrink-0 px-4 py-2 rounded-xl text-[12px] font-semibold transition-all duration-150"
                     style={{
-                      background: isActive ? "rgba(255,255,255,0.12)" : "transparent",
-                      color: isActive ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.38)",
-                      border: `1px solid ${isActive ? "rgba(255,255,255,0.16)" : "rgba(255,255,255,0.07)"}`,
+                      background: isActive ? "hsl(352 72% 38%)" : "transparent",
+                      color: isActive ? "white" : "hsl(220 18% 40%)",
+                      border: `1px solid ${isActive ? "hsl(352 72% 38%)" : "hsl(220 16% 86%)"}`,
                     }}
                   >
                     {ind.name}
@@ -245,24 +246,24 @@ export default function Industries() {
                     key={ind.id}
                     onClick={() => setSelectedId(ind.id)}
                     className="relative w-full text-left px-5 py-3.5 transition-all duration-150"
-                    style={{ background: isActive ? "rgba(255,255,255,0.07)" : "transparent" }}
+                    style={{ background: isActive ? "hsl(352 72% 38% / 0.06)" : "transparent" }}
                   >
                     {/* Active left bar */}
                     {isActive && (
                       <motion.div
                         layoutId="activeBar"
                         className="absolute left-0 top-1.5 bottom-1.5 w-[2.5px] rounded-r-full"
-                        style={{ background: "hsl(352 72% 52%)" }}
+                        style={{ background: "hsl(352 72% 42%)" }}
                         transition={{ type: "spring", stiffness: 500, damping: 32 }}
                       />
                     )}
                     {/* Divider */}
                     {i > 0 && (
-                      <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "rgba(255,255,255,0.05)" }} />
+                      <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "hsl(220 16% 90%)" }} />
                     )}
                     <p
                       className="text-[13px] font-semibold tracking-[-0.01em] leading-snug transition-colors duration-150"
-                      style={{ color: isActive ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.38)" }}
+                      style={{ color: isActive ? "hsl(352 65% 34%)" : "hsl(220 14% 52%)" }}
                     >
                       {ind.name}
                     </p>
@@ -272,12 +273,13 @@ export default function Industries() {
             </div>
           </div>
 
-          {/* ── Right preview panel ── */}
+          {/* ── Right preview panel — light ── */}
           <div
             className="rounded-2xl overflow-hidden"
             style={{
-              background: "hsl(220 22% 9%)",
-              border: "1px solid rgba(255,255,255,0.08)",
+              background: "hsl(220 18% 97%)",
+              border: "1px solid hsl(220 16% 88%)",
+              boxShadow: "0 4px 24px hsl(220 25% 5% / 0.25)",
             }}
           >
             <AnimatePresence mode="wait">
@@ -289,28 +291,29 @@ export default function Industries() {
                 transition={{ duration: 0.2, ease: [0.25, 1, 0.4, 1] }}
               >
                 {/* Panel header */}
-                <div className="px-6 pt-5 pb-4">
-                  <p className="font-sora text-[18px] font-extrabold tracking-[-0.03em] text-white leading-tight">
+                <div className="px-6 pt-5 pb-4 border-b" style={{ borderColor: "hsl(220 16% 90%)" }}>
+                  <p className="font-sora text-[18px] font-extrabold tracking-[-0.03em] leading-tight" style={{ color: "hsl(220 25% 10%)" }}>
                     {selected.name}
                   </p>
-                  <p className="text-[11px] text-white/35 mt-1 font-inter">
+                  <p className="text-[11px] mt-1 font-inter" style={{ color: "hsl(220 12% 52%)" }}>
                     {selected.tag}
                   </p>
                 </div>
 
-                {/* Conversation area — light surfaces on dark bg */}
-                <div className="px-6 pb-5 flex flex-col gap-3">
+                {/* Conversation area */}
+                <div className="px-6 py-5 flex flex-col gap-3">
 
                   {/* Customer bubble */}
                   <div className="flex flex-col gap-1.5">
-                    <span className="text-[9.5px] font-semibold tracking-[0.06em] uppercase ml-1" style={{ color: "rgba(255,255,255,0.28)" }}>
+                    <span className="text-[9.5px] font-semibold tracking-[0.06em] uppercase ml-1" style={{ color: "hsl(220 12% 58%)" }}>
                       Customer
                     </span>
                     <div
                       className="self-start px-4 py-3 rounded-2xl rounded-tl-sm text-[13px] leading-[1.7] font-inter max-w-[90%]"
                       style={{
-                        background: "rgba(255,255,255,0.10)",
-                        color: "rgba(255,255,255,0.88)",
+                        background: "hsl(220 16% 92%)",
+                        color: "hsl(220 18% 18%)",
+                        border: "1px solid hsl(220 16% 87%)",
                       }}
                     >
                       {selected.inquiry}
@@ -319,14 +322,16 @@ export default function Industries() {
 
                   {/* AI response bubble */}
                   <div className="flex flex-col gap-1.5">
-                    <span className="text-[9.5px] font-semibold tracking-[0.06em] uppercase ml-1" style={{ color: "hsl(352 60% 62% / 0.7)" }}>
+                    <span className="text-[9.5px] font-semibold tracking-[0.06em] uppercase ml-1" style={{ color: "hsl(352 65% 42%)" }}>
                       Kanaung AI
                     </span>
                     <div
                       className="self-start px-4 py-3.5 rounded-2xl rounded-tl-sm text-[13px] leading-[1.75] font-inter max-w-[92%]"
                       style={{
-                        background: "hsl(220 20% 97%)",
-                        color: "hsl(220 18% 18%)",
+                        background: "white",
+                        color: "hsl(220 18% 15%)",
+                        border: "1px solid hsl(220 16% 88%)",
+                        boxShadow: "0 2px 8px hsl(220 20% 12% / 0.06)",
                       }}
                     >
                       {selected.response}
@@ -338,15 +343,15 @@ export default function Industries() {
                 {/* Knowledge source row */}
                 <div
                   className="flex items-center gap-2.5 px-6 py-3.5 border-t"
-                  style={{ borderColor: "rgba(255,255,255,0.07)" }}
+                  style={{ borderColor: "hsl(220 16% 90%)", background: "hsl(220 18% 96%)" }}
                 >
-                  <BookOpen className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "rgba(255,255,255,0.25)" }} />
-                  <span className="text-[10.5px] font-inter" style={{ color: "rgba(255,255,255,0.32)" }}>
+                  <BookOpen className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "hsl(220 12% 58%)" }} />
+                  <span className="text-[10.5px] font-inter" style={{ color: "hsl(220 12% 46%)" }}>
                     {selected.knowledge.join(" · ")}
                   </span>
                   <div className="ml-auto flex items-center gap-1.5 flex-shrink-0">
-                    <CheckCircle2 className="w-3 h-3" style={{ color: "hsl(142 55% 50% / 0.65)" }} />
-                    <span className="text-[9.5px] font-semibold" style={{ color: "rgba(255,255,255,0.28)" }}>AI resolved</span>
+                    <CheckCircle2 className="w-3 h-3" style={{ color: "hsl(142 50% 40%)" }} />
+                    <span className="text-[9.5px] font-semibold" style={{ color: "hsl(220 12% 46%)" }}>AI resolved</span>
                   </div>
                 </div>
 
