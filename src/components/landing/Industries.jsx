@@ -211,8 +211,8 @@ export default function Industries() {
           <div
             className="rounded-2xl overflow-hidden"
             style={{
-              background: "linear-gradient(160deg, hsl(220 22% 10%) 0%, hsl(220 22% 8.5%) 100%)",
-              border: "1px solid rgba(255,255,255,0.07)",
+              background: "hsl(220 22% 9%)",
+              border: "1px solid rgba(255,255,255,0.08)",
             }}
           >
             {/* Mobile: horizontal scroll */}
@@ -225,9 +225,9 @@ export default function Industries() {
                     onClick={() => setSelectedId(ind.id)}
                     className="flex-shrink-0 px-4 py-2 rounded-xl text-[12px] font-semibold transition-all duration-150"
                     style={{
-                      background: isActive ? "rgba(255,255,255,0.1)" : "transparent",
-                      color: isActive ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.35)",
-                      border: `1px solid ${isActive ? "rgba(255,255,255,0.14)" : "rgba(255,255,255,0.06)"}`,
+                      background: isActive ? "rgba(255,255,255,0.12)" : "transparent",
+                      color: isActive ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.38)",
+                      border: `1px solid ${isActive ? "rgba(255,255,255,0.16)" : "rgba(255,255,255,0.07)"}`,
                     }}
                   >
                     {ind.name}
@@ -237,64 +237,35 @@ export default function Industries() {
             </div>
 
             {/* Desktop: vertical list */}
-            <div className="hidden md:flex flex-col pt-2 pb-2">
-              {/* Header */}
-              <div className="px-5 pt-3 pb-3 border-b" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
-                <p className="text-[9px] font-bold tracking-[0.14em] uppercase" style={{ color: "rgba(255,255,255,0.2)" }}>
-                  Industries
-                </p>
-              </div>
-
+            <div className="hidden md:flex flex-col py-1.5">
               {industries.map((ind, i) => {
                 const isActive = ind.id === selectedId;
                 return (
                   <button
                     key={ind.id}
                     onClick={() => setSelectedId(ind.id)}
-                    className="relative w-full text-left px-5 py-3 transition-all duration-150"
-                    style={{
-                      background: isActive ? "rgba(255,255,255,0.055)" : "transparent",
-                    }}
+                    className="relative w-full text-left px-5 py-3.5 transition-all duration-150"
+                    style={{ background: isActive ? "rgba(255,255,255,0.07)" : "transparent" }}
                   >
                     {/* Active left bar */}
                     {isActive && (
                       <motion.div
                         layoutId="activeBar"
-                        className="absolute left-0 top-2 bottom-2 w-[2px] rounded-r-full"
+                        className="absolute left-0 top-1.5 bottom-1.5 w-[2.5px] rounded-r-full"
                         style={{ background: "hsl(352 72% 52%)" }}
                         transition={{ type: "spring", stiffness: 500, damping: 32 }}
                       />
                     )}
-
-                    {/* Subtle top divider except first */}
-                    {i > 0 && !isActive && (
-                      <div className="absolute top-0 left-5 right-5 h-px" style={{ background: "rgba(255,255,255,0.04)" }} />
+                    {/* Divider */}
+                    {i > 0 && (
+                      <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "rgba(255,255,255,0.05)" }} />
                     )}
-
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="min-w-0">
-                        <p
-                          className="text-[12.5px] font-semibold tracking-[-0.01em] leading-snug truncate transition-colors duration-150"
-                          style={{ color: isActive ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.32)" }}
-                        >
-                          {ind.name}
-                        </p>
-                        <p
-                          className="text-[9.5px] mt-0.5 font-inter truncate transition-colors duration-150"
-                          style={{ color: isActive ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.14)" }}
-                        >
-                          {ind.tag}
-                        </p>
-                      </div>
-                      {isActive && (
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0.7 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                          style={{ background: "hsl(352 72% 52%)" }}
-                        />
-                      )}
-                    </div>
+                    <p
+                      className="text-[13px] font-semibold tracking-[-0.01em] leading-snug transition-colors duration-150"
+                      style={{ color: isActive ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.38)" }}
+                    >
+                      {ind.name}
+                    </p>
                   </button>
                 );
               })}
@@ -305,8 +276,8 @@ export default function Industries() {
           <div
             className="rounded-2xl overflow-hidden"
             style={{
-              background: "linear-gradient(160deg, hsl(220 22% 10%) 0%, hsl(220 22% 8.5%) 100%)",
-              border: "1px solid rgba(255,255,255,0.07)",
+              background: "hsl(220 22% 9%)",
+              border: "1px solid rgba(255,255,255,0.08)",
             }}
           >
             <AnimatePresence mode="wait">
@@ -318,103 +289,64 @@ export default function Industries() {
                 transition={{ duration: 0.2, ease: [0.25, 1, 0.4, 1] }}
               >
                 {/* Panel header */}
-                <div
-                  className="flex items-center justify-between px-6 py-4 border-b"
-                  style={{ borderColor: "rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.015)" }}
-                >
-                  <div>
-                    <p className="font-sora text-[16px] font-extrabold tracking-[-0.03em] text-white leading-tight">
-                      {selected.name}
-                    </p>
-                    <p className="text-[9.5px] text-white/25 mt-0.5 font-inter tracking-[0.01em]">
-                      {selected.tag}
-                    </p>
-                  </div>
-                  {/* Knowledge chips — panel header right */}
-                  <div className="hidden sm:flex items-center gap-1.5 flex-wrap justify-end max-w-[240px]">
-                    {selected.knowledge.map((k) => (
-                      <span
-                        key={k}
-                        className="text-[9px] font-medium px-2 py-1 rounded-md"
-                        style={{
-                          background: "rgba(255,255,255,0.05)",
-                          color: "rgba(255,255,255,0.28)",
-                          border: "1px solid rgba(255,255,255,0.07)",
-                        }}
-                      >
-                        {k}
-                      </span>
-                    ))}
-                  </div>
+                <div className="px-6 pt-5 pb-4">
+                  <p className="font-sora text-[18px] font-extrabold tracking-[-0.03em] text-white leading-tight">
+                    {selected.name}
+                  </p>
+                  <p className="text-[11px] text-white/35 mt-1 font-inter">
+                    {selected.tag}
+                  </p>
                 </div>
 
-                {/* Conversation area */}
-                <div className="px-6 py-5 flex flex-col gap-4">
+                {/* Conversation area — light surfaces on dark bg */}
+                <div className="px-6 pb-5 flex flex-col gap-3">
 
                   {/* Customer bubble */}
-                  <div className="flex items-start gap-3 justify-end">
-                    <div className="flex flex-col items-end gap-1.5 max-w-[78%]">
-                      <span className="text-[9px] font-semibold tracking-[0.04em] uppercase" style={{ color: "rgba(255,255,255,0.2)" }}>
-                        Customer
-                      </span>
-                      <div
-                        className="px-4 py-3 rounded-2xl rounded-tr-sm text-[12.5px] leading-[1.72] font-inter"
-                        style={{
-                          background: "linear-gradient(135deg, hsl(352 72% 42%) 0%, hsl(352 65% 36%) 100%)",
-                          color: "rgba(255,255,255,0.92)",
-                          boxShadow: "0 4px 14px hsl(352 72% 38% / 0.18)",
-                        }}
-                      >
-                        {selected.inquiry}
-                      </div>
-                    </div>
-                    {/* Customer avatar */}
+                  <div className="flex flex-col gap-1.5">
+                    <span className="text-[9.5px] font-semibold tracking-[0.06em] uppercase ml-1" style={{ color: "rgba(255,255,255,0.28)" }}>
+                      Customer
+                    </span>
                     <div
-                      className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-5"
-                      style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.09)" }}
+                      className="self-start px-4 py-3 rounded-2xl rounded-tl-sm text-[13px] leading-[1.7] font-inter max-w-[90%]"
+                      style={{
+                        background: "rgba(255,255,255,0.10)",
+                        color: "rgba(255,255,255,0.88)",
+                      }}
                     >
-                      <span className="text-[9px] font-bold" style={{ color: "rgba(255,255,255,0.3)" }}>U</span>
+                      {selected.inquiry}
                     </div>
                   </div>
 
                   {/* AI response bubble */}
-                  <div className="flex items-start gap-3">
-                    <AIAvatar />
-                    <div className="flex flex-col gap-1.5 max-w-[82%]">
-                      <span className="text-[9px] font-semibold tracking-[0.04em] uppercase" style={{ color: "hsl(352 60% 55% / 0.55)" }}>
-                        Kanaung AI
-                      </span>
-                      <div
-                        className="px-4 py-3 rounded-2xl rounded-tl-sm text-[12.5px] leading-[1.72] font-inter"
-                        style={{
-                          background: "rgba(255,255,255,0.055)",
-                          border: "1px solid rgba(255,255,255,0.08)",
-                          color: "rgba(255,255,255,0.80)",
-                        }}
-                      >
-                        {selected.response}
-                      </div>
+                  <div className="flex flex-col gap-1.5">
+                    <span className="text-[9.5px] font-semibold tracking-[0.06em] uppercase ml-1" style={{ color: "hsl(352 60% 62% / 0.7)" }}>
+                      Kanaung AI
+                    </span>
+                    <div
+                      className="self-start px-4 py-3.5 rounded-2xl rounded-tl-sm text-[13px] leading-[1.75] font-inter max-w-[92%]"
+                      style={{
+                        background: "hsl(220 20% 97%)",
+                        color: "hsl(220 18% 18%)",
+                      }}
+                    >
+                      {selected.response}
                     </div>
                   </div>
 
                 </div>
 
-                {/* Panel footer — knowledge source + resolved indicator */}
+                {/* Knowledge source row */}
                 <div
-                  className="flex items-center justify-between gap-4 px-6 py-3.5 border-t"
-                  style={{ borderColor: "rgba(255,255,255,0.055)", background: "rgba(255,255,255,0.01)" }}
+                  className="flex items-center gap-2.5 px-6 py-3.5 border-t"
+                  style={{ borderColor: "rgba(255,255,255,0.07)" }}
                 >
-                  <div className="flex items-center gap-2 min-w-0">
-                    <BookOpen className="w-3 h-3 flex-shrink-0" style={{ color: "rgba(255,255,255,0.2)" }} />
-                    <span className="text-[9.5px] font-inter truncate" style={{ color: "rgba(255,255,255,0.22)" }}>
-                      {selected.knowledge.join(" · ")}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1.5 flex-shrink-0">
-                    <CheckCircle2 className="w-3 h-3" style={{ color: "hsl(142 55% 48% / 0.55)" }} />
-                    <span className="text-[9px] font-semibold" style={{ color: "rgba(255,255,255,0.18)" }}>
-                      AI resolved
-                    </span>
+                  <BookOpen className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "rgba(255,255,255,0.25)" }} />
+                  <span className="text-[10.5px] font-inter" style={{ color: "rgba(255,255,255,0.32)" }}>
+                    {selected.knowledge.join(" · ")}
+                  </span>
+                  <div className="ml-auto flex items-center gap-1.5 flex-shrink-0">
+                    <CheckCircle2 className="w-3 h-3" style={{ color: "hsl(142 55% 50% / 0.65)" }} />
+                    <span className="text-[9.5px] font-semibold" style={{ color: "rgba(255,255,255,0.28)" }}>AI resolved</span>
                   </div>
                 </div>
 
