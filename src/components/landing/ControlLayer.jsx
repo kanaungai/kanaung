@@ -381,7 +381,7 @@ export default function ControlLayer() {
   const { ref: dashRef, inView: dashVisible } = useScrollReveal({ margin: "-60px" });
 
   return (
-    <section className="py-24 md:py-32 relative overflow-hidden">
+    <section className="py-24 md:py-32 relative overflow-hidden" style={{ background: "hsl(220 22% 97% / 0.78)" }}>
       <div className="absolute inset-0 bg-gradient-to-b from-background to-background pointer-events-none" />
 
       <div className="relative max-w-[1200px] mx-auto px-8">

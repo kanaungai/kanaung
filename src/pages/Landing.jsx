@@ -18,7 +18,11 @@ import ChannelsBar from "../components/landing/ChannelsBar";
 export default function Landing() {
   return (
     <LanguageProvider>
-    <div className="min-h-screen bg-background font-inter antialiased">
+    <div className="min-h-screen bg-background font-inter antialiased" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M 0 0 L 0 40' stroke='%23090d18' stroke-width='0.4' stroke-opacity='0.04'/%3E%3Ccircle cx='0' cy='0' r='0.9' fill='%23090d18' fill-opacity='0.07'/%3E%3C/svg%3E")`,
+        backgroundRepeat: "repeat",
+        backgroundSize: "40px 40px",
+      }}>
       <Navbar />
       <Hero />
       <ChannelsBar />

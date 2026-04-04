@@ -64,7 +64,7 @@ export default function Pricing() {
   ];
 
   return (
-    <section id="pricing" className="py-24 md:py-32 relative">
+    <section id="pricing" className="py-24 md:py-32 relative" style={{ background: "hsl(220 22% 97% / 0.8)" }}>
 
       <div className="max-w-[1200px] mx-auto px-8 relative">
 
