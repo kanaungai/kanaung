@@ -273,13 +273,12 @@ export default function Industries() {
             </div>
           </div>
 
-          {/* ── Right preview panel — light ── */}
+          {/* ── Right preview panel — dark frame, light answer card inside ── */}
           <div
             className="rounded-2xl overflow-hidden"
             style={{
-              background: "hsl(220 18% 97%)",
-              border: "1px solid hsl(220 16% 88%)",
-              boxShadow: "0 4px 24px hsl(220 25% 5% / 0.25)",
+              background: "hsl(220 22% 9%)",
+              border: "1px solid rgba(255,255,255,0.08)",
             }}
           >
             <AnimatePresence mode="wait">
@@ -290,68 +289,69 @@ export default function Industries() {
                 exit={{ opacity: 0, y: -5 }}
                 transition={{ duration: 0.2, ease: [0.25, 1, 0.4, 1] }}
               >
-                {/* Panel header */}
-                <div className="px-6 pt-5 pb-4 border-b" style={{ borderColor: "hsl(220 16% 90%)" }}>
-                  <p className="font-sora text-[18px] font-extrabold tracking-[-0.03em] leading-tight" style={{ color: "hsl(220 25% 10%)" }}>
-                    {selected.name}
-                  </p>
-                  <p className="text-[11px] mt-1 font-inter" style={{ color: "hsl(220 12% 52%)" }}>
-                    {selected.tag}
+                {/* Panel header — industry name + inquiry */}
+                <div className="px-6 pt-6 pb-5">
+                  <div className="flex items-start justify-between gap-4 mb-4">
+                    <p className="font-sora text-[19px] font-extrabold tracking-[-0.03em] leading-tight" style={{ color: "rgba(255,255,255,0.9)" }}>
+                      {selected.name}
+                    </p>
+                    <span
+                      className="text-[9px] font-bold tracking-[0.1em] uppercase px-2.5 py-1 rounded-full flex-shrink-0 mt-0.5"
+                      style={{ background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.35)", border: "1px solid rgba(255,255,255,0.1)" }}
+                    >
+                      {selected.tag.split(" · ")[0]}
+                    </span>
+                  </div>
+                  {/* Inquiry line */}
+                  <p className="text-[12.5px] font-inter leading-[1.65]" style={{ color: "rgba(255,255,255,0.42)" }}>
+                    <span className="text-[10px] font-semibold tracking-[0.06em] uppercase mr-2" style={{ color: "rgba(255,255,255,0.22)" }}>
+                      Asked:
+                    </span>
+                    {selected.inquiry}
                   </p>
                 </div>
 
-                {/* Conversation area */}
-                <div className="px-6 py-5 flex flex-col gap-3">
-
-                  {/* Customer bubble */}
-                  <div className="flex flex-col gap-1.5">
-                    <span className="text-[9.5px] font-semibold tracking-[0.06em] uppercase ml-1" style={{ color: "hsl(220 12% 58%)" }}>
-                      Customer
-                    </span>
-                    <div
-                      className="self-start px-4 py-3 rounded-2xl rounded-tl-sm text-[13px] leading-[1.7] font-inter max-w-[90%]"
-                      style={{
-                        background: "hsl(220 16% 92%)",
-                        color: "hsl(220 18% 18%)",
-                        border: "1px solid hsl(220 16% 87%)",
-                      }}
-                    >
-                      {selected.inquiry}
+                {/* Main answer card — single light surface */}
+                <div className="px-6 pb-6">
+                  <div
+                    className="rounded-2xl px-5 py-4"
+                    style={{
+                      background: "hsl(220 20% 97%)",
+                      border: "1px solid hsl(220 16% 90%)",
+                      boxShadow: "0 2px 12px hsl(220 25% 4% / 0.25)",
+                    }}
+                  >
+                    {/* Answer label */}
+                    <div className="flex items-center gap-2 mb-3">
+                      <img
+                        src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
+                        alt="Kanaung"
+                        className="w-3.5 h-3.5 object-contain flex-shrink-0"
+                        style={{ filter: "brightness(0) saturate(100%) invert(16%) sepia(80%) saturate(900%) hue-rotate(330deg) brightness(80%)" }}
+                      />
+                      <span className="text-[10px] font-bold tracking-[0.06em] uppercase" style={{ color: "hsl(352 65% 40%)" }}>
+                        Kanaung AI
+                      </span>
                     </div>
-                  </div>
-
-                  {/* AI response bubble */}
-                  <div className="flex flex-col gap-1.5">
-                    <span className="text-[9.5px] font-semibold tracking-[0.06em] uppercase ml-1" style={{ color: "hsl(352 65% 42%)" }}>
-                      Kanaung AI
-                    </span>
-                    <div
-                      className="self-start px-4 py-3.5 rounded-2xl rounded-tl-sm text-[13px] leading-[1.75] font-inter max-w-[92%]"
-                      style={{
-                        background: "white",
-                        color: "hsl(220 18% 15%)",
-                        border: "1px solid hsl(220 16% 88%)",
-                        boxShadow: "0 2px 8px hsl(220 20% 12% / 0.06)",
-                      }}
-                    >
+                    {/* Answer text */}
+                    <p className="text-[13.5px] leading-[1.75] font-inter" style={{ color: "hsl(220 18% 16%)" }}>
                       {selected.response}
-                    </div>
+                    </p>
                   </div>
-
                 </div>
 
                 {/* Knowledge source row */}
                 <div
                   className="flex items-center gap-2.5 px-6 py-3.5 border-t"
-                  style={{ borderColor: "hsl(220 16% 90%)", background: "hsl(220 18% 96%)" }}
+                  style={{ borderColor: "rgba(255,255,255,0.07)" }}
                 >
-                  <BookOpen className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "hsl(220 12% 58%)" }} />
-                  <span className="text-[10.5px] font-inter" style={{ color: "hsl(220 12% 46%)" }}>
+                  <BookOpen className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "rgba(255,255,255,0.22)" }} />
+                  <span className="text-[10.5px] font-inter" style={{ color: "rgba(255,255,255,0.28)" }}>
                     {selected.knowledge.join(" · ")}
                   </span>
                   <div className="ml-auto flex items-center gap-1.5 flex-shrink-0">
-                    <CheckCircle2 className="w-3 h-3" style={{ color: "hsl(142 50% 40%)" }} />
-                    <span className="text-[9.5px] font-semibold" style={{ color: "hsl(220 12% 46%)" }}>AI resolved</span>
+                    <CheckCircle2 className="w-3 h-3" style={{ color: "hsl(142 55% 50% / 0.6)" }} />
+                    <span className="text-[9.5px] font-semibold" style={{ color: "rgba(255,255,255,0.25)" }}>AI resolved</span>
                   </div>
                 </div>
 
