@@ -38,7 +38,7 @@ export default function Industries() {
           </p>
           <div className="w-full h-px bg-white/8 mb-10" />
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
-            <h2 className="font-sora text-[36px] md:text-[46px] xl:text-[52px] font-bold tracking-[-0.04em] leading-[1.03] text-white">
+            <h2 className="font-sora text-[36px] md:text-[48px] xl:text-[56px] font-extrabold tracking-[-0.05em] leading-[0.97] text-white">
               {tx.ind_h2}
             </h2>
             <motion.p
@@ -79,7 +79,7 @@ export default function Industries() {
                 }}
               >
                 <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-foreground/8 to-transparent pointer-events-none" />
-                <h3 className="font-sora text-[15px] md:text-[16px] font-bold tracking-[-0.03em] text-white/75 leading-snug mb-2">
+                <h3 className="font-sora text-[15px] md:text-[16px] font-extrabold tracking-[-0.04em] text-white/75 leading-snug mb-2">
                   {item.name}
                 </h3>
                 <p className="text-[12.5px] text-white/32 leading-[1.7] font-inter tracking-[-0.005em]">

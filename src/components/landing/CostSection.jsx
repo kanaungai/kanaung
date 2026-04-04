@@ -37,7 +37,7 @@ export default function CostSection() {
           </p>
           <div className="w-full h-px bg-white/8 mb-10" />
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
-            <h2 className="font-sora text-[36px] md:text-[46px] xl:text-[52px] font-bold tracking-[-0.04em] leading-[1.03] text-white">
+            <h2 className="font-sora text-[36px] md:text-[48px] xl:text-[56px] font-extrabold tracking-[-0.05em] leading-[0.97] text-white">
               {tx.cost_h2}
             </h2>
             <motion.p
@@ -63,7 +63,7 @@ export default function CostSection() {
               <p className="text-[10px] font-semibold tracking-[0.14em] uppercase text-white/25 mb-5 font-inter">
                 {item.label}
               </p>
-              <div className="font-sora text-[56px] md:text-[64px] font-bold tracking-[-0.05em] leading-none text-white mb-6">
+              <div className="font-sora text-[60px] md:text-[72px] font-extrabold tracking-[-0.06em] leading-none text-white mb-6">
                 {item.stat}
               </div>
               <div className="w-8 h-px bg-white/20 mb-5" />

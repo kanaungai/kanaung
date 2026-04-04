@@ -31,7 +31,7 @@ export default function UseCases() {
           transition={{ duration: 0.6 }}
           className="text-center mb-14"
         >
-          <h2 className="font-sora text-[32px] md:text-[40px] font-bold tracking-[-0.04em] leading-[1.05] text-foreground">
+          <h2 className="font-sora text-[32px] md:text-[42px] font-extrabold tracking-[-0.05em] leading-[0.97] text-foreground">
             Built for high-inquiry Myanmar businesses
           </h2>
           <p className="mt-4 text-[14px] text-muted-foreground max-w-lg mx-auto leading-[1.7] tracking-[-0.005em] font-inter">

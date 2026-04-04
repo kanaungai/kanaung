@@ -40,20 +40,20 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
               className="inline-flex items-center self-start gap-2 px-4 py-2 rounded-full bg-foreground mb-8">
               <span className="w-1.5 h-1.5 rounded-full bg-white/50" />
-              <span className="text-[10px] font-semibold text-background/80 tracking-[0.12em] uppercase font-inter">
+              <span className="text-[9.5px] font-bold text-background/70 tracking-[0.2em] uppercase font-inter">
                 {tx.hero_eyebrow}
               </span>
             </motion.div>
 
-            <h1 className="font-sora text-[46px] md:text-[56px] xl:text-[66px] font-bold tracking-[-0.04em] leading-[1.0] text-foreground">
+            <h1 className="font-sora text-[50px] md:text-[62px] xl:text-[72px] font-extrabold tracking-[-0.05em] leading-[0.96] text-foreground">
               {tx.hero_h1_1}<br />
               {tx.hero_h1_2}<br />
               <span className="text-[hsl(var(--foreground))]">{tx.hero_h1_3}</span>
             </h1>
 
-            <p className="mt-8 text-[15px] md:text-[16px] text-muted-foreground leading-[1.8] max-w-[400px] font-inter font-normal tracking-[-0.005em]">
+            <p className="mt-8 text-[14.5px] md:text-[15.5px] text-muted-foreground leading-[1.85] max-w-[390px] font-inter font-normal tracking-[0.005em]">
               {tx.hero_sub}{" "}
-              <span className="text-foreground/65 font-medium">{tx.hero_sub_bold}</span>
+              <span className="text-foreground/60 font-medium">{tx.hero_sub_bold}</span>
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row gap-3">

@@ -32,7 +32,7 @@ export default function WhyDifferent() {
           </p>
           <div className="w-full h-px bg-white/8 mb-10" />
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
-            <h2 className="font-sora text-[36px] md:text-[46px] xl:text-[52px] font-bold tracking-[-0.04em] leading-[1.03] text-white">
+            <h2 className="font-sora text-[36px] md:text-[48px] xl:text-[56px] font-extrabold tracking-[-0.05em] leading-[0.97] text-white">
               {tx.why_h2}
             </h2>
             <motion.p
@@ -61,7 +61,7 @@ export default function WhyDifferent() {
               <span className="text-[10px] font-semibold tracking-[0.14em] uppercase text-white/22 font-inter">
                   {tx.why_trad_label}
                 </span>
-                <h3 className="font-sora text-[19px] font-bold tracking-[-0.03em] text-white/28 mt-2 leading-snug">
+                <h3 className="font-sora text-[19px] font-extrabold tracking-[-0.04em] text-white/28 mt-2 leading-[1.15]">
                   {tx.why_trad_title}
                 </h3>
             </div>
@@ -84,7 +84,7 @@ export default function WhyDifferent() {
                 <span className="text-[10px] font-semibold tracking-[0.14em] uppercase text-white/30 font-inter">
                   {tx.why_kan_label}
                 </span>
-                <h3 className="font-sora text-[19px] font-bold tracking-[-0.03em] text-white mt-2 leading-snug">
+                <h3 className="font-sora text-[19px] font-extrabold tracking-[-0.04em] text-white mt-2 leading-[1.15]">
                   {tx.why_kan_title}
                 </h3>
               </div>

@@ -25,7 +25,7 @@ export default function FinalCTA() {
           <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
 
           <div className="relative px-8 py-16 md:px-16 md:py-20 text-center">
-            <h2 className="font-sora text-[32px] md:text-[42px] lg:text-[50px] font-bold tracking-[-0.04em] text-background max-w-2xl mx-auto leading-[1.02]">
+            <h2 className="font-sora text-[32px] md:text-[44px] lg:text-[54px] font-extrabold tracking-[-0.05em] text-background max-w-2xl mx-auto leading-[0.97]">
               {tx.cta_h2}
             </h2>
             <p className="mt-6 text-background/60 max-w-lg mx-auto text-[15px] leading-[1.8] font-inter tracking-[-0.005em]">

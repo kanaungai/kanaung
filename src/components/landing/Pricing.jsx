@@ -80,7 +80,7 @@ export default function Pricing() {
           </p>
           <div className="w-full h-px bg-foreground/8 mb-10" />
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
-            <h2 className="font-sora text-[36px] md:text-[46px] xl:text-[52px] font-bold tracking-[-0.04em] leading-[1.03] text-foreground">
+            <h2 className="font-sora text-[36px] md:text-[48px] xl:text-[56px] font-extrabold tracking-[-0.05em] leading-[0.97] text-foreground">
               {tx.price_h2}
             </h2>
             <motion.p
@@ -135,7 +135,7 @@ export default function Pricing() {
               )}
 
               <div className={plan.badge ? "" : "mt-0"}>
-                <h3 className="font-sora text-[19px] font-bold tracking-[-0.04em] text-foreground">
+                <h3 className="font-sora text-[20px] font-extrabold tracking-[-0.05em] text-foreground">
                   {plan.name}
                 </h3>
                 <p className="text-[12.5px] text-muted-foreground mt-1.5 leading-snug font-inter tracking-[-0.005em]">
