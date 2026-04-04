@@ -159,13 +159,12 @@ function GenerationStrip({ isActive, statusLabel }) {
 }
 
 export default function LiveCallPanel() {
+  const [runKey, setRunKey] = useState(0);
   const [visibleMessages, setVisibleMessages] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const [statusLabel, setStatusLabel] = useState(STATUS_LABELS[0]);
-  const timeoutRef = useRef(null);
-  const statusRef = useRef(null);
   const containerRef = useRef(null);
+  const statusRef = useRef(null);
 
   // Cycle status labels while AI is typing
   useEffect(() => {
@@ -178,39 +177,54 @@ export default function LiveCallPanel() {
     return () => clearInterval(statusRef.current);
   }, [isTyping]);
 
+  // Drive the whole conversation with a single sequential async loop
   useEffect(() => {
-    if (currentIndex >= CONVERSATION.length) {
-      timeoutRef.current = setTimeout(() => {
+    let cancelled = false;
+
+    const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
+
+    async function runConversation() {
+      // Initial pause before anything starts
+      await sleep(800);
+      if (cancelled) return;
+
+      for (let i = 0; i < CONVERSATION.length; i++) {
+        const msg = CONVERSATION[i];
+        const delay = DELAYS[i] ?? 2000;
+
+        if (msg.role === "ai") {
+          // Show typing dots for ~60% of the delay
+          const typingMs = Math.min(Math.floor(delay * 0.6), 2400);
+          if (!cancelled) setIsTyping(true);
+          await sleep(typingMs);
+          if (cancelled) return;
+          setIsTyping(false);
+          // Small gap after dots disappear before bubble appears
+          await sleep(120);
+        } else {
+          // Customer: just wait before their message appears
+          await sleep(delay);
+        }
+
+        if (cancelled) return;
+        setVisibleMessages((prev) => [...prev, msg]);
+        // Small pause between consecutive messages
+        await sleep(400);
+      }
+
+      // Pause at end then restart
+      await sleep(5000);
+      if (!cancelled) {
         setVisibleMessages([]);
-        setCurrentIndex(0);
         setIsTyping(false);
-      }, 5500);
-      return () => clearTimeout(timeoutRef.current);
+        setRunKey((k) => k + 1);
+      }
     }
 
-    const msg = CONVERSATION[currentIndex];
-    const delay = DELAYS[currentIndex] ?? 2000;
+    runConversation();
 
-    if (msg.role === "ai") {
-      // Show typing dots first (for half the delay), then reveal the message
-      const typingDuration = Math.min(delay * 0.55, 2200);
-      setIsTyping(true);
-      timeoutRef.current = setTimeout(() => {
-        setIsTyping(false);
-        setVisibleMessages((prev) => [...prev, msg]);
-        setCurrentIndex((i) => i + 1);
-      }, typingDuration);
-    } else {
-      // Customer messages appear after a short pause, no dots
-      setIsTyping(false);
-      timeoutRef.current = setTimeout(() => {
-        setVisibleMessages((prev) => [...prev, msg]);
-        setCurrentIndex((i) => i + 1);
-      }, delay);
-    }
-
-    return () => clearTimeout(timeoutRef.current);
-  }, [currentIndex]);
+    return () => { cancelled = true; };
+  }, [runKey]);
 
   useEffect(() => {
     if (containerRef.current) {
