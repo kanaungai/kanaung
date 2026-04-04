@@ -21,11 +21,11 @@ export default function Hero() {
       <div
         className="absolute pointer-events-none"
         style={{
-          top: "-15%",
-          left: "-15%",
-          width: "80%",
-          height: "110%",
-          background: "radial-gradient(ellipse at 40% 45%, hsl(28 70% 91% / 0.95) 0%, hsl(26 50% 94% / 0.65) 35%, transparent 65%)",
+          top: "-20%",
+          left: "-20%",
+          width: "90%",
+          height: "120%",
+          background: "radial-gradient(ellipse at 38% 44%, hsl(28 75% 89% / 1) 0%, hsl(26 55% 93% / 0.75) 30%, transparent 60%)",
         }}
       />
 
@@ -37,31 +37,23 @@ export default function Hero() {
           right: "-10%",
           width: "60%",
           height: "85%",
-          background: "radial-gradient(ellipse at 60% 35%, hsl(220 35% 92% / 0.7) 0%, transparent 58%)",
+          background: "radial-gradient(ellipse at 60% 35%, hsl(220 35% 91% / 0.75) 0%, transparent 55%)",
         }}
       />
 
-      {/* Pinstripes — crisp vertical structure, fades over content areas */}
+      {/* Pinstripes — bolder, wider-spaced, architectural */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage: `repeating-linear-gradient(
             90deg,
             transparent,
-            transparent 39px,
-            hsl(220 25% 55% / 0.11) 39px,
-            hsl(220 25% 55% / 0.11) 40px
+            transparent 59px,
+            hsl(220 25% 45% / 0.13) 59px,
+            hsl(220 25% 45% / 0.13) 60px
           )`,
-          maskImage: `
-            radial-gradient(ellipse 55% 80% at 28% 50%, transparent 30%, black 70%),
-            linear-gradient(to bottom, transparent 0%, black 10%, black 82%, transparent 100%)
-          `,
-          WebkitMaskImage: `
-            radial-gradient(ellipse 55% 80% at 28% 50%, transparent 30%, black 70%),
-            linear-gradient(to bottom, transparent 0%, black 10%, black 82%, transparent 100%)
-          `,
-          maskComposite: "intersect",
-          WebkitMaskComposite: "destination-in",
+          maskImage: `linear-gradient(to bottom, transparent 0%, black 8%, black 85%, transparent 100%)`,
+          WebkitMaskImage: `linear-gradient(to bottom, transparent 0%, black 8%, black 85%, transparent 100%)`,
         }}
       />
 
