@@ -4,6 +4,11 @@ import { BookOpen, CheckCircle2 } from "lucide-react";
 
 const CONVERSATION = [
   {
+    role: "ai",
+    text: "မင်္ဂလာပါ။ ရွှေကြယ် စက်ပစ္စည်းဆိုင်မှ ကြိုဆိုပါတယ်။ ဘာများ ကူညီပေးရမလဲ?",
+    source: null,
+  },
+  {
     role: "customer",
     text: "Mini Excavator EX55 model ရှိသေးလား? ဈေးနှုန်းပြောပြပါ",
   },
@@ -21,9 +26,18 @@ const CONVERSATION = [
     text: "ရန်ကုန်အတွင်း ၃–၅ ရက်အတွင်း ရောက်ပါတယ်။ Standard delivery အခမဲ့ ပေးပါတယ်။",
     source: "Delivery Policy",
   },
+  {
+    role: "customer",
+    text: "Financing option ရှိသလား?",
+  },
+  {
+    role: "ai",
+    text: "ဟုတ်ကဲ့၊ အရစ်ကျ ငွေပေးချေမှု ရရှိနိုင်ပါတယ်။ အသေးစိတ်အတွက် ကျွန်တော်တို့ team နှင့် တိုက်ရိုက် ဆက်သွယ်နိုင်ပါတယ်။",
+    source: "Financing Options",
+  },
 ];
 
-const DELAYS = [800, 2200, 2000, 2400];
+const DELAYS = [600, 1800, 2200, 2000, 2400, 1800, 2600];
 
 // Cycling status labels shown in the generation strip
 const STATUS_LABELS = [
@@ -248,7 +262,7 @@ export default function LiveCallPanel() {
         <div
           ref={containerRef}
           className="px-5 py-4 space-y-4 overflow-y-auto"
-          style={{ height: "300px", scrollbarWidth: "none" }}
+          style={{ height: "400px", scrollbarWidth: "none" }}
         >
           <AnimatePresence initial={false}>
             {visibleMessages.map((msg, i) => (
