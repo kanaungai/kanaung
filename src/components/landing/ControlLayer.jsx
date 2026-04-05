@@ -418,7 +418,6 @@ export default function ControlLayer() {
           animate={{ opacity: dashVisible ? 1 : 0, y: dashVisible ? 0 : 20 }}
           initial={{ opacity: 0, y: 20 }}
           transition={REVEAL.card}
-          ref={dashRef}
           className="md:hidden rounded-2xl overflow-hidden"
           style={{
             border: "1px solid hsl(220 16% 84%)",
@@ -510,6 +509,7 @@ export default function ControlLayer() {
 
         {/* ── Desktop-only demo card ── */}
         <motion.div
+          ref={dashRef}
           animate={{ opacity: dashVisible ? 1 : 0, y: dashVisible ? 0 : 20 }}
           initial={{ opacity: 0, y: 20 }}
           transition={REVEAL.card}
