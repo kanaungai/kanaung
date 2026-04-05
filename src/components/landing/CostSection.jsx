@@ -35,10 +35,10 @@ export default function CostSection() {
           initial={{ opacity: 0, y: 14 }}
           transition={REVEAL.primary}
         >
-          <p className="text-[10px] font-semibold tracking-[0.16em] uppercase text-white/25 mb-6 font-inter">
+          <p className="text-[10px] font-semibold tracking-[0.16em] uppercase mb-6 font-inter" style={{ color: "rgba(255,255,255,0.6)" }}>
             {tx.cost_eyebrow}
           </p>
-          <div className="w-full h-px mb-14 md:mb-16" style={{ background: "rgba(255,255,255,0.07)" }} />
+          <div className="w-full h-px mb-14 md:mb-16" style={{ background: "rgba(255,255,255,0.1)" }} />
         </motion.div>
 
         {/* Top row: headline left, paragraph right */}
@@ -58,8 +58,7 @@ export default function CostSection() {
             animate={{ opacity: sectionVisible ? 1 : 0, y: sectionVisible ? 0 : 16 }}
             initial={{ opacity: 0, y: 16 }}
             transition={{ ...REVEAL.primary, delay: 0.14 }}
-            className="text-[14.5px] leading-[1.85] font-inter tracking-[-0.005em] md:pt-1"
-            style={{ color: "rgba(255,255,255,0.38)" }}
+            className="text-[14.5px] leading-[1.85] font-inter tracking-[-0.005em] md:pt-1 text-white"
           >
             {tx.cost_sub}
           </motion.p>
@@ -71,7 +70,7 @@ export default function CostSection() {
           initial={{ opacity: 0, y: 12 }}
           transition={{ ...REVEAL.fade, delay: 0.24 }}
           className="grid md:grid-cols-3 gap-0"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
+          style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}
         >
           {stats.map((item, i) => (
             <motion.div
@@ -83,19 +82,19 @@ export default function CostSection() {
               style={{
                 paddingRight: i < 2 ? "clamp(24px, 4vw, 56px)" : 0,
                 paddingLeft: i > 0 ? "clamp(24px, 4vw, 56px)" : 0,
-                borderLeft: i > 0 ? "1px solid rgba(255,255,255,0.07)" : "none",
+                borderLeft: i > 0 ? "1px solid rgba(255,255,255,0.1)" : "none",
               }}
             >
               <div
-                className="font-sora font-extrabold tracking-[-0.05em] leading-none"
-                style={{ fontSize: "clamp(36px, 5vw, 56px)", color: "rgba(255,255,255,0.92)" }}
+                className="font-sora font-extrabold tracking-[-0.05em] leading-none text-white"
+                style={{ fontSize: "clamp(36px, 5vw, 56px)" }}
               >
                 {item.stat}
               </div>
-              <p className="text-[9.5px] font-semibold tracking-[0.14em] uppercase font-inter" style={{ color: "rgba(255,255,255,0.45)" }}>
+              <p className="text-[9.5px] font-semibold tracking-[0.14em] uppercase font-inter text-white">
                 {item.label}
               </p>
-              <p className="text-[13px] leading-[1.8] font-inter tracking-[-0.005em]" style={{ color: "rgba(255,255,255,0.62)" }}>
+              <p className="text-[13px] leading-[1.8] font-inter tracking-[-0.005em] text-white">
                 {item.body}
               </p>
             </motion.div>
@@ -108,7 +107,7 @@ export default function CostSection() {
           initial={{ opacity: 0 }}
           transition={{ ...REVEAL.fade, delay: 0.44 }}
           className="w-full h-px mt-16 md:mt-20"
-          style={{ background: "rgba(255,255,255,0.07)" }}
+          style={{ background: "rgba(255,255,255,0.1)" }}
         />
       </div>
     </section>
