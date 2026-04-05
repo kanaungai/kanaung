@@ -362,7 +362,7 @@ export default function ControlLayer() {
     <section className="py-24 md:py-32 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-background to-background pointer-events-none" />
 
-      <div className="relative max-w-[1200px] mx-auto px-5 md:px-8">
+      <div className="relative max-w-[1200px] mx-auto px-8">
 
         {/* Section header */}
         <motion.div

@@ -14,7 +14,7 @@ export default function Pricing() {
 
   return (
     <section id="pricing" className="py-24 md:py-36 relative">
-      <div className="max-w-[1200px] mx-auto px-5 md:px-8">
+      <div className="max-w-[1200px] mx-auto px-8">
 
         {/* ── Header ── */}
         <motion.div
@@ -58,12 +58,12 @@ export default function Pricing() {
             animate={{ opacity: bodyVisible ? 1 : 0, y: bodyVisible ? 0 : 12 }}
             initial={{ opacity: 0, y: 12 }}
             transition={{ ...REVEAL.primary, delay: 0.12 }}
-            className="grid md:grid-cols-[1fr_1fr_auto] gap-6 md:gap-16 items-start md:items-center py-8 md:py-10 border-b border-foreground/[0.07]"
+            className="grid md:grid-cols-[1fr_1fr_auto] gap-8 md:gap-16 items-center py-10 border-b border-foreground/[0.07]"
           >
             {/* Name + tagline */}
             <div>
               <div className="flex items-baseline gap-3 mb-2">
-                <h3 className="font-sora text-[20px] md:text-[22px] font-extrabold tracking-[-0.04em] text-foreground">
+                <h3 className="font-sora text-[22px] font-extrabold tracking-[-0.04em] text-foreground">
                   {tx.price_p1_name}
                 </h3>
                 <span className="text-[10px] font-semibold tracking-[0.12em] uppercase font-inter text-muted-foreground/50">
@@ -76,24 +76,24 @@ export default function Pricing() {
             </div>
 
             {/* Features */}
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-2.5">
               {[tx.price_p1_f1, tx.price_p1_f2, tx.price_p1_f3].map((f) => (
                 <li key={f} className="flex items-center gap-2.5">
                   <Check className="w-3 h-3 text-foreground/30 flex-shrink-0" />
-                  <span className="text-[12.5px] md:text-[13px] text-foreground/60 font-inter">{f}</span>
+                  <span className="text-[13px] text-foreground/60 font-inter">{f}</span>
                 </li>
               ))}
             </ul>
 
             {/* Price + CTA */}
-            <div className="flex flex-row md:flex-col items-center md:items-end gap-4 md:gap-3">
+            <div className="flex md:flex-col items-center md:items-end gap-5 md:gap-3">
               <div className="flex items-baseline gap-1">
-                <span className="font-sora text-[24px] md:text-[28px] font-bold tracking-[-0.04em] text-foreground">$99</span>
+                <span className="font-sora text-[28px] font-bold tracking-[-0.04em] text-foreground">$99</span>
                 <span className="text-[12px] text-muted-foreground font-inter">/ mo</span>
               </div>
               <button
                 onClick={openCalendly}
-                className="text-[12px] md:text-[12.5px] font-semibold font-inter px-4 md:px-5 py-2 rounded-full transition-all duration-200 whitespace-nowrap"
+                className="text-[12.5px] font-semibold font-inter px-5 py-2 rounded-full transition-all duration-200"
                 style={{ border: "1.5px solid hsl(220 16% 80%)", color: "hsl(220 25% 22%)" }}
                 onMouseEnter={e => { e.currentTarget.style.background = "hsl(220 16% 96%)"; }}
                 onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
@@ -108,23 +108,18 @@ export default function Pricing() {
             animate={{ opacity: bodyVisible ? 1 : 0, y: bodyVisible ? 0 : 12 }}
             initial={{ opacity: 0, y: 12 }}
             transition={{ ...REVEAL.primary, delay: 0.2 }}
-            className="grid md:grid-cols-[1fr_1fr_auto] gap-6 md:gap-16 items-start md:items-center py-8 md:py-10 border-b border-foreground/[0.07] relative"
+            className="grid md:grid-cols-[1fr_1fr_auto] gap-8 md:gap-16 items-center py-10 border-b border-foreground/[0.07] relative"
           >
-            {/* Mobile top accent bar */}
-            <div
-              className="absolute left-0 top-0 bottom-0 w-[2.5px] rounded-r-full md:hidden"
-              style={{ background: "hsl(220 25% 14%)" }}
-            />
-            {/* Desktop left accent bar */}
+            {/* Subtle left accent bar */}
             <div
               className="absolute left-0 top-4 bottom-4 w-[2.5px] rounded-r-full hidden md:block"
               style={{ background: "hsl(220 25% 14%)" }}
             />
 
             {/* Name + tagline */}
-            <div className="pl-4 md:pl-5">
+            <div className="md:pl-5">
               <div className="flex items-baseline gap-3 mb-2">
-                <h3 className="font-sora text-[20px] md:text-[22px] font-extrabold tracking-[-0.04em] text-foreground">
+                <h3 className="font-sora text-[22px] font-extrabold tracking-[-0.04em] text-foreground">
                   {tx.price_p2_name}
                 </h3>
                 <span className="text-[10px] font-semibold tracking-[0.12em] uppercase font-inter" style={{ color: "hsl(220 25% 40%)" }}>
@@ -137,24 +132,24 @@ export default function Pricing() {
             </div>
 
             {/* Features */}
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-2.5">
               {[tx.price_p2_f1, tx.price_p2_f2, tx.price_p2_f3, tx.price_p2_f4].map((f) => (
                 <li key={f} className="flex items-center gap-2.5">
                   <Check className="w-3 h-3 flex-shrink-0" style={{ color: "hsl(220 25% 22%)" }} />
-                  <span className="text-[12.5px] md:text-[13px] font-inter font-medium" style={{ color: "hsl(220 20% 18%)" }}>{f}</span>
+                  <span className="text-[13px] font-inter font-medium" style={{ color: "hsl(220 20% 18%)" }}>{f}</span>
                 </li>
               ))}
             </ul>
 
             {/* Price + CTA */}
-            <div className="flex flex-row md:flex-col items-center md:items-end gap-4 md:gap-3">
+            <div className="flex md:flex-col items-center md:items-end gap-5 md:gap-3">
               <div className="flex items-baseline gap-1">
-                <span className="font-sora text-[24px] md:text-[28px] font-bold tracking-[-0.04em] text-foreground">$199</span>
+                <span className="font-sora text-[28px] font-bold tracking-[-0.04em] text-foreground">$199</span>
                 <span className="text-[12px] text-muted-foreground font-inter">/ mo</span>
               </div>
               <button
                 onClick={openCalendly}
-                className="group inline-flex items-center gap-2 text-[12px] md:text-[12.5px] font-bold font-inter px-4 md:px-5 py-2 rounded-full transition-all duration-200 whitespace-nowrap"
+                className="group inline-flex items-center gap-2 text-[12.5px] font-bold font-inter px-5 py-2 rounded-full transition-all duration-200"
                 style={{ background: "hsl(220 25% 12%)", color: "white" }}
                 onMouseEnter={e => { e.currentTarget.style.background = "hsl(220 25% 8%)"; }}
                 onMouseLeave={e => { e.currentTarget.style.background = "hsl(220 25% 12%)"; }}
@@ -170,12 +165,12 @@ export default function Pricing() {
             animate={{ opacity: bodyVisible ? 1 : 0, y: bodyVisible ? 0 : 12 }}
             initial={{ opacity: 0, y: 12 }}
             transition={{ ...REVEAL.primary, delay: 0.28 }}
-            className="grid md:grid-cols-[1fr_1fr_auto] gap-6 md:gap-16 items-start md:items-center py-8 md:py-10"
+            className="grid md:grid-cols-[1fr_1fr_auto] gap-8 md:gap-16 items-center py-10"
           >
             {/* Name + tagline */}
             <div>
               <div className="flex items-baseline gap-3 mb-2">
-                <h3 className="font-sora text-[20px] md:text-[22px] font-extrabold tracking-[-0.04em] text-foreground">
+                <h3 className="font-sora text-[22px] font-extrabold tracking-[-0.04em] text-foreground">
                   {tx.price_p3_name}
                 </h3>
                 <span className="text-[10px] font-semibold tracking-[0.12em] uppercase font-inter text-muted-foreground/50">
@@ -188,23 +183,23 @@ export default function Pricing() {
             </div>
 
             {/* Features */}
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-2.5">
               {[tx.price_p3_f1, tx.price_p3_f2, tx.price_p3_f3].map((f) => (
                 <li key={f} className="flex items-center gap-2.5">
                   <Check className="w-3 h-3 text-foreground/30 flex-shrink-0" />
-                  <span className="text-[12.5px] md:text-[13px] text-foreground/60 font-inter">{f}</span>
+                  <span className="text-[13px] text-foreground/60 font-inter">{f}</span>
                 </li>
               ))}
             </ul>
 
             {/* Price + CTA */}
-            <div className="flex flex-row md:flex-col items-center md:items-end gap-4 md:gap-3">
+            <div className="flex md:flex-col items-center md:items-end gap-5 md:gap-3">
               <div>
                 <span className="font-sora text-[20px] font-bold tracking-[-0.04em] text-foreground/60">Custom</span>
               </div>
               <button
                 onClick={openCalendly}
-                className="text-[12px] md:text-[12.5px] font-semibold font-inter px-4 md:px-5 py-2 rounded-full transition-all duration-200 text-muted-foreground whitespace-nowrap"
+                className="text-[12.5px] font-semibold font-inter px-5 py-2 rounded-full transition-all duration-200 text-muted-foreground"
                 style={{ border: "1.5px solid hsl(220 16% 80%)" }}
                 onMouseEnter={e => { e.currentTarget.style.background = "hsl(220 16% 96%)"; e.currentTarget.style.color = "hsl(220 25% 18%)"; }}
                 onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = ""; }}

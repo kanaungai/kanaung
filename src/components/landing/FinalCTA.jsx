@@ -30,7 +30,7 @@ export default function FinalCTA() {
         }}
       />
 
-      <div className="relative max-w-[1200px] mx-auto px-5 md:px-8">
+      <div className="relative max-w-[1200px] mx-auto px-8">
 
         {/* Top hairline */}
         <div className="w-full h-px mb-16 md:mb-20" style={{ background: "rgba(255,255,255,0.08)" }} />
@@ -41,7 +41,7 @@ export default function FinalCTA() {
           animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 24 }}
           initial={{ opacity: 0, y: 24 }}
           transition={REVEAL.primary}
-          className="grid md:grid-cols-[1fr_1.1fr] gap-10 md:gap-20 items-end pb-16 md:pb-32"
+          className="grid md:grid-cols-[1fr_1.1fr] gap-12 md:gap-20 items-end pb-24 md:pb-32"
         >
 
           {/* ── Left: headline block ── */}
@@ -65,7 +65,7 @@ export default function FinalCTA() {
             animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 16 }}
             initial={{ opacity: 0, y: 16 }}
             transition={{ ...REVEAL.primary, delay: 0.14 }}
-            className="flex flex-col justify-end gap-8 md:gap-10"
+            className="flex flex-col justify-end gap-10"
           >
             <p
               className="text-[15px] leading-[1.85] font-inter tracking-[-0.005em] max-w-md"

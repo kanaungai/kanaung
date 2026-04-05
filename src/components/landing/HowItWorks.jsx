@@ -25,7 +25,7 @@ export default function HowItWorks() {
         style={{ width: 600, height: 500, background: "hsl(210 80% 55% / 0.04)", filter: "blur(140px)", borderRadius: "50%" }}
       />
 
-      <div className="relative max-w-[1200px] mx-auto px-5 md:px-8">
+      <div className="relative max-w-[1200px] mx-auto px-8">
 
         {/* ── Header ── */}
         <motion.div
@@ -56,7 +56,7 @@ export default function HowItWorks() {
         </motion.div>
 
         {/* ── Steps ── */}
-        <div ref={stepsRef} className="grid grid-cols-1 md:grid-cols-3">
+        <div ref={stepsRef} className="grid md:grid-cols-3">
           {STEPS.map((step, i) => (
             <motion.div
               key={step.number}
@@ -65,11 +65,10 @@ export default function HowItWorks() {
               transition={{ ...REVEAL.primary, delay: i * 0.12 }}
               className="relative flex flex-col"
               style={{
-                paddingRight: i < 2 ? "clamp(16px, 4vw, 60px)" : 0,
-                paddingLeft: i > 0 ? "clamp(16px, 4vw, 60px)" : 0,
+                paddingRight: i < 2 ? "clamp(28px, 4vw, 60px)" : 0,
+                paddingLeft: i > 0 ? "clamp(28px, 4vw, 60px)" : 0,
                 borderLeft: i > 0 ? "1px solid rgba(255,255,255,0.07)" : "none",
-                borderTop: i > 0 ? "1px solid rgba(255,255,255,0.06)" : "none",
-                paddingTop: i > 0 ? "clamp(24px, 3vw, 0px)" : "0",
+                paddingTop: "0",
               }}
             >
               {/* Step number */}

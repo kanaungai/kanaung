@@ -27,7 +27,7 @@ export default function CostSection() {
         style={{ width: 700, height: 420, background: "hsl(352 72% 38% / 0.06)", filter: "blur(120px)", borderRadius: "50%" }}
       />
 
-      <div ref={sectionRef} className="relative max-w-[1200px] mx-auto px-5 md:px-8">
+      <div ref={sectionRef} className="relative max-w-[1200px] mx-auto px-8">
 
         {/* Eyebrow + rule */}
         <motion.div
@@ -69,7 +69,7 @@ export default function CostSection() {
           animate={{ opacity: sectionVisible ? 1 : 0, y: sectionVisible ? 0 : 12 }}
           initial={{ opacity: 0, y: 12 }}
           transition={{ ...REVEAL.fade, delay: 0.24 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-0"
+          className="grid md:grid-cols-3 gap-0"
           style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}
         >
           {stats.map((item, i) => (
@@ -80,10 +80,9 @@ export default function CostSection() {
               transition={{ ...REVEAL.fade, delay: 0.28 + i * 0.08 }}
               className="pt-10 pb-2 flex flex-col gap-3"
               style={{
-                paddingRight: i < 2 ? "clamp(16px, 4vw, 56px)" : 0,
-                paddingLeft: i > 0 ? "clamp(16px, 4vw, 56px)" : 0,
+                paddingRight: i < 2 ? "clamp(24px, 4vw, 56px)" : 0,
+                paddingLeft: i > 0 ? "clamp(24px, 4vw, 56px)" : 0,
                 borderLeft: i > 0 ? "1px solid rgba(255,255,255,0.1)" : "none",
-                borderTop: i > 0 ? "1px solid rgba(255,255,255,0.07)" : "none",
               }}
             >
               <div

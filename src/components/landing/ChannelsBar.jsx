@@ -136,7 +136,7 @@ export default function ChannelsBar() {
 
   return (
     <section className="py-16 md:py-20 relative">
-      <div className="max-w-[1200px] mx-auto px-5 md:px-8">
+      <div className="max-w-[1200px] mx-auto px-8">
 
         {/* Overline */}
         <motion.p
