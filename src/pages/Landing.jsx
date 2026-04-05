@@ -7,7 +7,7 @@ import ChatDemo from "../components/landing/ChatDemo";
 import ProblemSection from "../components/landing/ProblemSection";
 import HowItWorks from "../components/landing/HowItWorks";
 import WhyDifferent from "../components/landing/WhyDifferent";
-import ControlLayer from "../components/landing/ControlLayer";
+import ControlLayer from "../components/landing/ControlLayer.jsx";
 import Industries from "../components/landing/Industries";
 import Pricing from "../components/landing/Pricing";
 import FinalCTA from "../components/landing/FinalCTA";
