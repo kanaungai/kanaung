@@ -3,7 +3,7 @@ import React from "react";
 export default function Footer() {
   return (
     <footer style={{ background: "hsl(220 25% 5%)" }}>
-      <div className="max-w-[1200px] mx-auto px-8">
+      <div className="max-w-[1200px] mx-auto px-5 md:px-8">
         <div
           className="flex flex-col md:flex-row items-center justify-between gap-4 py-8"
           style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}

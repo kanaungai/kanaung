@@ -12,7 +12,7 @@ export default function Hero() {
   const tx = t[lang];
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center pt-20 pb-16 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col justify-center pt-24 pb-16 overflow-hidden">
 
       {/* Base surface */}
       <div className="absolute inset-0 bg-[hsl(220_22%_97%)] pointer-events-none" />
@@ -66,8 +66,8 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative max-w-[1200px] mx-auto px-8 w-full">
-        <div className="grid lg:grid-cols-[1fr_1.15fr] gap-10 xl:gap-16 items-center">
+      <div className="relative max-w-[1200px] mx-auto px-5 md:px-8 w-full">
+        <div className="grid lg:grid-cols-[1fr_1.15fr] gap-12 xl:gap-16 items-center">
 
           <motion.div
             initial={{ opacity: 0, y: 32 }}
@@ -86,7 +86,7 @@ export default function Hero() {
               </span>
             </motion.div>
 
-            <h1 className="font-sora text-[50px] md:text-[62px] xl:text-[72px] font-extrabold tracking-[-0.05em] leading-[0.96] text-foreground">
+            <h1 className="font-sora text-[40px] md:text-[62px] xl:text-[72px] font-extrabold tracking-[-0.05em] leading-[0.96] text-foreground">
               {tx.hero_h1_1}<br />
               {tx.hero_h1_2}<br />
               <span className="text-[hsl(var(--foreground))]">{tx.hero_h1_3}</span>
@@ -111,7 +111,7 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.55 }}
-              className="mt-14 flex items-center gap-10">
+              className="mt-10 flex items-center gap-8">
               {[
                 { value: "LLM", label: tx.stat1_label },
                 { value: "24 / 7", label: tx.stat2_label },

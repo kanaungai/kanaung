@@ -170,7 +170,7 @@ export default function Industries() {
 
   return (
     <section id="industries" className="py-24 md:py-32 bg-[hsl(220_25%_6%)] relative">
-      <div className="max-w-[1200px] mx-auto px-8">
+      <div className="max-w-[1200px] mx-auto px-5 md:px-8">
 
         {/* Header — unchanged */}
         <motion.div

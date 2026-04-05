@@ -17,7 +17,7 @@ export default function WhyDifferent() {
   return (
     <section className="py-24 md:py-36 relative overflow-hidden bg-[hsl(220_25%_6%)]">
 
-      <div className="relative max-w-[1200px] mx-auto px-8">
+      <div className="relative max-w-[1200px] mx-auto px-5 md:px-8">
 
         {/* ── Header ── */}
         <motion.div
@@ -53,11 +53,11 @@ export default function WhyDifferent() {
           animate={{ opacity: cardVisible ? 1 : 0, y: cardVisible ? 0 : 16 }}
           initial={{ opacity: 0, y: 16 }}
           transition={REVEAL.card}
-          className="grid md:grid-cols-[1fr_1px_1fr] gap-0 items-start"
+          className="grid grid-cols-1 md:grid-cols-[1fr_1px_1fr] gap-0 items-start"
         >
 
           {/* ── Left: Traditional ── */}
-          <div className="pr-0 md:pr-16 pb-12 md:pb-0">
+          <div className="pr-0 md:pr-16 pb-10 md:pb-0">
             <div className="mb-8">
               <span
                 className="text-[9.5px] font-bold tracking-[0.16em] uppercase font-inter block mb-3"
