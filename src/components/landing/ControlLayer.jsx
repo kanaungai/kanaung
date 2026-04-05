@@ -413,23 +413,19 @@ export default function ControlLayer() {
           </div>
         </motion.div>
 
-        {/* ── Mobile-only workflow crop ── */}
+        {/* ── Mobile-only focused card ── */}
         <motion.div
           animate={{ opacity: dashVisible ? 1 : 0, y: dashVisible ? 0 : 20 }}
           initial={{ opacity: 0, y: 20 }}
           transition={REVEAL.card}
-          className="md:hidden relative rounded-2xl overflow-hidden"
+          ref={dashRef}
+          className="md:hidden rounded-2xl overflow-hidden"
           style={{
             border: "1px solid hsl(220 16% 84%)",
             boxShadow: "0 0 0 1px hsl(220 20% 95%), 0 24px 60px -12px hsl(220 25% 15% / 0.12)",
             background: "hsl(220 18% 97%)",
           }}
         >
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent pointer-events-none z-10" />
-          {/* Fade-out right edge to make crop feel intentional */}
-          <div className="absolute top-0 right-0 bottom-0 w-16 pointer-events-none z-10"
-            style={{ background: "linear-gradient(to right, transparent, hsl(220 18% 97%))" }} />
-
           {/* Browser chrome */}
           <div className="flex items-center gap-3 px-4 py-2.5 border-b" style={{ background: "hsl(220 18% 98.5%)", borderColor: "hsl(220 16% 87%)" }}>
             <div className="flex items-center gap-1.5 flex-shrink-0">
@@ -437,174 +433,76 @@ export default function ControlLayer() {
                 <div key={i} className="w-2 h-2 rounded-full" style={{ background: "hsl(220 10% 81%)" }} />
               ))}
             </div>
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-mono flex-1"
-              style={{ background: "hsl(220 16% 94%)", border: "1px solid hsl(220 16% 88%)", color: "hsl(220 12% 52%)" }}>
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-mono flex-1" style={{ background: "hsl(220 16% 94%)", border: "1px solid hsl(220 16% 88%)", color: "hsl(220 12% 52%)" }}>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
               app.kanaung.ai / inbox
             </div>
           </div>
 
-          {/* The full 3-column layout, scaled down to ~68% and left-anchored */}
-          <div style={{ overflowX: "hidden" }}>
-            <div style={{
-              width: 760,
-              transformOrigin: "top left",
-              transform: "scale(0.515)",
-              height: 460,
-              // the scaled container collapses: 460 * 0.515 ≈ 237px visible
-              marginBottom: "calc(460px * 0.515 - 460px)",
-            }}>
-              <div className="flex" style={{ minHeight: 460, background: "hsl(220 18% 97%)" }}>
+          {/* Status bar */}
+          <div className="flex items-center gap-2 px-4 py-2.5 border-b" style={{ background: "hsl(220 20% 97%)", borderColor: "hsl(220 16% 89%)" }}>
+            <p className="text-[10px] font-bold tracking-[0.1em] uppercase flex-1" style={{ color: "hsl(220 12% 56%)" }}>Needs Review · 4</p>
+            {CATEGORIES.map((cat) => (
+              <span key={cat.id} className="text-[9px] font-semibold px-2 py-0.5 rounded-full" style={{ background: `${cat.color}18`, color: cat.color }}>
+                {cat.count}
+              </span>
+            ))}
+          </div>
 
-                {/* Slim sidebar */}
-                <div className="flex-shrink-0 flex flex-col items-center py-4 gap-1 border-r"
-                  style={{ width: 52, background: "hsl(220 22% 13%)", borderColor: "hsl(220 16% 87%)" }}>
-                  <div className="mb-3 mt-1">
-                    <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "hsl(352 72% 44%)" }}>
-                      <span className="text-white font-bold text-[10px]" style={{ fontFamily: "var(--font-sora)" }}>K</span>
-                    </div>
+          {/* Selected conversation detail — full width, readable */}
+          <div style={{ background: "white" }}>
+            {/* Conv header */}
+            <div className="px-4 py-3 border-b flex items-center justify-between gap-2" style={{ borderColor: "hsl(220 16% 91%)" }}>
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold flex-shrink-0" style={{ background: "hsl(220 25% 14%)", color: "white" }}>မ</div>
+                <div>
+                  <p className="text-[13px] font-semibold" style={{ color: "hsl(220 25% 10%)" }}>မသီတာ</p>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full" style={{ background: "#7360F214", color: "#7360F2" }}>Viber</span>
+                    <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-full" style={{ background: "hsl(38 80% 96%)", color: "hsl(38 65% 38%)", border: "1px solid hsl(38 60% 88%)" }}>Needs Review</span>
                   </div>
-                  {NAV.map(({ icon: Icon, label, active }) => (
-                    <div key={label} className="w-8 h-8 rounded-lg flex items-center justify-center"
-                      style={{ background: active ? "hsl(220 25% 24%)" : "transparent" }}>
-                      <Icon className="w-3.5 h-3.5" style={{ color: active ? "white" : "hsl(220 16% 52%)" }} />
-                    </div>
-                  ))}
                 </div>
+              </div>
+              <span className="text-[9px] font-semibold px-2 py-1 rounded-md flex-shrink-0" style={{ background: "hsl(220 55% 97%)", color: "hsl(220 50% 46%)", border: "1px solid hsl(220 40% 90%)" }}>Stock Check</span>
+            </div>
 
-                {/* Queue / category column */}
-                <div className="flex-shrink-0 flex flex-col border-r"
-                  style={{ width: 188, background: "hsl(220 20% 97%)", borderColor: "hsl(220 16% 89%)" }}>
-                  <div className="px-3.5 pt-4 pb-3">
-                    <p className="text-[9px] font-bold tracking-[0.1em] uppercase" style={{ color: "hsl(220 12% 56%)" }}>Inbox</p>
+            {/* Customer message */}
+            <div className="px-4 pt-4 pb-3">
+              <p className="text-[9px] font-bold tracking-[0.1em] uppercase mb-2" style={{ color: "hsl(220 12% 60%)" }}>Customer</p>
+              <div className="px-3.5 py-3 rounded-2xl rounded-tl-sm text-[13px] leading-relaxed" style={{ background: "hsl(220 20% 96%)", border: "1px solid hsl(220 16% 90%)", color: "hsl(220 18% 22%)" }}>
+                EX55 model ရှိသေးလား? ဈေးနှုန်းပြောပြပါ
+              </div>
+            </div>
+
+            {/* AI Draft */}
+            <div className="px-4 pb-4">
+              <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid hsl(220 30% 88%)", background: "linear-gradient(160deg, hsl(220 30% 98.5%) 0%, hsl(220 20% 97%) 100%)" }}>
+                <div className="flex items-center justify-between px-4 py-2.5 border-b" style={{ borderColor: "hsl(220 20% 91%)", background: "hsl(220 25% 98%)" }}>
+                  <div className="flex items-center gap-2">
+                    <div className="w-5 h-5 rounded-md flex items-center justify-center" style={{ background: "hsl(220 25% 14%)" }}>
+                      <Zap className="w-2.5 h-2.5 text-white" />
+                    </div>
+                    <span className="text-[11px] font-semibold" style={{ color: "hsl(220 25% 14%)" }}>AI Drafted Reply</span>
                   </div>
-                  <button className="flex items-center justify-between px-3.5 py-2 mx-2 rounded-lg mb-1"
-                    style={{ background: "hsl(220 20% 92%)" }}>
-                    <span className="text-[11px] font-semibold" style={{ color: "hsl(220 25% 14%)" }}>All</span>
-                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full" style={{ background: "hsl(220 25% 20%)", color: "white" }}>52</span>
+                  <ConfidenceRing value={88} />
+                </div>
+                <div className="px-4 py-3.5">
+                  <p className="text-[13px] leading-[1.75]" style={{ color: "hsl(220 18% 22%)" }}>
+                    EX55 model လက်ရှိ stock ရှိပါတယ်။ ကျပ် ၂၈၀ သိန်းမှ စတင်ပါတယ်။ အရောင် ၂ မျိုး ရရှိနိုင်ပြီး financing option များလည်း ရှိပါတယ်။
+                  </p>
+                </div>
+                <div className="flex items-center gap-1.5 px-4 py-2 border-t" style={{ borderColor: "hsl(220 20% 91%)" }}>
+                  <BookOpen className="w-2.5 h-2.5 flex-shrink-0" style={{ color: "hsl(220 12% 64%)" }} />
+                  <p className="text-[9.5px]" style={{ color: "hsl(220 12% 56%)" }}>Source: Product Catalog · EX55</p>
+                </div>
+                <div className="flex items-center gap-2 px-4 py-3 border-t" style={{ borderColor: "hsl(220 20% 91%)", background: "hsl(220 18% 98%)" }}>
+                  <button className="flex items-center gap-1.5 text-[12px] font-semibold px-4 py-2 rounded-lg" style={{ background: "hsl(220 25% 12%)", color: "white" }}>
+                    <CheckCircle2 className="w-3.5 h-3.5" />Approve & Send
                   </button>
-                  {CATEGORIES.map((cat) => (
-                    <button key={cat.id} className="flex items-center justify-between px-3.5 py-2 mx-2 rounded-lg mb-0.5">
-                      <span className="text-[10.5px]" style={{ color: "hsl(220 18% 36%)" }}>{cat.label}</span>
-                      <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full min-w-[18px] text-center"
-                        style={{ background: `${cat.color}18`, color: cat.color }}>{cat.count}</span>
-                    </button>
-                  ))}
-                  <div className="mt-4 mx-3.5">
-                    <p className="text-[8.5px] font-bold tracking-[0.1em] uppercase mb-2" style={{ color: "hsl(220 12% 64%)" }}>Channels</p>
-                    {CHANNEL_PILLS.map((ch) => (
-                      <div key={ch.label} className="flex items-center gap-2 py-1.5">
-                        <div className="w-1.5 h-1.5 rounded-full" style={{ background: ch.color }} />
-                        <span className="text-[10px]" style={{ color: "hsl(220 14% 44%)" }}>{ch.label}</span>
-                      </div>
-                    ))}
-                  </div>
+                  <button className="flex items-center gap-1.5 text-[12px] font-semibold px-3 py-2 rounded-lg" style={{ background: "hsl(220 16% 93%)", color: "hsl(220 18% 28%)", border: "1px solid hsl(220 16% 87%)" }}>
+                    <Pencil className="w-3 h-3" />Edit
+                  </button>
                 </div>
-
-                {/* Conversation list */}
-                <div className="flex-shrink-0 flex flex-col border-r"
-                  style={{ width: 240, background: "hsl(220 18% 97.5%)", borderColor: "hsl(220 16% 89%)" }}>
-                  <div className="px-4 py-3 border-b" style={{ borderColor: "hsl(220 16% 91%)" }}>
-                    <p className="text-[9px] font-bold tracking-[0.1em] uppercase" style={{ color: "hsl(220 12% 58%)" }}>Needs Review · 4</p>
-                  </div>
-                  {CONVERSATIONS.map((conv, i) => {
-                    const st = STATUS_CONFIG[conv.status];
-                    const isSelected = i === 1;
-                    return (
-                      <div key={conv.id} className="w-full text-left flex items-start gap-3 px-4 py-3.5 border-b"
-                        style={{ borderBottomColor: "hsl(220 16% 91%)", background: isSelected ? "white" : "transparent", borderLeft: `2.5px solid ${isSelected ? "hsl(220 25% 16%)" : "transparent"}` }}>
-                        <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 text-[10px] font-bold"
-                          style={{ background: isSelected ? "hsl(220 25% 14%)" : "hsl(220 16% 90%)", color: isSelected ? "white" : "hsl(220 18% 40%)" }}>
-                          {conv.name.charAt(0)}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between mb-0.5">
-                            <p className="text-[11.5px] font-semibold truncate" style={{ color: "hsl(220 25% 12%)" }}>{conv.name}</p>
-                            <span className="text-[9px] flex-shrink-0 ml-1" style={{ color: "hsl(220 12% 60%)" }}>{conv.time}</span>
-                          </div>
-                          <p className="text-[10.5px] truncate mb-1.5" style={{ color: "hsl(220 12% 52%)" }}>{conv.preview}</p>
-                          <div className="flex items-center gap-1.5">
-                            <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full"
-                              style={{ background: `${conv.channelColor}14`, color: conv.channelColor }}>{conv.channel}</span>
-                            <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-full"
-                              style={{ background: st.bg, color: st.color }}>{st.label}</span>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* Detail panel — selected conversation */}
-                <div className="flex-1 min-w-0 flex flex-col" style={{ background: "white" }}>
-                  {/* Header */}
-                  <div className="px-5 py-3.5 border-b flex items-center justify-between gap-3" style={{ borderColor: "hsl(220 16% 91%)" }}>
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold"
-                        style={{ background: "hsl(220 25% 14%)", color: "white" }}>မ</div>
-                      <div>
-                        <p className="text-[12.5px] font-semibold" style={{ color: "hsl(220 25% 10%)" }}>မသီတာ</p>
-                        <div className="flex items-center gap-1.5 mt-0.5">
-                          <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full" style={{ background: "#7360F214", color: "#7360F2" }}>Viber</span>
-                          <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-full"
-                            style={{ background: "hsl(38 80% 96%)", color: "hsl(38 65% 38%)", border: "1px solid hsl(38 60% 88%)" }}>Needs Review</span>
-                        </div>
-                      </div>
-                    </div>
-                    <span className="text-[9px] font-semibold px-2 py-1 rounded-md"
-                      style={{ background: "hsl(220 55% 97%)", color: "hsl(220 50% 46%)", border: "1px solid hsl(220 40% 90%)" }}>Stock Check</span>
-                  </div>
-                  {/* Customer msg */}
-                  <div className="px-5 pt-4 pb-3">
-                    <p className="text-[9px] font-bold tracking-[0.1em] uppercase mb-2.5" style={{ color: "hsl(220 12% 60%)" }}>Customer</p>
-                    <div className="px-3.5 py-3 rounded-2xl rounded-tl-sm text-[12px] leading-relaxed"
-                      style={{ background: "hsl(220 20% 96%)", border: "1px solid hsl(220 16% 90%)", color: "hsl(220 18% 22%)", maxWidth: "88%" }}>
-                      EX55 model ရှိသေးလား? ဈေးနှုန်းပြောပြပါ
-                    </div>
-                  </div>
-                  {/* AI Draft */}
-                  <div className="px-5 pb-4">
-                    <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid hsl(220 30% 88%)", background: "linear-gradient(160deg, hsl(220 30% 98.5%) 0%, hsl(220 20% 97%) 100%)" }}>
-                      <div className="flex items-center justify-between px-4 py-2.5 border-b"
-                        style={{ borderColor: "hsl(220 20% 91%)", background: "hsl(220 25% 98%)" }}>
-                        <div className="flex items-center gap-2">
-                          <div className="w-5 h-5 rounded-md flex items-center justify-center" style={{ background: "hsl(220 25% 14%)" }}>
-                            <Zap className="w-2.5 h-2.5 text-white" />
-                          </div>
-                          <span className="text-[10.5px] font-semibold" style={{ color: "hsl(220 25% 14%)" }}>AI Drafted Reply</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <ConfidenceRing value={88} />
-                          <div>
-                            <p className="text-[9px] font-bold leading-none" style={{ color: "hsl(220 18% 24%)" }}>Confidence</p>
-                            <p className="text-[8.5px] mt-0.5 leading-none" style={{ color: "hsl(220 12% 56%)" }}>Stock Check</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="px-4 py-3.5">
-                        <p className="text-[12px] leading-[1.75]" style={{ color: "hsl(220 18% 22%)" }}>
-                          EX55 model လက်ရှိ stock ရှိပါတယ်။ ကျပ် ၂၈၀ သိန်းမှ စတင်ပါတယ်။ အရောင် ၂ မျိုး ရရှိနိုင်ပြီး financing option များလည်း ရှိပါတယ်။
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-1.5 px-4 py-2 border-t" style={{ borderColor: "hsl(220 20% 91%)" }}>
-                        <BookOpen className="w-2.5 h-2.5 flex-shrink-0" style={{ color: "hsl(220 12% 64%)" }} />
-                        <p className="text-[9.5px]" style={{ color: "hsl(220 12% 56%)" }}>Source: Product Catalog · EX55</p>
-                      </div>
-                      <div className="flex items-center gap-2 px-4 py-3 border-t"
-                        style={{ borderColor: "hsl(220 20% 91%)", background: "hsl(220 18% 98%)" }}>
-                        <button className="flex items-center gap-1.5 text-[11px] font-semibold px-3.5 py-1.5 rounded-lg"
-                          style={{ background: "hsl(220 25% 12%)", color: "white" }}>
-                          <CheckCircle2 className="w-3 h-3" />Approve & Send
-                        </button>
-                        <button className="flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-lg"
-                          style={{ background: "hsl(220 16% 93%)", color: "hsl(220 18% 28%)", border: "1px solid hsl(220 16% 87%)" }}>
-                          <Pencil className="w-2.5 h-2.5" />Edit
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
               </div>
             </div>
           </div>
@@ -612,7 +510,6 @@ export default function ControlLayer() {
 
         {/* ── Desktop-only demo card ── */}
         <motion.div
-          ref={dashRef}
           animate={{ opacity: dashVisible ? 1 : 0, y: dashVisible ? 0 : 20 }}
           initial={{ opacity: 0, y: 20 }}
           transition={REVEAL.card}
