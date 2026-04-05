@@ -88,14 +88,14 @@ export default function CostSection() {
             >
               <div
                 className="font-sora font-extrabold tracking-[-0.05em] leading-none"
-                style={{ fontSize: "clamp(36px, 5vw, 56px)", color: "rgba(255,255,255,0.72)" }}
+                style={{ fontSize: "clamp(36px, 5vw, 56px)", color: "rgba(255,255,255,0.92)" }}
               >
                 {item.stat}
               </div>
-              <p className="text-[9.5px] font-semibold tracking-[0.14em] uppercase font-inter" style={{ color: "rgba(255,255,255,0.22)" }}>
+              <p className="text-[9.5px] font-semibold tracking-[0.14em] uppercase font-inter" style={{ color: "rgba(255,255,255,0.45)" }}>
                 {item.label}
               </p>
-              <p className="text-[13px] leading-[1.8] font-inter tracking-[-0.005em]" style={{ color: "rgba(255,255,255,0.34)" }}>
+              <p className="text-[13px] leading-[1.8] font-inter tracking-[-0.005em]" style={{ color: "rgba(255,255,255,0.62)" }}>
                 {item.body}
               </p>
             </motion.div>
