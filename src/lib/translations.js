@@ -110,6 +110,7 @@ export const t = {
     price_cta2: "Book a Demo",
 
     // FinalCTA
+    cta_eyebrow: "Selected Pilots · 2025",
     cta_h2: "Bring LLM-powered Burmese customer service to your business.",
     cta_sub: "We're working with a select group of Myanmar businesses to replace rigid bots with smarter, more natural customer service automation. Let's talk.",
     cta_btn1: "Book a pilot",
@@ -228,6 +229,7 @@ export const t = {
     price_cta2: "Demo ချိန်းဆိုရန်",
 
     // FinalCTA
+    cta_eyebrow: "ရွေးချယ်ထားသော Pilot လုပ်ငန်းများ · ၂၀၂၅",
     cta_h2: "သင့်လုပ်ငန်းသို့ LLM-powered မြန်မာ customer service ယူဆောင်လာပါ။",
     cta_sub: "ကျွန်ုပ်တို့သည် မြန်မာ လုပ်ငန်းအချို့နှင့်အတူ rigid bot များကို ပိုမိုစမတ်ကျသောနှင့် သဘာဝကျသော customer service automation ဖြင့် အစားထိုးရန် လုပ်ဆောင်နေပါသည်။ ကျွန်ုပ်တို့နှင့် စကားပြောကြပါစို့။",
     cta_btn1: "Pilot ချိန်းဆိုရန်",

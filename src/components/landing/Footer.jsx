@@ -2,15 +2,19 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border py-10">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+    <footer style={{ background: "hsl(220 25% 5%)" }}>
+      <div className="max-w-[1200px] mx-auto px-8">
+        <div
+          className="flex flex-col md:flex-row items-center justify-between gap-4 py-8"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
+        >
           <img
-            src="https://media.base44.com/images/public/69cae07a199d96c3df465260/a1a835598_1.png"
-            alt="Kanaung AI"
-            className="h-6 w-auto opacity-60"
+            src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
+            alt="Kanaung"
+            className="h-5 w-auto"
+            style={{ filter: "brightness(0) invert(1) opacity(0.22)" }}
           />
-          <p className="text-xs text-muted-foreground">
+          <p className="text-[11.5px] font-inter" style={{ color: "rgba(255,255,255,0.20)" }}>
             © {new Date().getFullYear()} Kanaung. Burmese AI customer service for Myanmar businesses.
           </p>
         </div>

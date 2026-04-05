@@ -10,8 +10,8 @@ import WhyDifferent from "../components/landing/WhyDifferent.jsx";
 import ControlLayer from "../components/landing/ControlLayer.jsx";
 import Industries from "../components/landing/Industries";
 import Pricing from "../components/landing/Pricing";
-import FinalCTA from "../components/landing/FinalCTA";
-import Footer from "../components/landing/Footer";
+import FinalCTA from "../components/landing/FinalCTA.jsx";
+import Footer from "../components/landing/Footer.jsx";
 import CalendlyPopup from "../components/landing/CalendlyPopup";
 import ChannelsBar from "../components/landing/ChannelsBar";
 
