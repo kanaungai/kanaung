@@ -4,10 +4,18 @@ import { useLang } from "../../lib/LanguageContext";
 import { t } from "../../lib/translations";
 import { useScrollReveal, REVEAL } from "../../hooks/useScrollReveal";
 
+const STATS = (tx) => [
+  { stat: tx.cost_s1_stat, label: tx.cost_s1_label, body: tx.cost_s1_body },
+  { stat: tx.cost_s2_stat, label: tx.cost_s2_label, body: tx.cost_s2_body },
+  { stat: tx.cost_s3_stat, label: tx.cost_s3_label, body: tx.cost_s3_body },
+];
+
 export default function CostSection() {
   const { lang } = useLang();
   const tx = t[lang];
   const { ref: sectionRef, inView: sectionVisible } = useScrollReveal({ margin: "-80px" });
+
+  const stats = STATS(tx);
 
   return (
     <section className="py-28 md:py-40 relative overflow-hidden bg-[hsl(220_25%_6%)]">
@@ -16,7 +24,7 @@ export default function CostSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-[hsl(220_25%_4%)] via-[hsl(220_25%_7%)] to-[hsl(220_25%_6%)] pointer-events-none" />
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none"
-        style={{ width: 800, height: 480, background: "hsl(352 72% 38% / 0.07)", filter: "blur(130px)", borderRadius: "50%" }}
+        style={{ width: 700, height: 420, background: "hsl(352 72% 38% / 0.06)", filter: "blur(120px)", borderRadius: "50%" }}
       />
 
       <div ref={sectionRef} className="relative max-w-[1200px] mx-auto px-8">
@@ -30,109 +38,77 @@ export default function CostSection() {
           <p className="text-[10px] font-semibold tracking-[0.16em] uppercase text-white/25 mb-6 font-inter">
             {tx.cost_eyebrow}
           </p>
-          <div className="w-full h-px bg-white/8 mb-16 md:mb-20" />
+          <div className="w-full h-px mb-14 md:mb-16" style={{ background: "rgba(255,255,255,0.07)" }} />
         </motion.div>
 
-        {/* ── Hero: 21× ── */}
-        <div className="grid md:grid-cols-2 gap-12 md:gap-24 items-end mb-20 md:mb-28">
+        {/* Top row: headline left, paragraph right */}
+        <div className="grid md:grid-cols-2 gap-10 md:gap-24 mb-20 md:mb-24 items-start">
 
-          {/* Giant number */}
-          <motion.div
-            animate={{ opacity: sectionVisible ? 1 : 0, y: sectionVisible ? 0 : 24 }}
-            initial={{ opacity: 0, y: 24 }}
-            transition={{ ...REVEAL.card, delay: 0.05 }}
+          <motion.h2
+            animate={{ opacity: sectionVisible ? 1 : 0, y: sectionVisible ? 0 : 20 }}
+            initial={{ opacity: 0, y: 20 }}
+            transition={{ ...REVEAL.primary, delay: 0.05 }}
+            className="font-sora font-extrabold tracking-[-0.045em] leading-[1.06] text-white"
+            style={{ fontSize: "clamp(28px, 4.5vw, 52px)" }}
           >
-            <div
-              className="font-sora font-extrabold tracking-[-0.07em] leading-none select-none"
-              style={{
-                fontSize: "clamp(100px, 18vw, 200px)",
-                background: "linear-gradient(170deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.28) 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              21×
-            </div>
-          </motion.div>
+            {tx.cost_h2}
+          </motion.h2>
 
-          {/* Copy beside the number */}
-          <motion.div
-            animate={{ opacity: sectionVisible ? 1 : 0, y: sectionVisible ? 0 : 18 }}
-            initial={{ opacity: 0, y: 18 }}
-            transition={{ ...REVEAL.card, delay: 0.15 }}
-            className="pb-3 md:pb-5"
+          <motion.p
+            animate={{ opacity: sectionVisible ? 1 : 0, y: sectionVisible ? 0 : 16 }}
+            initial={{ opacity: 0, y: 16 }}
+            transition={{ ...REVEAL.primary, delay: 0.14 }}
+            className="text-[14.5px] leading-[1.85] font-inter tracking-[-0.005em] md:pt-1"
+            style={{ color: "rgba(255,255,255,0.38)" }}
           >
-            <h2 className="font-sora text-[26px] md:text-[34px] font-extrabold tracking-[-0.04em] leading-[1.1] text-white mb-5">
-              {tx.cost_h2}
-            </h2>
-            <p className="text-[14.5px] text-white/42 leading-[1.85] font-inter tracking-[-0.005em] max-w-sm">
-              {tx.cost_s1_body}
-            </p>
-            {/* Narrative thread */}
-            <div className="mt-8 flex items-center gap-2.5 flex-wrap">
-              {(lang === "en"
-                ? ["Inquiry arrives", "No fast reply", "Lead goes cold"]
-                : ["မေးမြန်းချက် ရောက်သည်", "မြန်မြန်မဖြေ", "ဖောက်သည် ထွက်သွားသည်"]
-              ).map((step, i, arr) => (
-                <React.Fragment key={step}>
-                  <span
-                    className="text-[11px] font-medium font-inter"
-                    style={{
-                      color: i === 0
-                        ? "rgba(255,255,255,0.35)"
-                        : i === 1
-                        ? "hsl(38 75% 55%)"
-                        : "hsl(352 65% 60%)",
-                    }}
-                  >
-                    {step}
-                  </span>
-                  {i < arr.length - 1 && (
-                    <span style={{ color: "rgba(255,255,255,0.12)", fontSize: 11 }}>→</span>
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
-          </motion.div>
+            {tx.cost_sub}
+          </motion.p>
         </div>
 
-        {/* ── Supporting stats — open, minimal, no cards ── */}
+        {/* Bottom row: 3 equal stat columns */}
         <motion.div
           animate={{ opacity: sectionVisible ? 1 : 0, y: sectionVisible ? 0 : 12 }}
           initial={{ opacity: 0, y: 12 }}
-          transition={{ ...REVEAL.fade, delay: 0.28 }}
-          className="grid md:grid-cols-2 gap-10 md:gap-20 pt-10 border-t"
-          style={{ borderColor: "rgba(255,255,255,0.07)" }}
+          transition={{ ...REVEAL.fade, delay: 0.24 }}
+          className="grid md:grid-cols-3 gap-0"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
         >
-          {[
-            { stat: tx.cost_s2_stat, label: tx.cost_s2_label, body: tx.cost_s2_body },
-            { stat: tx.cost_s3_stat, label: tx.cost_s3_label, body: tx.cost_s3_body },
-          ].map((item) => (
-            <div key={item.label} className="flex gap-6 items-start">
+          {stats.map((item, i) => (
+            <motion.div
+              key={item.label}
+              animate={{ opacity: sectionVisible ? 1 : 0, y: sectionVisible ? 0 : 10 }}
+              initial={{ opacity: 0, y: 10 }}
+              transition={{ ...REVEAL.fade, delay: 0.28 + i * 0.08 }}
+              className="pt-10 pb-2 flex flex-col gap-3"
+              style={{
+                paddingRight: i < 2 ? "clamp(24px, 4vw, 56px)" : 0,
+                paddingLeft: i > 0 ? "clamp(24px, 4vw, 56px)" : 0,
+                borderLeft: i > 0 ? "1px solid rgba(255,255,255,0.07)" : "none",
+              }}
+            >
               <div
-                className="font-sora font-extrabold tracking-[-0.05em] leading-none flex-shrink-0 mt-0.5"
-                style={{ fontSize: 44, color: "rgba(255,255,255,0.18)" }}
+                className="font-sora font-extrabold tracking-[-0.05em] leading-none"
+                style={{ fontSize: "clamp(36px, 5vw, 56px)", color: "rgba(255,255,255,0.72)" }}
               >
                 {item.stat}
               </div>
-              <div>
-                <p className="text-[9.5px] font-semibold tracking-[0.14em] uppercase text-white/20 mb-2 font-inter">
-                  {item.label}
-                </p>
-                <p className="text-[13px] text-white/36 leading-[1.8] font-inter tracking-[-0.005em]">
-                  {item.body}
-                </p>
-              </div>
-            </div>
+              <p className="text-[9.5px] font-semibold tracking-[0.14em] uppercase font-inter" style={{ color: "rgba(255,255,255,0.22)" }}>
+                {item.label}
+              </p>
+              <p className="text-[13px] leading-[1.8] font-inter tracking-[-0.005em]" style={{ color: "rgba(255,255,255,0.34)" }}>
+                {item.body}
+              </p>
+            </motion.div>
           ))}
         </motion.div>
 
+        {/* Bottom rule */}
         <motion.div
           animate={{ opacity: sectionVisible ? 1 : 0 }}
           initial={{ opacity: 0 }}
-          transition={{ ...REVEAL.fade, delay: 0.38 }}
-          className="w-full h-px bg-white/8 mt-16 md:mt-20"
+          transition={{ ...REVEAL.fade, delay: 0.44 }}
+          className="w-full h-px mt-16 md:mt-20"
+          style={{ background: "rgba(255,255,255,0.07)" }}
         />
       </div>
     </section>
