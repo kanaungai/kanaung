@@ -135,7 +135,7 @@ export default function ChatDemo() {
       setInput("");
       setIsTyping(true);
 
-      const delay = 800 + Math.random() * 800;
+      const delay = 200 + Math.random() * 200;
       setTimeout(() => {
         const response = findBestMatch(trimmed);
         setMessages((prev) => [...prev, { role: "bot", content: response }]);
