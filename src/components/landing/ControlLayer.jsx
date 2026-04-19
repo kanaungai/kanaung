@@ -359,16 +359,8 @@ export default function ControlLayer() {
   const { ref: dashRef, inView: dashVisible } = useScrollReveal({ margin: "-40px" });
 
   return (
-    <section className="py-28 md:py-40 relative overflow-hidden" style={{ background: "hsl(220 25% 6%)" }}>
-      {/* Atmospheric bloom behind dashboard */}
-      <div
-        className="absolute bottom-0 right-0 pointer-events-none"
-        style={{ width: 800, height: 600, background: "hsl(352 60% 28% / 0.07)", filter: "blur(130px)", borderRadius: "50%" }}
-      />
-      <div
-        className="absolute top-0 left-0 pointer-events-none"
-        style={{ width: 600, height: 500, background: "hsl(220 60% 20% / 0.12)", filter: "blur(120px)", borderRadius: "50%" }}
-      />
+    <section className="py-24 md:py-32 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-background to-background pointer-events-none" />
 
       <div className="relative max-w-[1200px] mx-auto px-8">
 
@@ -380,20 +372,19 @@ export default function ControlLayer() {
           transition={REVEAL.primary}
           className="mb-16 md:mb-20"
         >
-          <p className="text-[10px] font-semibold tracking-[0.16em] uppercase mb-6 font-inter" style={{ color: "rgba(255,255,255,0.28)" }}>
+          <p className="text-[10px] font-semibold tracking-[0.16em] uppercase text-muted-foreground/60 mb-6 font-inter">
             The Control Layer
           </p>
-          <div className="w-full h-px mb-10" style={{ background: "rgba(255,255,255,0.07)" }} />
+          <div className="w-full h-px bg-foreground/8 mb-10" />
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
-            <h2 className="font-sora text-[30px] md:text-[48px] xl:text-[56px] font-extrabold tracking-[-0.05em] leading-[0.97] text-white">
+            <h2 className="font-sora text-[30px] md:text-[48px] xl:text-[56px] font-extrabold tracking-[-0.05em] leading-[0.97] text-foreground">
               The control layer behind every conversation.
             </h2>
             <motion.p
               animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 12 }}
               initial={{ opacity: 0, y: 12 }}
               transition={{ ...REVEAL.primary, delay: 0.12 }}
-              className="text-[15px] leading-[1.8] md:pt-2 max-w-md font-inter tracking-[-0.005em]"
-              style={{ color: "rgba(255,255,255,0.42)" }}
+              className="text-[15px] text-muted-foreground leading-[1.8] md:pt-2 max-w-md font-inter tracking-[-0.005em]"
             >
               Monitor AI-handled conversations, review auto-generated replies, and manage human escalations — all from one operations dashboard built for Myanmar businesses.
             </motion.p>
@@ -414,8 +405,7 @@ export default function ControlLayer() {
           animate={{ opacity: dashVisible ? 1 : 0 }}
           initial={{ opacity: 0 }}
           transition={{ ...REVEAL.fade, delay: 0.4 }}
-          className="w-full h-px mt-16 md:mt-20"
-          style={{ background: "rgba(255,255,255,0.07)" }}
+          className="w-full h-px bg-foreground/8 mt-16 md:mt-20"
         />
       </div>
     </section>

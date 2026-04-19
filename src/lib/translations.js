@@ -22,8 +22,7 @@ export const t = {
     stat3_label: "Native language",
 
     // ChannelsBar
-    channels_heading: "Works across every channel your customers already use.",
-    channels_label: "Messenger · WhatsApp · Viber · Telegram · Facebook · Instagram · Web Chat",
+    channels_label: "Integrations",
 
     // CostSection
     cost_eyebrow: "The Problem",
@@ -157,8 +156,7 @@ export const t = {
     stat3_label: "မိခင်ဘာသာ",
 
     // ChannelsBar
-    channels_heading: "သုံးစွဲသူများ ပြောဆိုနေသော channel အားလုံးတွင် အလုပ်လုပ်သည်။",
-    channels_label: "Messenger · WhatsApp · Viber · Telegram · Facebook · Instagram · Web Chat",
+    channels_label: "ချိတ်ဆက်မှုများ",
 
     // CostSection
     cost_eyebrow: "ပြဿနာ",
