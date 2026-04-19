@@ -97,7 +97,8 @@ export default function Navbar() {
           </a>
           <button
             onClick={openCalendly}
-            className="inline-flex items-center gap-2 bg-foreground text-background text-[13px] font-semibold px-5 h-[38px] rounded-full hover:bg-foreground/90 transition-all duration-200 tracking-[-0.01em] shadow-sm">
+            className="inline-flex items-center gap-2 bg-foreground text-background text-[12.5px] font-semibold px-4 h-[36px] rounded-lg hover:bg-foreground/90 transition-all duration-200 tracking-[-0.01em]"
+            style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.06)" }}>
             
             {tx.nav_book}
           </button>

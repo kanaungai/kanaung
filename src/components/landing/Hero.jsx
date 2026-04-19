@@ -17,7 +17,7 @@ export default function Hero() {
       {/* Base surface */}
       <div className="absolute inset-0 bg-[hsl(220_22%_97%)] pointer-events-none" />
 
-      {/* Warm radial glow — primary atmosphere, left-center behind text */}
+      {/* Cool neutral atmosphere — restrained, enterprise */}
       <div
         className="absolute pointer-events-none"
         style={{
@@ -25,11 +25,11 @@ export default function Hero() {
           left: "-20%",
           width: "90%",
           height: "120%",
-          background: "radial-gradient(ellipse at 38% 44%, hsl(28 75% 89% / 1) 0%, hsl(26 55% 93% / 0.75) 30%, transparent 60%)",
+          background: "radial-gradient(ellipse at 38% 44%, hsl(220 30% 93% / 0.9) 0%, hsl(220 25% 95% / 0.6) 32%, transparent 62%)",
         }}
       />
 
-      {/* Secondary glow — right side cool depth */}
+      {/* Secondary depth — very subtle warmth on the right */}
       <div
         className="absolute pointer-events-none"
         style={{
@@ -37,7 +37,7 @@ export default function Hero() {
           right: "-10%",
           width: "60%",
           height: "85%",
-          background: "radial-gradient(ellipse at 60% 35%, hsl(220 35% 91% / 0.75) 0%, transparent 55%)",
+          background: "radial-gradient(ellipse at 60% 35%, hsl(28 40% 94% / 0.55) 0%, transparent 58%)",
         }}
       />
 
@@ -79,9 +79,10 @@ export default function Hero() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="inline-flex items-center self-start gap-2 px-4 py-2 rounded-full bg-foreground mb-8">
-              <span className="w-1.5 h-1.5 rounded-full bg-white/50" />
-              <span className="text-[9.5px] font-bold text-background/70 tracking-[0.2em] uppercase font-inter">
+              className="inline-flex items-center self-start gap-2 px-3 py-1.5 rounded-full mb-8"
+              style={{ background: "rgba(20, 22, 30, 0.04)", border: "1px solid rgba(20, 22, 30, 0.08)" }}>
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: "hsl(142 55% 44%)" }} />
+              <span className="text-[10px] font-semibold tracking-[0.14em] uppercase font-inter" style={{ color: "hsl(220 20% 28%)" }}>
                 {tx.hero_eyebrow}
               </span>
             </motion.div>
@@ -100,9 +101,10 @@ export default function Hero() {
             <div className="mt-10 flex flex-col sm:flex-row gap-3">
               <button
                 onClick={openCalendly}
-                className="inline-flex items-center justify-center gap-2 bg-foreground text-background text-[14px] font-semibold px-7 h-[50px] rounded-full hover:bg-foreground/88 transition-all duration-200 shadow-lg shadow-foreground/10 tracking-[-0.01em]">
+                className="inline-flex items-center justify-center gap-2 bg-foreground text-background text-[13.5px] font-semibold px-6 h-[46px] rounded-lg hover:bg-foreground/90 transition-all duration-200 tracking-[-0.01em]"
+                style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.08), 0 4px 12px -2px rgba(0,0,0,0.06)" }}>
                 {tx.hero_cta1}
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
               <TryDemoButton label={tx.hero_cta2} />
             </div>
