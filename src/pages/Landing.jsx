@@ -1,7 +1,8 @@
 import React from "react";
 import { LanguageProvider } from "../lib/LanguageContext";
 import Navbar from "../components/landing/Navbar";
-import Hero from "../components/landing/Hero";
+import Hero from "../components/landing/Hero.jsx";
+import ProductProof from "../components/landing/ProductProof.jsx";
 import CostSection from "../components/landing/CostSection.jsx";
 import ChatDemo from "../components/landing/ChatDemo";
 import ProblemSection from "../components/landing/ProblemSection";
@@ -21,6 +22,7 @@ export default function Landing() {
     <div className="min-h-screen bg-background font-inter antialiased">
       <Navbar />
       <Hero />
+      <ProductProof />
       <ChannelsBar />
       <ControlLayer />
       <CostSection />
