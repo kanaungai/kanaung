@@ -163,42 +163,49 @@ function AmbientPulse() {
   );
 }
 
-// Metadata strip — three-cell production-signal footer
-function MetadataStrip() {
-  const cellStyle = {
-    fontSize: 10,
-    letterSpacing: "0.06em",
-    color: "rgba(255,255,255,0.4)",
-    textTransform: "uppercase",
-    fontFamily: "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, monospace",
-    fontWeight: 500,
-    whiteSpace: "nowrap",
-  };
+function GenerationStrip({ isActive, statusLabel }) {
   return (
     <div
-      className="px-5 py-3 grid grid-cols-3 items-center"
-      style={{ borderTop: "0.5px solid rgba(255,255,255,0.06)" }}
+      className="px-5 py-3 flex items-center justify-between gap-4"
+      style={{
+        borderTop: "1px solid rgba(255,255,255,0.055)",
+        background: "rgba(255,255,255,0.012)",
+      }}
     >
-      <div style={{ ...cellStyle, textAlign: "left" }}>RESPONSE · 1.2s</div>
-      <div style={{ ...cellStyle, textAlign: "center" }}>CONFIDENCE · 94%</div>
-      <div style={{ ...cellStyle, textAlign: "right" }}>KANAUNG v2.1</div>
-    </div>
-  );
-}
+      <div className="flex items-center gap-2.5 min-w-0">
+        {/* Indicator dot */}
+        <span
+          className="flex-shrink-0"
+          style={{
+            width: 6,
+            height: 6,
+            borderRadius: "50%",
+            display: "inline-block",
+            background: isActive ? "hsl(352 72% 52%)" : "rgba(255,255,255,0.18)",
+            boxShadow: isActive ? "0 0 7px hsl(352 72% 52% / 0.55)" : "none",
+            transition: "background 0.4s, box-shadow 0.4s",
+          }}
+        />
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={statusLabel + String(isActive)}
+            initial={{ opacity: 0, y: 3 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -3 }}
+            transition={{ duration: 0.22 }}
+            className="text-[10px] font-medium font-inter truncate tracking-[-0.005em]"
+            style={{ color: isActive ? "rgba(255,255,255,0.38)" : "rgba(255,255,255,0.22)" }}
+          >
+            {isActive ? statusLabel : "Monitoring · Kanaung AI"}
+          </motion.span>
+        </AnimatePresence>
+      </div>
 
-// Real Messenger icon — blue circle with white lightning bolt
-function MessengerIcon({ size = 10 }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
-      <circle cx="24" cy="24" r="24" fill="url(#msg-hero-grad)"/>
-      <defs>
-        <linearGradient id="msg-hero-grad" x1="24" y1="0" x2="24" y2="48" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#00B0FF"/>
-          <stop offset="1" stopColor="#006AFF"/>
-        </linearGradient>
-      </defs>
-      <path d="M24 8C15.163 8 8 14.716 8 23C8 27.557 10.057 31.627 13.322 34.42V40L18.908 37.147C20.511 37.608 22.224 37.857 24 37.857C32.837 37.857 40 31.141 40 22.857C40 14.573 32.837 8 24 8ZM25.392 27.392L21.837 23.571L14.914 27.392L22.557 19.178L26.163 22.999L33.035 19.178L25.392 27.392Z" fill="white"/>
-    </svg>
+      <div className="flex items-center gap-3 flex-shrink-0">
+        {!isActive && <AmbientPulse />}
+        <ActivityBars isActive={isActive} />
+      </div>
+    </div>
   );
 }
 
@@ -277,76 +284,57 @@ export default function LiveCallPanel() {
 
   return (
     <div className="relative w-full">
+      {/* Ambient glow */}
+      <div className="absolute -inset-4 rounded-[36px] bg-primary/[0.07] blur-3xl pointer-events-none" />
+      <div className="absolute -inset-1 rounded-[32px] bg-gradient-to-br from-primary/8 via-transparent to-blue-500/4 blur-xl pointer-events-none" />
 
       {/* Panel */}
       <div
-        className="relative overflow-hidden"
+        className="relative rounded-[24px] overflow-hidden shadow-2xl shadow-black/40"
         style={{
-          background: "#0a0a0b",
-          border: "0.5px solid rgba(255,255,255,0.08)",
-          borderRadius: 14,
+          background: "linear-gradient(145deg, #111117 0%, #0d0d12 60%, #0f0e14 100%)",
+          border: "1px solid rgba(255,255,255,0.07)",
         }}
       >
-        {/* ── Header ── Messenger-inbox style */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
+
+        {/* ── Header ── */}
         <div
-          className="px-4 pt-3.5 pb-3.5 flex items-center justify-between"
-          style={{ borderBottom: "0.5px solid rgba(255,255,255,0.06)" }}
+          className="px-5 pt-4 pb-4 flex items-center justify-between"
+          style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}
         >
-          <div className="flex items-center gap-2.5">
-            {/* Back chevron */}
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
-              <path d="M15 18L9 12L15 6" stroke="rgba(255,255,255,0.35)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-
-            {/* Diamond avatar — 28px */}
-            <div
-              className="flex items-center justify-center flex-shrink-0"
-              style={{
-                width: 28,
-                height: 28,
-                borderRadius: 10,
-                background: "#1a1015",
-                border: "1px solid rgba(255,255,255,0.1)",
-              }}
-            >
-              <img
-                src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
-                alt="Kanaung"
-                style={{ width: 14, height: 14, objectFit: "contain", filter: "brightness(0) invert(1) opacity(0.9)" }}
-              />
+          <div className="flex items-center gap-3">
+            <div className="relative w-8 h-8 flex-shrink-0">
+              <div className="absolute inset-0 rounded-xl bg-primary/20 blur-sm" />
+              <div
+                className="relative w-8 h-8 rounded-xl flex items-center justify-center"
+                style={{ background: "#1a1015", border: "1px solid rgba(255,255,255,0.1)" }}
+              >
+                <img
+                  src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
+                  alt="Kanaung"
+                  className="w-4 h-4 object-contain"
+                  style={{ filter: "brightness(0) invert(1) opacity(0.9)" }}
+                />
+              </div>
             </div>
-
-            {/* Two-line label */}
-            <div className="flex flex-col">
-              <span
-                className="font-sora leading-tight"
-                style={{ fontSize: 14, fontWeight: 500, color: "rgba(255,255,255,1)", letterSpacing: "-0.005em" }}
-              >
-                မောင်သီဟ
-              </span>
-              <span
-                className="font-inter flex items-center gap-1 leading-tight mt-[2px]"
-                style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}
-              >
-                via <MessengerIcon size={10} /> Messenger · Yangon
-              </span>
+            <div>
+              <div className="font-sora text-[13px] font-semibold leading-tight tracking-[-0.01em]" style={{ color: "rgba(255,255,255,0.88)" }}>
+                Kanaung AI
+              </div>
+              <div className="text-[10px] mt-0.5 font-inter" style={{ color: "rgba(255,255,255,0.26)", letterSpacing: "0.01em" }}>
+                ရွှေကြယ် စက်ပစ္စည်း · Business Assistant
+              </div>
             </div>
           </div>
 
-          {/* Timestamp */}
-          <span
-            style={{
-              fontSize: 10,
-              letterSpacing: "0.08em",
-              color: "rgba(255,255,255,0.4)",
-              textTransform: "uppercase",
-              fontFamily: "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, monospace",
-              fontWeight: 500,
-              whiteSpace: "nowrap",
-            }}
+          <div
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full"
+            style={{ background: "rgba(34,197,94,0.07)", border: "1px solid rgba(34,197,94,0.14)" }}
           >
-            2 MIN AGO
-          </span>
+            <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+            <span className="text-[9px] font-bold text-green-400 tracking-[0.1em] uppercase">Live</span>
+          </div>
         </div>
 
         {/* ── Messages ── */}
@@ -450,8 +438,10 @@ export default function LiveCallPanel() {
           </AnimatePresence>
         </div>
 
-        {/* ── Metadata strip ── */}
-        <MetadataStrip />
+        {/* ── Generation strip ── */}
+        <GenerationStrip isActive={isTyping} statusLabel={statusLabel} />
+
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent pointer-events-none" />
       </div>
     </div>
   );
