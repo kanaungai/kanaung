@@ -120,13 +120,13 @@ export default function TryDemoButton({ label = "Try the Demo" }) {
           whileTap={{ scale: 0.97 }}
           style={{ y: liftY }}
           transition={{ duration: 0.18, ease: "easeOut" }}
-          className="relative inline-flex items-center justify-center overflow-hidden rounded-lg h-[48px] px-6 cursor-pointer"
+          className="relative inline-flex items-center justify-center overflow-hidden rounded-full h-[50px] px-7 cursor-pointer"
         >
           {/* Base background */}
           <motion.div
             className="absolute inset-0 rounded-full pointer-events-none"
             style={{
-              background: "rgba(255,255,255,0.04)",
+              background: "rgba(255,255,255,0.72)",
               backdropFilter: "blur(12px)",
               WebkitBackdropFilter: "blur(12px)",
               borderWidth: 1,
@@ -135,7 +135,7 @@ export default function TryDemoButton({ label = "Try the Demo" }) {
               // Inner edge glow — very subtle warmth on the border itself
               boxShadow: useTransform(
                 glowOpacity,
-                (v) => `inset 0 0 12px rgba(255,255,255,${v * 0.05}), 0 8px 24px rgba(0,0,0,0.08)`
+                (v) => `inset 0 0 12px rgba(255,106,61,${v * 0.12}), inset 0 0 6px rgba(79,209,197,${v * 0.08}), 0 2px 20px rgba(0,0,0,0.07)`
               ),
             }}
           />
@@ -162,7 +162,7 @@ export default function TryDemoButton({ label = "Try the Demo" }) {
           {/* Label */}
           <span
             className="relative z-10 text-[14px] font-medium tracking-[-0.015em]"
-            style={{ color: "rgba(255,255,255,0.86)", fontFamily: "var(--font-inter)" }}
+            style={{ color: "#0A0A0A", fontFamily: "var(--font-inter)" }}
           >
             {label}
           </span>
