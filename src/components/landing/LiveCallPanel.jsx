@@ -285,71 +285,63 @@ export default function LiveCallPanel() {
   return (
     <div className="relative w-full">
       {/* Ambient glow */}
-      <div className="absolute -inset-5 rounded-[40px] bg-slate-900/[0.08] blur-3xl pointer-events-none" />
-      <div className="absolute -inset-1 rounded-[34px] bg-gradient-to-br from-white/90 via-slate-200/40 to-primary/5 blur-xl pointer-events-none" />
+      <div className="absolute -inset-4 rounded-[36px] bg-primary/[0.07] blur-3xl pointer-events-none" />
+      <div className="absolute -inset-1 rounded-[32px] bg-gradient-to-br from-primary/8 via-transparent to-blue-500/4 blur-xl pointer-events-none" />
 
       {/* Panel */}
       <div
-        className="relative rounded-[26px] overflow-hidden"
+        className="relative rounded-[24px] overflow-hidden shadow-2xl shadow-black/40"
         style={{
-          background: "hsl(220 22% 98%)",
-          border: "1px solid hsl(220 16% 84%)",
-          boxShadow: "0 1px 0 rgba(255,255,255,0.9) inset, 0 34px 90px -28px rgba(15,23,42,0.45), 0 14px 34px -24px rgba(15,23,42,0.35)",
+          background: "linear-gradient(145deg, #111117 0%, #0d0d12 60%, #0f0e14 100%)",
+          border: "1px solid rgba(255,255,255,0.07)",
         }}
       >
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white to-transparent pointer-events-none" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
 
         {/* ── Header ── */}
         <div
-          className="px-4 py-3 flex items-center justify-between"
-          style={{ borderBottom: "1px solid hsl(220 16% 87%)", background: "linear-gradient(180deg, white 0%, hsl(220 20% 97%) 100%)" }}
+          className="px-5 pt-4 pb-4 flex items-center justify-between"
+          style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}
         >
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="hidden sm:flex items-center gap-1.5 flex-shrink-0 mr-1">
-              {[0, 1, 2].map((i) => <span key={i} className="w-2.5 h-2.5 rounded-full" style={{ background: "hsl(220 10% 82%)" }} />)}
-            </div>
+          <div className="flex items-center gap-3">
             <div className="relative w-8 h-8 flex-shrink-0">
-              <div className="absolute inset-0 rounded-xl bg-primary/10 blur-sm" />
+              <div className="absolute inset-0 rounded-xl bg-primary/20 blur-sm" />
               <div
                 className="relative w-8 h-8 rounded-xl flex items-center justify-center"
-                style={{ background: "white", border: "1px solid hsl(220 16% 86%)", boxShadow: "0 1px 2px rgba(15,23,42,0.05)" }}
+                style={{ background: "#1a1015", border: "1px solid rgba(255,255,255,0.1)" }}
               >
                 <img
                   src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
                   alt="Kanaung"
                   className="w-4 h-4 object-contain"
-                  style={{ filter: "brightness(0) saturate(100%) invert(16%) sepia(80%) saturate(900%) hue-rotate(330deg) brightness(80%)" }}
+                  style={{ filter: "brightness(0) invert(1) opacity(0.9)" }}
                 />
               </div>
             </div>
-            <div className="min-w-0">
-              <div className="font-sora text-[13px] font-semibold leading-tight tracking-[-0.01em] text-foreground">
+            <div>
+              <div className="font-sora text-[13px] font-semibold leading-tight tracking-[-0.01em]" style={{ color: "rgba(255,255,255,0.88)" }}>
                 Kanaung AI
               </div>
-              <div className="text-[10px] mt-0.5 font-inter truncate" style={{ color: "hsl(220 12% 48%)", letterSpacing: "0.01em" }}>
+              <div className="text-[10px] mt-0.5 font-inter" style={{ color: "rgba(255,255,255,0.26)", letterSpacing: "0.01em" }}>
                 ရွှေကြယ် စက်ပစ္စည်း · Business Assistant
               </div>
             </div>
           </div>
 
           <div
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full flex-shrink-0"
-            style={{ background: "hsl(142 55% 95%)", border: "1px solid hsl(142 45% 86%)" }}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full"
+            style={{ background: "rgba(34,197,94,0.07)", border: "1px solid rgba(34,197,94,0.14)" }}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-[9px] font-bold tracking-[0.1em] uppercase" style={{ color: "hsl(142 50% 34%)" }}>Live</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+            <span className="text-[9px] font-bold text-green-400 tracking-[0.1em] uppercase">Live</span>
           </div>
         </div>
 
         {/* ── Messages ── */}
         <div
           ref={containerRef}
-          className="relative px-5 pt-5 pb-3 space-y-4 overflow-y-auto"
-          style={{
-            height: "450px",
-            scrollbarWidth: "none",
-            background: "radial-gradient(circle at 18% 0%, hsl(220 28% 14%) 0%, transparent 34%), linear-gradient(180deg, hsl(220 25% 8%) 0%, hsl(220 24% 6%) 100%)",
-          }}
+          className="px-5 pt-5 pb-3 space-y-4 overflow-y-auto"
+          style={{ height: "450px", scrollbarWidth: "none" }}
         >
           <AnimatePresence initial={false}>
             {visibleMessages.map((msg, i) => (
@@ -447,11 +439,9 @@ export default function LiveCallPanel() {
         </div>
 
         {/* ── Generation strip ── */}
-        <div style={{ background: "hsl(220 24% 6%)" }}>
-          <GenerationStrip isActive={isTyping} statusLabel={statusLabel} />
-        </div>
+        <GenerationStrip isActive={isTyping} statusLabel={statusLabel} />
 
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent pointer-events-none" />
       </div>
     </div>
   );
