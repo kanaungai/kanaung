@@ -189,7 +189,7 @@ function GenerationStrip({ isActive, statusLabel }) {
   );
 }
 
-export default function LiveCallPanel() {
+export default function LiveCallPanel({ compact = false }) {
   const [runKey, setRunKey] = useState(0);
   const [visibleMessages, setVisibleMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
@@ -300,7 +300,7 @@ export default function LiveCallPanel() {
         {/* Messages */}
         <div
           ref={containerRef}
-          style={{ padding: "18px 20px 12px", height: 440, overflowY: "auto", scrollbarWidth: "none", display: "flex", flexDirection: "column", gap: 14 }}
+          style={{ padding: "18px 20px 12px", height: compact ? 320 : 440, overflowY: "auto", scrollbarWidth: "none", display: "flex", flexDirection: "column", gap: 14 }}
         >
           <style>{`@keyframes typingBounce{0%,60%,100%{transform:translateY(0);opacity:.35}30%{transform:translateY(-5px);opacity:1}}`}</style>
 
