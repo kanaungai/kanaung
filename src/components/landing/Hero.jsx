@@ -142,12 +142,77 @@ export default function Hero() {
             initial={{ opacity: 0, y: 32, scale: 0.975 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.82, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
-            className="relative"
-            style={{ maxWidth: 660 }}
+            className="relative flex justify-end"
           >
-            <DecorativePanels />
-            {/* Constrain the panel width */}
-            <div style={{ position: "relative", zIndex: 1 }}>
+            {/* Outer glow behind everything */}
+            <div className="absolute pointer-events-none" style={{ inset: -32, background: "radial-gradient(ellipse at 55% 48%, hsl(352 40% 88% / 0.22) 0%, transparent 62%)", filter: "blur(24px)" }} />
+
+            {/* Knowledge base panel — peeks top-left behind card */}
+            <div
+              className="absolute hidden lg:block pointer-events-none"
+              style={{
+                top: 28, left: 0, width: 148,
+                background: "hsl(0 0% 99%)", border: "1px solid hsl(220 14% 89%)",
+                borderRadius: 12, padding: "10px 12px",
+                boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
+                opacity: 0.72,
+                transform: "translateX(-40%) translateY(-8px)",
+                zIndex: 0,
+              }}
+            >
+              <p style={{ fontSize: 7, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "hsl(220 12% 52%)", marginBottom: 6 }}>Knowledge Base</p>
+              {[
+                { label: "Product Catalog", dot: "hsl(142 48% 50%)" },
+                { label: "Pricing Sheet", dot: "hsl(142 48% 50%)" },
+                { label: "Delivery Policy", dot: "hsl(38 72% 52%)" },
+                { label: "FAQ", dot: "hsl(142 48% 50%)" },
+              ].map((r) => (
+                <div key={r.label} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                  <div style={{ width: 5, height: 5, borderRadius: 2.5, background: r.dot, flexShrink: 0 }} />
+                  <span style={{ fontSize: 8.5, color: "hsl(220 14% 38%)", letterSpacing: "-0.005em" }}>{r.label}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Activity panel — peeks lower-right behind card */}
+            <div
+              className="absolute hidden lg:block pointer-events-none"
+              style={{
+                bottom: 40, right: 0, width: 138,
+                background: "hsl(0 0% 99%)", border: "1px solid hsl(220 14% 89%)",
+                borderRadius: 12, padding: "10px 12px",
+                boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
+                opacity: 0.68,
+                transform: "translateX(36%) translateY(6px)",
+                zIndex: 0,
+              }}
+            >
+              <p style={{ fontSize: 7, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "hsl(220 12% 52%)", marginBottom: 6 }}>Recent Activity</p>
+              {[
+                { label: "Messenger", value: "48 chats", dot: "#006AFF" },
+                { label: "Viber", value: "31 chats", dot: "#7360F2" },
+                { label: "Website", value: "12 chats", dot: "#475569" },
+              ].map((r) => (
+                <div key={r.label} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 6, marginBottom: 4 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                    <div style={{ width: 6, height: 6, borderRadius: 3, background: r.dot, flexShrink: 0 }} />
+                    <span style={{ fontSize: 8, color: "hsl(220 14% 40%)" }}>{r.label}</span>
+                  </div>
+                  <span style={{ fontSize: 7.5, fontWeight: 600, color: "hsl(220 18% 28%)" }}>{r.value}</span>
+                </div>
+              ))}
+              <div style={{ marginTop: 6, paddingTop: 5, borderTop: "1px solid hsl(220 14% 92%)" }}>
+                {[{ t: "Pricing updated", c: "hsl(38 70% 42%)" }, { t: "Delivery policy synced", c: "hsl(142 46% 40%)" }].map((n) => (
+                  <div key={n.t} style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 3 }}>
+                    <div style={{ width: 4, height: 4, borderRadius: 2, background: n.c, flexShrink: 0 }} />
+                    <span style={{ fontSize: 7.5, color: "hsl(220 12% 48%)" }}>{n.t}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Main chat card — slightly narrowed, shifted right */}
+            <div style={{ position: "relative", zIndex: 1, width: "88%", maxWidth: 560 }}>
               <LiveCallPanel compact />
             </div>
           </motion.div>
@@ -155,49 +220,5 @@ export default function Hero() {
         </div>
       </div>
     </section>
-  );
-}
-
-function DecorativePanels() {
-  return (
-    <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
-      {/* Knowledge base — top-left, peeking */}
-      <div
-        className="absolute hidden xl:block"
-        style={{
-          top: 18, left: -32, width: 134, opacity: 0.25,
-          background: "hsl(0 0% 100%)", border: "1px solid hsl(220 14% 90%)",
-          borderRadius: 10, padding: "8px 10px",
-          boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
-        }}
-      >
-        <p style={{ fontSize: 6.5, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "hsl(220 12% 52%)", marginBottom: 5 }}>Knowledge Base</p>
-        {["Product Catalog", "Pricing Sheet", "Delivery Policy", "FAQs"].map((r) => (
-          <div key={r} style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 3.5 }}>
-            <div style={{ width: 4, height: 4, borderRadius: 2, background: "hsl(142 48% 50%)", flexShrink: 0 }} />
-            <span style={{ fontSize: 8, color: "hsl(220 14% 40%)", letterSpacing: "-0.005em" }}>{r}</span>
-          </div>
-        ))}
-      </div>
-
-      {/* Analytics — bottom-right, peeking */}
-      <div
-        className="absolute hidden xl:block"
-        style={{
-          bottom: 28, right: -26, width: 116, opacity: 0.22,
-          background: "hsl(0 0% 100%)", border: "1px solid hsl(220 14% 90%)",
-          borderRadius: 10, padding: "8px 10px",
-          boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
-        }}
-      >
-        <p style={{ fontSize: 6.5, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "hsl(220 12% 52%)", marginBottom: 5 }}>This Week</p>
-        {[{ l: "AI resolved", v: "94%" }, { l: "Avg reply", v: "0.8s" }, { l: "Escalated", v: "6%" }].map((r) => (
-          <div key={r.l} style={{ display: "flex", justifyContent: "space-between", gap: 8, marginBottom: 3 }}>
-            <span style={{ fontSize: 7.5, color: "hsl(220 12% 50%)" }}>{r.l}</span>
-            <span style={{ fontSize: 7.5, fontWeight: 600, color: "hsl(220 18% 26%)" }}>{r.v}</span>
-          </div>
-        ))}
-      </div>
-    </div>
   );
 }
