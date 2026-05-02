@@ -9,7 +9,7 @@ export default function Footer() {
           style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
         >
           <img
-            src="/kanaung-mark.svg"
+            src="/kanaung-logo.png"
             alt="Kanaung"
             className="h-5 w-auto"
             style={{ filter: "brightness(0) invert(1) opacity(0.22)" }}

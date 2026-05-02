@@ -149,7 +149,7 @@ function AIAvatar() {
       style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}
     >
       <img
-        src="/kanaung-mark.svg"
+        src="/kanaung-logo.png"
         alt="AI"
         className="w-3.5 h-3.5 object-contain"
         style={{ filter: "brightness(0) invert(1) opacity(0.7)" }}
