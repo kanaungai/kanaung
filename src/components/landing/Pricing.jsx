@@ -121,6 +121,7 @@ export default function Pricing() {
       tagline: tx.price_p1_tag,
       price: "$99",
       period: "/ mo",
+      inherits: null,
       features: [tx.price_p1_f1, tx.price_p1_f2, tx.price_p1_f3],
       cta: tx.price_cta1,
       ctaStyle: "secondary",

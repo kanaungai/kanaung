@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, BookOpen } from "lucide-react";
+import { BookOpen } from "lucide-react";
 
 const CONVERSATION = [
   {
@@ -109,7 +109,7 @@ function AIAvatar() {
       }}
     >
       <img
-        src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
+        src="/kanaung-mark.svg"
         alt="AI"
         style={{ width: 14, height: 14, objectFit: "contain", filter: "brightness(0) invert(1) opacity(0.7)" }}
       />
@@ -271,7 +271,7 @@ export default function LiveCallPanel({ compact = false }) {
               <div style={{ position: "absolute", inset: 0, borderRadius: 8, background: "hsl(352 65% 44% / 0.18)", filter: "blur(4px)" }} />
               <div style={{ position: "relative", width: 30, height: 30, borderRadius: 8, background: "hsl(220 22% 11%)", border: "1px solid rgba(255,255,255,0.09)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <img
-                  src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
+                  src="/kanaung-mark.svg"
                   alt="Kanaung"
                   style={{ width: 15, height: 15, objectFit: "contain", filter: "brightness(0) invert(1) opacity(0.88)" }}
                 />

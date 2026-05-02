@@ -9,7 +9,7 @@ export default function Footer() {
           style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
         >
           <img
-            src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
+            src="/kanaung-mark.svg"
             alt="Kanaung"
             className="h-5 w-auto"
             style={{ filter: "brightness(0) invert(1) opacity(0.22)" }}

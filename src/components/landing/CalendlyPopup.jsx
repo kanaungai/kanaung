@@ -3,8 +3,9 @@ import { useEffect } from "react";
 const CALENDLY_URL = "https://calendly.com/aungkaung855/kanaung-enquires";
 
 export function openCalendly() {
-  if (window.Calendly) {
-    window.Calendly.initPopupWidget({ url: CALENDLY_URL });
+  const calendly = window["Calendly"];
+  if (calendly) {
+    calendly.initPopupWidget({ url: CALENDLY_URL });
   }
 }
 

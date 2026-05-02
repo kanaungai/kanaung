@@ -1,7 +1,6 @@
-import { base44 } from "@/api/base44Client";
 import { generateReply } from "@/data/showroomData";
 
-const FUNCTION_NAME = "showroomAssistantChat";
+const ASSISTANT_ENDPOINT = "/api/showroom-assistant-chat";
 const HISTORY_LIMIT = 8;
 
 function normalizeFunctionResult(result) {
@@ -38,15 +37,26 @@ export async function requestShowroomAssistantReply({
   messages,
 }) {
   try {
-    const result = await base44.functions.invoke(FUNCTION_NAME, {
-      message,
-      context,
-      inventory,
-      showroom,
-      kb,
-      conversationHistory: toConversationHistory(messages),
+    const response = await fetch(ASSISTANT_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message,
+        context,
+        inventory,
+        showroom,
+        kb,
+        conversationHistory: toConversationHistory(messages),
+      }),
     });
 
+    if (!response.ok) {
+      throw new Error(`Assistant request failed with status ${response.status}`);
+    }
+
+    const result = await response.json();
     return normalizeFunctionResult(result);
   } catch (error) {
     const fallback = generateReply(message, context, inventory, showroom, kb);

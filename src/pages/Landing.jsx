@@ -3,8 +3,6 @@ import { LanguageProvider } from "../lib/LanguageContext";
 import Navbar from "../components/landing/Navbar";
 import Hero from "../components/landing/Hero";
 import CostSection from "../components/landing/CostSection.jsx";
-import ChatDemo from "../components/landing/ChatDemo";
-import ProblemSection from "../components/landing/ProblemSection";
 import HowItWorks from "../components/landing/HowItWorks.jsx";
 import WhyDifferent from "../components/landing/WhyDifferent.jsx";
 import ControlLayer from "../components/landing/ControlLayer.jsx";

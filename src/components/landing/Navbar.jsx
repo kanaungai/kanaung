@@ -55,7 +55,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 flex-shrink-0 group">
           <img
-            src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
+            src="/kanaung-mark.svg"
             alt="Kanaung"
             className="h-6 w-6 object-contain"
             style={{ filter: "brightness(0) saturate(100%) invert(16%) sepia(80%) saturate(900%) hue-rotate(330deg) brightness(80%)" }} />
