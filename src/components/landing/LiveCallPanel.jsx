@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, BookOpen } from "lucide-react";
 
 const CONVERSATION = [
   {
@@ -44,24 +44,22 @@ const STATUS_LABELS = [
   "Generating grounded reply",
 ];
 
-// ── Evidence footer: one clean block, not multiple pills ──
 function EvidenceFooter({ evidence }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 3 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.28, delay: 0.22 }}
+      transition={{ duration: 0.25, delay: 0.2 }}
       style={{
         marginTop: 5,
         borderRadius: 8,
         overflow: "hidden",
         border: "1px solid rgba(255,255,255,0.07)",
-        background: "rgba(255,255,255,0.03)",
+        background: "rgba(255,255,255,0.028)",
         alignSelf: "flex-start",
-        minWidth: 180,
+        minWidth: 190,
       }}
     >
-      {/* Data rows */}
       {evidence.rows.map((row, i) => (
         <div
           key={i}
@@ -82,7 +80,6 @@ function EvidenceFooter({ evidence }) {
           </span>
         </div>
       ))}
-      {/* Source line */}
       <div
         style={{
           display: "flex",
@@ -90,11 +87,11 @@ function EvidenceFooter({ evidence }) {
           gap: 5,
           padding: "3px 10px",
           borderTop: "1px solid rgba(255,255,255,0.05)",
-          background: "rgba(255,255,255,0.015)",
+          background: "rgba(255,255,255,0.012)",
         }}
       >
-        <CheckCircle2 style={{ width: 8, height: 8, color: "hsl(142 55% 50% / 0.55)", flexShrink: 0 }} />
-        <span style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", fontWeight: 500, letterSpacing: "0.02em" }}>
+        <BookOpen style={{ width: 8, height: 8, color: "rgba(255,255,255,0.22)", flexShrink: 0 }} />
+        <span style={{ fontSize: 9, color: "rgba(255,255,255,0.22)", fontWeight: 500, letterSpacing: "0.02em" }}>
           {evidence.source}
         </span>
       </div>
@@ -105,58 +102,46 @@ function EvidenceFooter({ evidence }) {
 function AIAvatar() {
   return (
     <div
-      className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0"
-      style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}
+      style={{
+        width: 26, height: 26, borderRadius: 8, flexShrink: 0,
+        background: "rgba(255,255,255,0.055)", border: "1px solid rgba(255,255,255,0.09)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}
     >
       <img
         src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
         alt="AI"
-        className="w-3.5 h-3.5 object-contain"
-        style={{ filter: "brightness(0) invert(1) opacity(0.75)" }}
+        style={{ width: 14, height: 14, objectFit: "contain", filter: "brightness(0) invert(1) opacity(0.7)" }}
       />
     </div>
   );
 }
 
-// Waveform bars — more organic, fewer bars for cleaner look
 function ActivityBars({ isActive }) {
   const bars = [8, 18, 12, 24, 10, 20, 14, 22, 8, 16];
   return (
-    <div className="flex items-center gap-[3px]" style={{ height: 18 }}>
+    <div style={{ display: "flex", alignItems: "center", gap: 3, height: 18 }}>
       {bars.map((h, i) => (
         <motion.div
           key={i}
-          className="w-[2px] rounded-full"
+          style={{ width: 2, height: h, borderRadius: 2, transformOrigin: "center", background: isActive ? "linear-gradient(to top, hsl(352 65% 46% / 0.5), hsl(352 55% 62% / 0.8))" : "rgba(255,255,255,0.1)" }}
           animate={isActive ? { scaleY: [0.25, 1, 0.4, 0.9, 0.2, 0.8, 0.45] } : { scaleY: 0.2 }}
-          transition={
-            isActive
-              ? { duration: 2.4, repeat: Infinity, delay: i * 0.11, ease: "easeInOut" }
-              : { duration: 0.4 }
-          }
-          style={{
-            height: h,
-            transformOrigin: "center",
-            background: isActive
-              ? "linear-gradient(to top, hsl(352 72% 48% / 0.5), hsl(352 60% 65% / 0.85))"
-              : "rgba(255,255,255,0.12)",
-          }}
+          transition={isActive ? { duration: 2.4, repeat: Infinity, delay: i * 0.11, ease: "easeInOut" } : { duration: 0.4 }}
         />
       ))}
     </div>
   );
 }
 
-// Always-on ambient pulse dots — give the idle strip life
 function AmbientPulse() {
   return (
-    <div className="flex items-center gap-1">
+    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
       {[0, 0.4, 0.8].map((delay, i) => (
         <motion.div
           key={i}
-          className="w-1 h-1 rounded-full"
-          animate={{ opacity: [0.15, 0.45, 0.15] }}
+          style={{ width: 4, height: 4, borderRadius: 2, background: "rgba(255,255,255,0.3)" }}
+          animate={{ opacity: [0.12, 0.4, 0.12] }}
           transition={{ duration: 2.2, repeat: Infinity, delay, ease: "easeInOut" }}
-          style={{ background: "rgba(255,255,255,0.35)" }}
         />
       ))}
     </div>
@@ -166,42 +151,37 @@ function AmbientPulse() {
 function GenerationStrip({ isActive, statusLabel }) {
   return (
     <div
-      className="px-5 py-3 flex items-center justify-between gap-4"
       style={{
-        borderTop: "1px solid rgba(255,255,255,0.055)",
-        background: "rgba(255,255,255,0.012)",
+        padding: "10px 20px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: 16,
+        borderTop: "1px solid rgba(255,255,255,0.05)",
+        background: "rgba(255,255,255,0.01)",
       }}
     >
-      <div className="flex items-center gap-2.5 min-w-0">
-        {/* Indicator dot */}
-        <span
-          className="flex-shrink-0"
-          style={{
-            width: 6,
-            height: 6,
-            borderRadius: "50%",
-            display: "inline-block",
-            background: isActive ? "hsl(352 72% 52%)" : "rgba(255,255,255,0.18)",
-            boxShadow: isActive ? "0 0 7px hsl(352 72% 52% / 0.55)" : "none",
-            transition: "background 0.4s, box-shadow 0.4s",
-          }}
-        />
+      <div style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0 }}>
+        <span style={{
+          width: 6, height: 6, borderRadius: "50%", flexShrink: 0, display: "inline-block",
+          background: isActive ? "hsl(352 65% 52%)" : "rgba(255,255,255,0.16)",
+          boxShadow: isActive ? "0 0 8px hsl(352 65% 52% / 0.5)" : "none",
+          transition: "background 0.4s, box-shadow 0.4s",
+        }} />
         <AnimatePresence mode="wait">
           <motion.span
             key={statusLabel + String(isActive)}
             initial={{ opacity: 0, y: 3 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -3 }}
-            transition={{ duration: 0.22 }}
-            className="text-[10px] font-medium font-inter truncate tracking-[-0.005em]"
-            style={{ color: isActive ? "rgba(255,255,255,0.38)" : "rgba(255,255,255,0.22)" }}
+            transition={{ duration: 0.2 }}
+            style={{ fontSize: 10, fontWeight: 500, fontFamily: "var(--font-inter)", color: isActive ? "rgba(255,255,255,0.36)" : "rgba(255,255,255,0.2)", letterSpacing: "-0.005em", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
           >
             {isActive ? statusLabel : "Monitoring · Kanaung AI"}
           </motion.span>
         </AnimatePresence>
       </div>
-
-      <div className="flex items-center gap-3 flex-shrink-0">
+      <div style={{ display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
         {!isActive && <AmbientPulse />}
         <ActivityBars isActive={isActive} />
       </div>
@@ -218,10 +198,7 @@ export default function LiveCallPanel() {
   const statusCycleRef = useRef(null);
 
   useEffect(() => {
-    if (!isTyping) {
-      clearInterval(statusCycleRef.current);
-      return;
-    }
+    if (!isTyping) { clearInterval(statusCycleRef.current); return; }
     let idx = 0;
     statusCycleRef.current = setInterval(() => {
       idx = (idx + 1) % STATUS_LABELS.length;
@@ -234,142 +211,132 @@ export default function LiveCallPanel() {
     let cancelled = false;
     const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
-    async function runConversation() {
-      await sleep(1200);
-
+    async function run() {
+      await sleep(1000);
       for (let i = 0; i < CONVERSATION.length; i++) {
         if (cancelled) return;
         const msg = CONVERSATION[i];
-
         if (msg.role === "customer") {
           setVisibleMessages((prev) => [...prev, msg]);
-          await sleep(1000 + Math.random() * 200);
+          await sleep(900 + Math.random() * 200);
         } else {
           setIsTyping(true);
           await sleep(16);
           if (cancelled) return;
-
-          const charCount = msg.text.length;
-          const typingDuration = 1800 + Math.min(charCount * 8, 600) + Math.random() * 400;
-          await sleep(typingDuration);
+          await sleep(1600 + Math.min(msg.text.length * 7, 550) + Math.random() * 300);
           if (cancelled) return;
-
           setIsTyping(false);
-          await sleep(150);
+          await sleep(120);
           if (cancelled) return;
           setVisibleMessages((prev) => [...prev, msg]);
-
-          const readPause = 1600 + Math.min(charCount * 10, 600) + Math.random() * 400;
-          await sleep(readPause);
+          await sleep(1400 + Math.min(msg.text.length * 8, 500) + Math.random() * 300);
         }
       }
-
-      await sleep(4500);
-      if (!cancelled) {
-        setVisibleMessages([]);
-        setIsTyping(false);
-        setRunKey((k) => k + 1);
-      }
+      await sleep(4000);
+      if (!cancelled) { setVisibleMessages([]); setIsTyping(false); setRunKey((k) => k + 1); }
     }
 
-    runConversation();
+    run();
     return () => { cancelled = true; };
   }, [runKey]);
 
   useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollTo({ top: containerRef.current.scrollHeight, behavior: "smooth" });
-    }
+    containerRef.current?.scrollTo({ top: containerRef.current.scrollHeight, behavior: "smooth" });
   }, [visibleMessages]);
 
   return (
-    <div className="relative w-full">
-      {/* Ambient glow */}
-      <div className="absolute -inset-4 rounded-[36px] bg-primary/[0.07] blur-3xl pointer-events-none" />
-      <div className="absolute -inset-1 rounded-[32px] bg-gradient-to-br from-primary/8 via-transparent to-blue-500/4 blur-xl pointer-events-none" />
+    <div className="relative w-full" style={{ zIndex: 1 }}>
+      {/* Premium glow — deeper ruby */}
+      <div className="absolute pointer-events-none" style={{ inset: -20, borderRadius: 40, background: "hsl(352 60% 40% / 0.07)", filter: "blur(36px)" }} />
+      <div className="absolute pointer-events-none" style={{ inset: -6, borderRadius: 34, background: "radial-gradient(ellipse at 60% 30%, hsl(352 55% 44% / 0.06) 0%, transparent 65%)", filter: "blur(18px)" }} />
 
       {/* Panel */}
       <div
-        className="relative rounded-[24px] overflow-hidden shadow-2xl shadow-black/40"
+        className="relative overflow-hidden"
         style={{
-          background: "linear-gradient(145deg, #111117 0%, #0d0d12 60%, #0f0e14 100%)",
-          border: "1px solid rgba(255,255,255,0.07)",
+          borderRadius: 20,
+          background: "linear-gradient(148deg, hsl(220 18% 9%) 0%, hsl(220 22% 7%) 50%, hsl(220 18% 8%) 100%)",
+          border: "1px solid rgba(255,255,255,0.075)",
+          boxShadow: "0 0 0 1px rgba(0,0,0,0.25), 0 24px 60px -12px rgba(0,0,0,0.45), 0 8px 24px -6px rgba(0,0,0,0.28)",
         }}
       >
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
+        {/* Top highlight */}
+        <div className="absolute top-0 left-0 right-0 h-px pointer-events-none" style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)" }} />
 
-        {/* ── Header ── */}
-        <div
-          className="px-5 pt-4 pb-4 flex items-center justify-between"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}
-        >
-          <div className="flex items-center gap-3">
-            <div className="relative w-8 h-8 flex-shrink-0">
-              <div className="absolute inset-0 rounded-xl bg-primary/20 blur-sm" />
-              <div
-                className="relative w-8 h-8 rounded-xl flex items-center justify-center"
-                style={{ background: "#1a1015", border: "1px solid rgba(255,255,255,0.1)" }}
-              >
+        {/* Header */}
+        <div style={{ padding: "14px 20px 14px", borderBottom: "1px solid rgba(255,255,255,0.05)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            {/* Logo mark */}
+            <div style={{ position: "relative", width: 30, height: 30, flexShrink: 0 }}>
+              <div style={{ position: "absolute", inset: 0, borderRadius: 8, background: "hsl(352 65% 44% / 0.18)", filter: "blur(4px)" }} />
+              <div style={{ position: "relative", width: 30, height: 30, borderRadius: 8, background: "hsl(220 22% 11%)", border: "1px solid rgba(255,255,255,0.09)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <img
                   src="https://media.base44.com/images/public/69cae07a199d96c3df465260/783d22566_2.png"
                   alt="Kanaung"
-                  className="w-4 h-4 object-contain"
-                  style={{ filter: "brightness(0) invert(1) opacity(0.9)" }}
+                  style={{ width: 15, height: 15, objectFit: "contain", filter: "brightness(0) invert(1) opacity(0.88)" }}
                 />
               </div>
             </div>
             <div>
-              <div className="font-sora text-[13px] font-semibold leading-tight tracking-[-0.01em]" style={{ color: "rgba(255,255,255,0.88)" }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.88)", fontFamily: "var(--font-sora)", letterSpacing: "-0.01em", lineHeight: 1.2 }}>
                 Kanaung AI
               </div>
-              <div className="text-[10px] mt-0.5 font-inter" style={{ color: "rgba(255,255,255,0.26)", letterSpacing: "0.01em" }}>
+              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.24)", fontFamily: "var(--font-inter)", marginTop: 1, letterSpacing: "0.005em" }}>
                 ရွှေကြယ် စက်ပစ္စည်း · Business Assistant
               </div>
             </div>
           </div>
-
-          <div
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full"
-            style={{ background: "rgba(34,197,94,0.07)", border: "1px solid rgba(34,197,94,0.14)" }}
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-[9px] font-bold text-green-400 tracking-[0.1em] uppercase">Live</span>
+          {/* Live badge */}
+          <div style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 9px", borderRadius: 99, background: "rgba(34,197,94,0.07)", border: "1px solid rgba(34,197,94,0.13)" }}>
+            <motion.span
+              animate={{ opacity: [1, 0.3, 1] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              style={{ width: 5, height: 5, borderRadius: "50%", background: "#4ade80", display: "inline-block" }}
+            />
+            <span style={{ fontSize: 9, fontWeight: 700, color: "#4ade80", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-inter)" }}>Live</span>
           </div>
         </div>
 
-        {/* ── Messages ── */}
+        {/* Messages */}
         <div
           ref={containerRef}
-          className="px-5 pt-5 pb-3 space-y-4 overflow-y-auto"
-          style={{ height: "450px", scrollbarWidth: "none" }}
+          style={{ padding: "18px 20px 12px", height: 440, overflowY: "auto", scrollbarWidth: "none", display: "flex", flexDirection: "column", gap: 14 }}
         >
+          <style>{`@keyframes typingBounce{0%,60%,100%{transform:translateY(0);opacity:.35}30%{transform:translateY(-5px);opacity:1}}`}</style>
+
           <AnimatePresence initial={false}>
             {visibleMessages.map((msg, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.28, ease: [0.25, 1, 0.4, 1] }}
-                className={`flex items-end gap-2 ${msg.role === "ai" ? "justify-start" : "justify-end"}`}
+                transition={{ duration: 0.26, ease: [0.25, 1, 0.4, 1] }}
+                style={{ display: "flex", alignItems: "flex-end", gap: 8, justifyContent: msg.role === "ai" ? "flex-start" : "flex-end" }}
               >
                 {msg.role === "ai" && <AIAvatar />}
-
-                <div className={`flex flex-col ${msg.role === "ai" ? "items-start" : "items-end"} max-w-[82%]`}>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: msg.role === "ai" ? "flex-start" : "flex-end", maxWidth: "82%" }}>
                   <div
-                    className={`px-3.5 py-2.5 text-[12.5px] leading-[1.72] font-inter ${
-                      msg.role === "ai" ? "rounded-2xl rounded-bl-sm" : "rounded-2xl rounded-br-sm"
-                    }`}
                     style={
                       msg.role === "ai"
                         ? {
-                            color: "rgba(255,255,255,0.82)",
-                            background: "rgba(255,255,255,0.058)",
-                            border: "1px solid rgba(255,255,255,0.08)",
+                            padding: "10px 13px",
+                            borderRadius: "14px 14px 14px 4px",
+                            fontSize: 13,
+                            lineHeight: 1.72,
+                            fontFamily: "var(--font-inter)",
+                            color: "rgba(255,255,255,0.80)",
+                            background: "rgba(255,255,255,0.055)",
+                            border: "1px solid rgba(255,255,255,0.07)",
                           }
                         : {
-                            color: "rgba(255,255,255,0.95)",
-                            background: "linear-gradient(135deg, hsl(352 72% 44%) 0%, hsl(352 65% 38%) 100%)",
-                            boxShadow: "0 4px 14px hsl(352 72% 38% / 0.22)",
+                            padding: "10px 13px",
+                            borderRadius: "14px 14px 4px 14px",
+                            fontSize: 13,
+                            lineHeight: 1.72,
+                            fontFamily: "var(--font-inter)",
+                            color: "rgba(255,255,255,0.94)",
+                            background: "linear-gradient(135deg, hsl(352 62% 42%) 0%, hsl(352 58% 36%) 100%)",
+                            boxShadow: "0 3px 16px hsl(352 65% 36% / 0.28)",
                           }
                     }
                   >
@@ -377,26 +344,15 @@ export default function LiveCallPanel() {
                   </div>
                   {msg.role === "ai" && msg.evidence && <EvidenceFooter evidence={msg.evidence} />}
                 </div>
-
                 {msg.role === "customer" && (
-                  <div
-                    className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.09)" }}
-                  >
-                    <span className="text-[9px] font-bold" style={{ color: "rgba(255,255,255,0.32)" }}>U</span>
+                  <div style={{ width: 24, height: 24, borderRadius: 7, background: "rgba(255,255,255,0.055)", border: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <span style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.28)" }}>U</span>
                   </div>
                 )}
               </motion.div>
             ))}
           </AnimatePresence>
 
-          {/* Typing indicator */}
-          <style>{`
-            @keyframes typingBounce {
-              0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
-              30% { transform: translateY(-5px); opacity: 1; }
-            }
-          `}</style>
           <AnimatePresence>
             {isTyping && (
               <motion.div
@@ -404,33 +360,12 @@ export default function LiveCallPanel() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.15 }}
-                className="flex items-end gap-2 justify-start"
+                style={{ display: "flex", alignItems: "flex-end", gap: 8 }}
               >
                 <AIAvatar />
-                <div
-                  style={{
-                    background: "rgba(255,255,255,0.055)",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    padding: "10px 14px",
-                    borderRadius: "16px 16px 16px 4px",
-                    display: "flex",
-                    gap: "5px",
-                    alignItems: "center",
-                  }}
-                >
+                <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", padding: "9px 13px", borderRadius: "14px 14px 14px 4px", display: "flex", gap: 5, alignItems: "center" }}>
                   {[0, 150, 300].map((delay, i) => (
-                    <span
-                      key={i}
-                      style={{
-                        display: "inline-block",
-                        width: 6,
-                        height: 6,
-                        borderRadius: "50%",
-                        background: "rgba(255,255,255,0.7)",
-                        animation: `typingBounce 1.2s ease-in-out infinite`,
-                        animationDelay: `${delay}ms`,
-                      }}
-                    />
+                    <span key={i} style={{ display: "inline-block", width: 5, height: 5, borderRadius: "50%", background: "rgba(255,255,255,0.65)", animation: "typingBounce 1.2s ease-in-out infinite", animationDelay: `${delay}ms` }} />
                   ))}
                 </div>
               </motion.div>
@@ -438,10 +373,10 @@ export default function LiveCallPanel() {
           </AnimatePresence>
         </div>
 
-        {/* ── Generation strip ── */}
+        {/* Footer strip */}
         <GenerationStrip isActive={isTyping} statusLabel={statusLabel} />
 
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-px pointer-events-none" style={{ background: "linear-gradient(90deg,transparent,rgba(255,255,255,0.035),transparent)" }} />
       </div>
     </div>
   );
