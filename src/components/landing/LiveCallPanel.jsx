@@ -44,6 +44,84 @@ const STATUS_LABELS = [
   "Generating grounded reply",
 ];
 
+const STAGE_PRESETS = {
+  ready: {
+    module: "knowledge",
+    kbItem: "Product Catalog",
+    metrics: {
+      sourcesChecked: 7,
+      confidenceScore: 94,
+      responseTime: 1.3,
+      activeMetric: "confidence",
+      status: "Knowledge ready",
+    },
+  },
+  channel: {
+    module: "channel",
+    kbItem: "Product Catalog",
+    metrics: {
+      sourcesChecked: 1,
+      confidenceScore: 88,
+      responseTime: 0.4,
+      activeMetric: "response",
+      status: "Message received",
+    },
+  },
+  inventory: {
+    module: "source",
+    kbItem: "Pricing Sheet",
+    metrics: {
+      sourcesChecked: 24,
+      confidenceScore: 98,
+      responseTime: 2.1,
+      activeMetric: "sources",
+      status: "Inventory checked",
+    },
+  },
+  delivery: {
+    module: "policy",
+    kbItem: "Delivery Policy",
+    metrics: {
+      sourcesChecked: 12,
+      confidenceScore: 96,
+      responseTime: 1.8,
+      activeMetric: "confidence",
+      status: "Policy matched",
+    },
+  },
+  financing: {
+    module: "knowledge",
+    kbItem: "FAQ",
+    metrics: {
+      sourcesChecked: 9,
+      confidenceScore: 93,
+      responseTime: 1.6,
+      activeMetric: "sources",
+      status: "FAQ checked",
+    },
+  },
+};
+
+function getSystemStage(message) {
+  if (message.role === "customer") {
+    return STAGE_PRESETS.channel;
+  }
+
+  if (!message.evidence) {
+    return STAGE_PRESETS.ready;
+  }
+
+  if (message.evidence.source === "Inventory & Price List") {
+    return STAGE_PRESETS.inventory;
+  }
+
+  if (message.evidence.source === "Delivery Policy") {
+    return STAGE_PRESETS.delivery;
+  }
+
+  return STAGE_PRESETS.financing;
+}
+
 function EvidenceFooter({ evidence }) {
   return (
     <motion.div
@@ -189,7 +267,7 @@ function GenerationStrip({ isActive, statusLabel }) {
   );
 }
 
-export default function LiveCallPanel({ compact = false }) {
+export default function LiveCallPanel({ compact = false, messageHeight, onStageChange }) {
   const [runKey, setRunKey] = useState(0);
   const [visibleMessages, setVisibleMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
@@ -212,10 +290,12 @@ export default function LiveCallPanel({ compact = false }) {
     const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
     async function run() {
+      onStageChange?.(STAGE_PRESETS.ready);
       await sleep(1000);
       for (let i = 0; i < CONVERSATION.length; i++) {
         if (cancelled) return;
         const msg = CONVERSATION[i];
+        onStageChange?.(getSystemStage(msg));
         if (msg.role === "customer") {
           setVisibleMessages((prev) => [...prev, msg]);
           await sleep(900 + Math.random() * 200);
@@ -233,7 +313,12 @@ export default function LiveCallPanel({ compact = false }) {
         }
       }
       await sleep(4000);
-      if (!cancelled) { setVisibleMessages([]); setIsTyping(false); setRunKey((k) => k + 1); }
+      if (!cancelled) {
+        onStageChange?.(STAGE_PRESETS.ready);
+        setVisibleMessages([]);
+        setIsTyping(false);
+        setRunKey((k) => k + 1);
+      }
     }
 
     run();
@@ -300,7 +385,7 @@ export default function LiveCallPanel({ compact = false }) {
         {/* Messages */}
         <div
           ref={containerRef}
-          style={{ padding: "18px 20px 12px", height: compact ? 320 : 440, overflowY: "auto", scrollbarWidth: "none", display: "flex", flexDirection: "column", gap: 14 }}
+          style={{ padding: "18px 20px 12px", height: messageHeight ?? (compact ? 320 : 440), overflowY: "auto", scrollbarWidth: "none", display: "flex", flexDirection: "column", gap: 14 }}
         >
           <style>{`@keyframes typingBounce{0%,60%,100%{transform:translateY(0);opacity:.35}30%{transform:translateY(-5px);opacity:1}}`}</style>
 

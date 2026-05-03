@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { MapPin, Clock, Truck, Key, Building2, Pencil, Check, X, Plus, Trash2 } from "lucide-react";
+import { MapPin, Building2, Pencil, Check, X, Plus, Trash2 } from "lucide-react";
 
 const FIELDS = [
-  { key: "hours",       label: "Opening Hours",   icon: Clock },
-  { key: "delivery",    label: "Delivery Info",   icon: Truck },
-  { key: "test_drive",  label: "Test Drive",      icon: Key },
-  { key: "warranty",    label: "Warranty",        icon: null },
-  { key: "bulk_policy", label: "Bulk / Fleet",    icon: null },
+  { key: "hours", label: "Opening Hours" },
+  { key: "delivery", label: "Delivery Info" },
+  { key: "test_drive", label: "Test Drive" },
+  { key: "warranty", label: "Warranty" },
+  { key: "bulk_policy", label: "Bulk / Fleet" },
 ];
 
-function EditableRow({ icon: Icon, label, value, onSave }) {
+function EditableRow({ label, value, onSave }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(value);
 
@@ -143,10 +143,9 @@ export default function ShowroomPanel({ showroom, setShowroom }) {
 
       {/* Operational fields */}
       <div className="mb-4">
-        {FIELDS.map(({ key, label, icon }) => (
+        {FIELDS.map(({ key, label }) => (
           <EditableRow
             key={key}
-            icon={icon}
             label={label}
             value={showroom[key] || ""}
             onSave={(val) => updateField(key, val)}

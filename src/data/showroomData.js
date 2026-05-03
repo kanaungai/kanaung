@@ -191,19 +191,19 @@ function buildCarBlock(car) {
 }
 
 // Check if escalation is needed based on KB rules
-function shouldEscalate(msg, kb) {
+function shouldEscalate(msg) {
   const triggers = ["discount", "လျော့", "cheap", "ထိုးပေး", "complain", "တိုင်ကြား", "fleet", "bulk", "upcountry", "မန္တလေး"];
   return triggers.some((t) => msg.toLowerCase().includes(t));
 }
 
-export function generateReply(userMessage, context, inventory, showroom, kb) {
+export function generateReply(userMessage, context, inventory, showroom, _kb) {
   const msg = userMessage.toLowerCase();
   const inv = inventory || [];
   const sr = showroom || {};
-  const policy = kb || {};
+  const businessName = context?.business?.name || "our showroom";
 
   // ── Escalation check (KB rules) ──
-  if (shouldEscalate(msg, policy)) {
+  if (shouldEscalate(msg)) {
     return {
       content: `ဒီကိစ္စအတွက် ကျွန်တော်တို့ sales team မှ တိုက်ရိုက် ဆက်သွယ်ပေးပါ့မယ်။\n\n${sr.branches?.[0] ? `📍 ${sr.branches[0].name}: ${sr.branches[0].phone}` : ""}`,
       signals: ["Escalating to sales team"],
@@ -288,7 +288,7 @@ export function generateReply(userMessage, context, inventory, showroom, kb) {
 
   // ── Fallback ──
   return {
-    content: `${context.business.name} မှ ကြိုဆိုပါတယ်။\n\nToyota, Honda, Nissan မော်ဒယ်များ ရရှိနိုင်ပါတယ်။ ဘယ် model အကြောင်း သိချင်ပါသလဲ?`,
+    content: `${businessName} မှ ကြိုဆိုပါတယ်။\n\nToyota, Honda, Nissan မော်ဒယ်များ ရရှိနိုင်ပါတယ်။ ဘယ် model အကြောင်း သိချင်ပါသလဲ?`,
     signals: [],
   };
 }

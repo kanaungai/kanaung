@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const CALENDLY_URL = "https://calendly.com/aungkaung855/kanaung-enquires";
+const CALENDLY_URL = import.meta.env.VITE_CALENDLY_URL || "https://calendly.com/aungkaung855/kanaung-enquires";
 
 export function openCalendly() {
   const calendly = window["Calendly"];

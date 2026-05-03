@@ -60,7 +60,7 @@ export default function ConversationPanel({ context, inventory, showroom, kb }) 
 
   return (
     <div className="flex flex-col h-full" style={{ background: "white" }}>
-      <ConversationHeader context={context} />
+      <ConversationHeader />
       <MessageThread messages={messages} isGenerating={isGenerating} />
       <div
         className="flex-shrink-0 border-t px-4 py-3"

@@ -1,7 +1,7 @@
 import React from "react";
 import { User, Zap } from "lucide-react";
 
-export default function ConversationHeader({ context }) {
+export default function ConversationHeader() {
   return (
     <div
       className="flex items-center justify-between px-5 py-3.5 border-b flex-shrink-0"

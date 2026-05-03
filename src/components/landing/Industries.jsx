@@ -141,23 +141,6 @@ const INDUSTRY_DATA = {
   ],
 };
 
-// AI avatar — matches LiveCallPanel
-function AIAvatar() {
-  return (
-    <div
-      className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
-      style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}
-    >
-      <img
-        src="/kanaung-logo.png"
-        alt="AI"
-        className="w-3.5 h-3.5 object-contain"
-        style={{ filter: "brightness(0) invert(1) opacity(0.7)" }}
-      />
-    </div>
-  );
-}
-
 export default function Industries() {
   const { lang } = useLang();
   const tx = t[lang];

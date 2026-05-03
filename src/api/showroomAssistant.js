@@ -12,9 +12,11 @@ function normalizeFunctionResult(result) {
 
   return {
     content: data.content,
-    signals: Array.isArray(data.signals) ? data.signals.filter(Boolean) : [],
+    signals: Array.isArray(data.signals) ? data.signals.filter((signal) => typeof signal === "string") : [],
     escalate: Boolean(data.escalate),
-    matchedModels: Array.isArray(data.matchedModels) ? data.matchedModels : [],
+    matchedModels: Array.isArray(data.matchedModels)
+      ? data.matchedModels.filter((model) => typeof model === "string")
+      : [],
   };
 }
 

@@ -20,7 +20,9 @@ cp env.example .env.local
 
 ```bash
 DEEPSEEK_API_KEY=your_deepseek_api_key
+DEEPSEEK_API_URL=https://api.deepseek.com/chat/completions
 DEEPSEEK_MODEL=deepseek-chat
+VITE_CALENDLY_URL=https://calendly.com/aungkaung855/kanaung-enquires
 ```
 
 4. Run the frontend:

@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowLeft } from "lucide-react";
-import { INITIAL_CONTEXT, INITIAL_INVENTORY, INITIAL_SHOWROOM, INITIAL_KB } from "../../data/showroomData";
-import ControlLayer from "../demo/ControlLayer";
-import ConversationPanel from "../demo/ConversationPanel";
+import { DemoHeader, DemoWorkspaceBody, useShowroomDemoState } from "../demo/DemoWorkspace";
 
 // Phases: "idle" | "expanding" | "open" | "collapsing"
 export default function DemoOverlay({ open, onClose, originRef }) {
-  const [context, setContext] = useState(INITIAL_CONTEXT);
-  const [inventory, setInventory] = useState(INITIAL_INVENTORY);
-  const [showroom, setShowroom] = useState(INITIAL_SHOWROOM);
-  const [kb, setKb] = useState(INITIAL_KB);
+  const demoState = useShowroomDemoState();
   const [contentVisible, setContentVisible] = useState(false);
 
   // Lock body scroll while open
@@ -101,70 +95,21 @@ export default function DemoOverlay({ open, onClose, originRef }) {
               originY: 0.5,
             }}
           >
-            {/* Top bar */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: contentVisible ? 1 : 0 }}
               transition={{ duration: 0.22 }}
-              className="flex items-center gap-4 px-6 h-[56px] border-b flex-shrink-0"
-              style={{ background: "hsl(0 0% 100%)", borderColor: "hsl(220 16% 88%)" }}
             >
-              <button
-                onClick={onClose}
-                className="flex items-center gap-1.5 text-[12px] font-medium text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" />
-                Back
-              </button>
-              <div className="w-px h-3.5 bg-foreground/10" />
-              <span className="font-sora font-semibold text-[14px] tracking-[-0.01em] text-foreground">
-                kanaung<span className="text-primary font-bold">.</span>
-              </span>
-              <span className="text-[12px] text-muted-foreground">Product Demo</span>
-              <div className="ml-auto flex items-center gap-3">
-                <span
-                  className="text-[10px] font-semibold px-2.5 py-1 rounded-full tracking-wide"
-                  style={{
-                    background: "hsl(142 55% 95%)",
-                    color: "hsl(142 55% 33%)",
-                    border: "1px solid hsl(142 45% 86%)",
-                  }}
-                >
-                  ● LIVE DEMO
-                </span>
-                <button
-                  onClick={onClose}
-                  className="w-7 h-7 rounded-full flex items-center justify-center hover:bg-foreground/6 transition-colors"
-                >
-                  <X className="w-3.5 h-3.5 text-muted-foreground" />
-                </button>
-              </div>
+              <DemoHeader onBack={onClose} showClose />
             </motion.div>
 
-            {/* Two-panel body */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: contentVisible ? 1 : 0 }}
               transition={{ duration: 0.3, delay: 0.05 }}
               className="flex flex-1 overflow-hidden"
             >
-              {/* Left: Control Layer */}
-              <div
-                className="w-[38%] flex-shrink-0 border-r flex flex-col overflow-hidden"
-                style={{ borderColor: "hsl(220 16% 88%)", background: "hsl(220 20% 98%)" }}
-              >
-                <ControlLayer
-                  context={context} setContext={setContext}
-                  inventory={inventory} setInventory={setInventory}
-                  showroom={showroom} setShowroom={setShowroom}
-                  kb={kb} setKb={setKb}
-                />
-              </div>
-
-              {/* Right: Conversation */}
-              <div className="flex-1 flex flex-col overflow-hidden">
-                <ConversationPanel context={context} inventory={inventory} showroom={showroom} kb={kb} />
-              </div>
+              <DemoWorkspaceBody demoState={demoState} />
             </motion.div>
           </motion.div>
         </>

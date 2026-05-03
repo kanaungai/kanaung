@@ -1,4 +1,4 @@
-const DEEPSEEK_URL = "https://api.deepseek.com/chat/completions";
+const DEEPSEEK_URL = process.env.DEEPSEEK_API_URL || "https://api.deepseek.com/chat/completions";
 const DEFAULT_MODEL = process.env.DEEPSEEK_MODEL || "deepseek-chat";
 
 function isObject(value) {
