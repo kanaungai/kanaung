@@ -51,7 +51,7 @@ export default function Navbar() {
       }}
     >
       
-      <div className="max-w-6xl mx-auto px-8 h-[72px] flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 h-[64px] md:h-[72px] flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 flex-shrink-0 group">
           <img
@@ -125,7 +125,7 @@ export default function Navbar() {
       </div>
 
       {mobileOpen &&
-      <div className="md:hidden bg-background/98 backdrop-blur-3xl border-b border-foreground/[0.06] px-6 pb-6 space-y-1">
+      <div className="md:hidden bg-background/98 backdrop-blur-3xl border-b border-foreground/[0.06] px-5 pb-5 space-y-1 max-h-[calc(100dvh-64px)] overflow-y-auto">
           {links.map((link) =>
         <button
           key={link.id}

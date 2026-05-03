@@ -7,6 +7,7 @@ import { DemoHeader, DemoWorkspaceBody, useShowroomDemoState } from "../demo/Dem
 export default function DemoOverlay({ open, onClose, originRef }) {
   const demoState = useShowroomDemoState();
   const [contentVisible, setContentVisible] = useState(false);
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   // Lock body scroll while open
   useEffect(() => {
@@ -70,7 +71,7 @@ export default function DemoOverlay({ open, onClose, originRef }) {
               scale: 1,
               x: 0,
               y: 0,
-              borderRadius: 16,
+              borderRadius: isMobile ? 0 : 16,
             }}
             exit={{
               opacity: 0,
@@ -85,10 +86,10 @@ export default function DemoOverlay({ open, onClose, originRef }) {
             }}
             className="fixed z-[100] overflow-hidden flex flex-col"
             style={{
-              top: "3vh",
-              left: "3vw",
-              width: "94vw",
-              height: "94vh",
+              top: isMobile ? 0 : "3vh",
+              left: isMobile ? 0 : "3vw",
+              width: isMobile ? "100vw" : "94vw",
+              height: isMobile ? "100dvh" : "94vh",
               background: "hsl(220 22% 97%)",
               boxShadow: "0 32px 80px rgba(0,0,0,0.28), 0 2px 8px rgba(0,0,0,0.12)",
               originX: 0.5,

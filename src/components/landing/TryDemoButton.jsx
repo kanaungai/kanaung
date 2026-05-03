@@ -78,7 +78,7 @@ export default function TryDemoButton({ label = "Try the Demo" }) {
 
   return (
     <>
-      <div ref={wrapperRef} className="relative inline-block" style={{ isolation: "isolate" }}>
+      <div ref={wrapperRef} className="relative inline-block w-full sm:w-auto" style={{ isolation: "isolate" }}>
         {/* Hover preview — desktop only */}
         <div className="hidden md:block">
           <DemoHoverPreview visible={hovered && !overlayOpen} />
@@ -120,7 +120,7 @@ export default function TryDemoButton({ label = "Try the Demo" }) {
           whileTap={{ scale: 0.97 }}
           style={{ y: liftY }}
           transition={{ duration: 0.18, ease: "easeOut" }}
-          className="relative inline-flex items-center justify-center overflow-hidden rounded-full h-[50px] px-7 cursor-pointer"
+          className="relative inline-flex w-full sm:w-auto items-center justify-center overflow-hidden rounded-full h-[48px] sm:h-[50px] px-5 sm:px-7 cursor-pointer"
         >
           {/* Base background */}
           <motion.div

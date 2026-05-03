@@ -18,7 +18,7 @@ export default function CostSection() {
   const stats = STATS(tx);
 
   return (
-    <section className="py-28 md:py-40 relative overflow-hidden bg-[hsl(220_25%_6%)]">
+    <section className="py-20 sm:py-28 md:py-40 relative overflow-hidden bg-[hsl(220_25%_6%)]">
 
       {/* Atmosphere */}
       <div className="absolute inset-0 bg-gradient-to-b from-[hsl(220_25%_4%)] via-[hsl(220_25%_7%)] to-[hsl(220_25%_6%)] pointer-events-none" />
@@ -27,7 +27,7 @@ export default function CostSection() {
         style={{ width: 700, height: 420, background: "hsl(352 72% 38% / 0.06)", filter: "blur(120px)", borderRadius: "50%" }}
       />
 
-      <div ref={sectionRef} className="relative max-w-[1200px] mx-auto px-8">
+      <div ref={sectionRef} className="relative max-w-[1200px] mx-auto px-5 sm:px-8">
 
         {/* Eyebrow + rule */}
         <motion.div
@@ -38,11 +38,11 @@ export default function CostSection() {
           <p className="text-[10px] font-semibold tracking-[0.16em] uppercase mb-6 font-inter" style={{ color: "rgba(255,255,255,0.6)" }}>
             {tx.cost_eyebrow}
           </p>
-          <div className="w-full h-px mb-14 md:mb-16" style={{ background: "rgba(255,255,255,0.1)" }} />
+          <div className="w-full h-px mb-10 sm:mb-14 md:mb-16" style={{ background: "rgba(255,255,255,0.1)" }} />
         </motion.div>
 
         {/* Top row: headline left, paragraph right */}
-        <div className="grid md:grid-cols-2 gap-10 md:gap-24 mb-20 md:mb-24 items-start">
+        <div className="grid md:grid-cols-2 gap-8 sm:gap-10 md:gap-24 mb-14 sm:mb-20 md:mb-24 items-start">
 
           <motion.h2
             animate={{ opacity: sectionVisible ? 1 : 0, y: sectionVisible ? 0 : 20 }}
@@ -78,12 +78,11 @@ export default function CostSection() {
               animate={{ opacity: sectionVisible ? 1 : 0, y: sectionVisible ? 0 : 10 }}
               initial={{ opacity: 0, y: 10 }}
               transition={{ ...REVEAL.fade, delay: 0.28 + i * 0.08 }}
-              className="pt-10 pb-2 flex flex-col gap-3"
-              style={{
-                paddingRight: i < 2 ? "clamp(24px, 4vw, 56px)" : 0,
-                paddingLeft: i > 0 ? "clamp(24px, 4vw, 56px)" : 0,
-                borderLeft: i > 0 ? "1px solid rgba(255,255,255,0.1)" : "none",
-              }}
+              className={`py-8 md:pt-10 md:pb-2 flex flex-col gap-3 ${
+                i > 0 ? "border-t border-white/10 md:border-t-0 md:border-l md:border-white/10" : ""
+              } ${i < 2 ? "md:pr-[clamp(24px,4vw,56px)]" : ""} ${
+                i > 0 ? "md:pl-[clamp(24px,4vw,56px)]" : ""
+              }`}
             >
               <div
                 className="font-sora font-extrabold tracking-[-0.05em] leading-none text-white"

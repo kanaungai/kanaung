@@ -100,7 +100,7 @@ function CarForm({ initial, onSave, onCancel }) {
         {initial?.id ? "Edit Model" : "Add New Model"}
       </p>
 
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 min-[420px]:grid-cols-2 gap-2">
         <Field label="Brand" k="brand" />
         <Field label="Model" k="model" />
         <Field label="Variant / Trim" k="variant" />
@@ -143,7 +143,7 @@ function CarForm({ initial, onSave, onCancel }) {
       </div>
 
       {form.installment_available && (
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 min-[420px]:grid-cols-2 gap-2">
           <Field label="Down Payment %" k="down_payment_pct" type="number" />
           <Field label="Term Options" k="monthly_term" />
         </div>
@@ -202,10 +202,10 @@ export default function InventoryPanel({ inventory, setInventory }) {
 
   return (
     <div
-      className="rounded-xl p-4"
+      className="rounded-xl p-3 sm:p-4"
       style={{ background: "white", border: "1px solid hsl(220 16% 89%)" }}
     >
-      <div className="flex items-center gap-2 mb-3">
+      <div className="flex flex-wrap items-center gap-2 mb-3">
         <Car className="w-3.5 h-3.5 text-muted-foreground" />
         <p className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground">
           Car Inventory

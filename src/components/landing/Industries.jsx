@@ -152,8 +152,8 @@ export default function Industries() {
   const selected = industries.find((i) => i.id === selectedId) || industries[0];
 
   return (
-    <section id="industries" className="py-24 md:py-32 bg-[hsl(220_25%_6%)] relative">
-      <div className="max-w-[1200px] mx-auto px-8">
+    <section id="industries" className="py-20 sm:py-24 md:py-32 bg-[hsl(220_25%_6%)] relative">
+      <div className="max-w-[1200px] mx-auto px-5 sm:px-8">
 
         {/* Header — unchanged */}
         <motion.div
@@ -161,12 +161,12 @@ export default function Industries() {
           animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 18 }}
           initial={{ opacity: 0, y: 18 }}
           transition={REVEAL.primary}
-          className="mb-16 md:mb-20"
+          className="mb-12 sm:mb-16 md:mb-20"
         >
           <p className="text-[10px] font-semibold tracking-[0.16em] uppercase text-white/25 mb-6 font-inter">
             {tx.ind_eyebrow}
           </p>
-          <div className="w-full h-px bg-white/8 mb-10" />
+          <div className="w-full h-px bg-white/8 mb-8 sm:mb-10" />
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
             <h2 className="font-sora text-[30px] md:text-[48px] xl:text-[56px] font-extrabold tracking-[-0.05em] leading-[0.97] text-white">
               {tx.ind_h2}
@@ -272,7 +272,7 @@ export default function Industries() {
                 transition={{ duration: 0.2, ease: [0.25, 1, 0.4, 1] }}
               >
                 {/* Panel header */}
-                <div className="px-6 pt-5 pb-4">
+                <div className="px-4 sm:px-6 pt-5 pb-4">
                   <p className="font-sora text-[18px] font-extrabold tracking-[-0.03em] text-white leading-tight">
                     {selected.name}
                   </p>
@@ -282,7 +282,7 @@ export default function Industries() {
                 </div>
 
                 {/* Conversation area — light surfaces on dark bg */}
-                <div className="px-6 pb-5 flex flex-col gap-3">
+                <div className="px-4 sm:px-6 pb-5 flex flex-col gap-3">
 
                   {/* Customer bubble */}
                   <div className="flex flex-col gap-1.5">
@@ -320,14 +320,14 @@ export default function Industries() {
 
                 {/* Knowledge source row */}
                 <div
-                  className="flex items-center gap-2.5 px-6 py-3.5 border-t"
+                  className="flex flex-wrap items-start gap-2.5 px-4 sm:px-6 py-3.5 border-t"
                   style={{ borderColor: "rgba(255,255,255,0.07)" }}
                 >
                   <BookOpen className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "rgba(255,255,255,0.25)" }} />
-                  <span className="text-[10.5px] font-inter" style={{ color: "rgba(255,255,255,0.32)" }}>
+                  <span className="min-w-0 flex-1 text-[10.5px] leading-relaxed font-inter" style={{ color: "rgba(255,255,255,0.32)" }}>
                     {selected.knowledge.join(" · ")}
                   </span>
-                  <div className="ml-auto flex items-center gap-1.5 flex-shrink-0">
+                  <div className="ml-0 sm:ml-auto flex items-center gap-1.5 flex-shrink-0">
                     <CheckCircle2 className="w-3 h-3" style={{ color: "hsl(142 55% 50% / 0.65)" }} />
                     <span className="text-[9.5px] font-semibold" style={{ color: "rgba(255,255,255,0.28)" }}>AI resolved</span>
                   </div>

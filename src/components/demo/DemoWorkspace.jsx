@@ -24,7 +24,7 @@ export function useShowroomDemoState() {
 }
 
 export function DemoHeader({ backTo = null, onBack = undefined, showClose = false }) {
-  const backClassName = "flex items-center gap-1.5 text-[12px] font-medium text-muted-foreground hover:text-foreground transition-colors";
+  const backClassName = "flex items-center gap-1.5 text-[12px] font-medium text-muted-foreground hover:text-foreground transition-colors shrink-0";
   const backContent = (
     <>
       <ArrowLeft className="w-3.5 h-3.5" />
@@ -34,7 +34,7 @@ export function DemoHeader({ backTo = null, onBack = undefined, showClose = fals
 
   return (
     <div
-      className="flex items-center gap-4 px-6 h-[56px] border-b flex-shrink-0"
+      className="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 h-[56px] border-b flex-shrink-0"
       style={{ background: "hsl(0 0% 100%)", borderColor: "hsl(220 16% 88%)" }}
     >
       {backTo ? (
@@ -50,10 +50,10 @@ export function DemoHeader({ backTo = null, onBack = undefined, showClose = fals
       <span className="font-sora font-semibold text-[14px] tracking-[-0.01em] text-foreground">
         kanaung<span className="text-primary font-bold">.</span>
       </span>
-      <span className="text-[12px] text-muted-foreground">Product Demo</span>
+      <span className="hidden min-[380px]:inline text-[12px] text-muted-foreground">Product Demo</span>
       <div className="ml-auto flex items-center gap-3">
         <span
-          className="text-[10px] font-semibold px-2.5 py-1 rounded-full tracking-wide"
+          className="hidden sm:inline-flex text-[10px] font-semibold px-2.5 py-1 rounded-full tracking-wide"
           style={{
             background: "hsl(142 55% 95%)",
             color: "hsl(142 55% 33%)",
@@ -76,6 +76,7 @@ export function DemoHeader({ backTo = null, onBack = undefined, showClose = fals
 }
 
 export function DemoWorkspaceBody({ demoState }) {
+  const [mobilePane, setMobilePane] = useState("conversation");
   const {
     context,
     setContext,
@@ -88,9 +89,29 @@ export function DemoWorkspaceBody({ demoState }) {
   } = demoState;
 
   return (
-    <div className="flex flex-1 overflow-hidden">
+    <div className="flex flex-1 min-h-0 flex-col overflow-hidden md:flex-row">
+      <div className="flex shrink-0 border-b bg-white md:hidden" style={{ borderColor: "hsl(220 16% 89%)" }}>
+        {[
+          ["conversation", "Conversation"],
+          ["control", "Controls"],
+        ].map(([pane, label]) => (
+          <button
+            key={pane}
+            onClick={() => setMobilePane(pane)}
+            className="flex-1 py-3 text-[11px] font-semibold transition-all"
+            style={
+              mobilePane === pane
+                ? { color: "hsl(220 25% 11%)", borderBottom: "2px solid hsl(220 25% 11%)" }
+                : { color: "hsl(220 12% 52%)", borderBottom: "2px solid transparent" }
+            }
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
       <div
-        className="w-[38%] flex-shrink-0 border-r flex flex-col overflow-hidden"
+        className={`${mobilePane === "control" ? "flex" : "hidden"} min-h-0 flex-1 flex-col overflow-hidden border-r md:flex md:w-[38%] md:flex-none`}
         style={{ borderColor: "hsl(220 16% 88%)", background: "hsl(220 20% 98%)" }}
       >
         <ControlLayer
@@ -105,7 +126,7 @@ export function DemoWorkspaceBody({ demoState }) {
         />
       </div>
 
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className={`${mobilePane === "conversation" ? "flex" : "hidden"} min-h-0 flex-1 flex-col overflow-hidden md:flex`}>
         <ConversationPanel context={context} inventory={inventory} showroom={showroom} kb={kb} />
       </div>
     </div>

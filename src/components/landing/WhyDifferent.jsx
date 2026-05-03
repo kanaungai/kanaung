@@ -15,9 +15,9 @@ export default function WhyDifferent() {
   const KANAUNG = [tx.why_kan_1, tx.why_kan_2, tx.why_kan_3, tx.why_kan_4];
 
   return (
-    <section className="py-24 md:py-36 relative overflow-hidden bg-[hsl(220_25%_6%)]">
+    <section className="py-20 sm:py-24 md:py-36 relative overflow-hidden bg-[hsl(220_25%_6%)]">
 
-      <div className="relative max-w-[1200px] mx-auto px-8">
+      <div className="relative max-w-[1200px] mx-auto px-5 sm:px-8">
 
         {/* ── Header ── */}
         <motion.div
@@ -25,12 +25,12 @@ export default function WhyDifferent() {
           animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 18 }}
           initial={{ opacity: 0, y: 18 }}
           transition={REVEAL.primary}
-          className="mb-20 md:mb-28"
+          className="mb-14 sm:mb-20 md:mb-28"
         >
           <p className="text-[10px] font-semibold tracking-[0.16em] uppercase mb-6 font-inter" style={{ color: "rgba(255,255,255,0.28)" }}>
             {tx.why_eyebrow}
           </p>
-          <div className="w-full h-px mb-10" style={{ background: "rgba(255,255,255,0.07)" }} />
+          <div className="w-full h-px mb-8 sm:mb-10" style={{ background: "rgba(255,255,255,0.07)" }} />
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
             <h2 className="font-sora text-[30px] md:text-[48px] xl:text-[56px] font-extrabold tracking-[-0.05em] leading-[0.97] text-white">
               {tx.why_h2}
@@ -57,7 +57,7 @@ export default function WhyDifferent() {
         >
 
           {/* ── Left: Traditional ── */}
-          <div className="pr-0 md:pr-16 pb-12 md:pb-0">
+          <div className="pr-0 md:pr-16 pb-10 sm:pb-12 md:pb-0">
             <div className="mb-8">
               <span
                 className="text-[9.5px] font-bold tracking-[0.16em] uppercase font-inter block mb-3"
@@ -100,7 +100,7 @@ export default function WhyDifferent() {
           />
           {/* Mobile divider */}
           <div
-            className="block md:hidden w-full h-px mb-12"
+            className="block md:hidden w-full h-px mb-10 sm:mb-12"
             style={{ background: "rgba(255,255,255,0.08)" }}
           />
 

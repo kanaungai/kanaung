@@ -226,15 +226,15 @@ function AmbientPulse() {
   );
 }
 
-function GenerationStrip({ isActive, statusLabel }) {
+function GenerationStrip({ isActive, statusLabel, compact = false }) {
   return (
     <div
       style={{
-        padding: "10px 20px",
+        padding: compact ? "10px 14px" : "10px 20px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        gap: 16,
+        gap: compact ? 10 : 16,
         borderTop: "1px solid rgba(255,255,255,0.05)",
         background: "rgba(255,255,255,0.01)",
       }}
@@ -259,7 +259,7 @@ function GenerationStrip({ isActive, statusLabel }) {
           </motion.span>
         </AnimatePresence>
       </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: compact ? 8 : 12, flexShrink: 0 }}>
         {!isActive && <AmbientPulse />}
         <ActivityBars isActive={isActive} />
       </div>
@@ -349,8 +349,8 @@ export default function LiveCallPanel({ compact = false, messageHeight, onStageC
         <div className="absolute top-0 left-0 right-0 h-px pointer-events-none" style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)" }} />
 
         {/* Header */}
-        <div style={{ padding: "14px 20px 14px", borderBottom: "1px solid rgba(255,255,255,0.05)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div style={{ padding: compact ? "12px 14px" : "14px 20px 14px", borderBottom: "1px solid rgba(255,255,255,0.05)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: compact ? 10 : 16 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
             {/* Logo mark */}
             <div style={{ position: "relative", width: 30, height: 30, flexShrink: 0 }}>
               <div style={{ position: "absolute", inset: 0, borderRadius: 8, background: "hsl(352 65% 44% / 0.18)", filter: "blur(4px)" }} />
@@ -362,11 +362,11 @@ export default function LiveCallPanel({ compact = false, messageHeight, onStageC
                 />
               </div>
             </div>
-            <div>
+            <div style={{ minWidth: 0 }}>
               <div style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.88)", fontFamily: "var(--font-sora)", letterSpacing: "-0.01em", lineHeight: 1.2 }}>
                 Kanaung AI
               </div>
-              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.24)", fontFamily: "var(--font-inter)", marginTop: 1, letterSpacing: "0.005em" }}>
+              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.24)", fontFamily: "var(--font-inter)", marginTop: 1, letterSpacing: "0.005em", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                 ရွှေကြယ် စက်ပစ္စည်း · Business Assistant
               </div>
             </div>
@@ -385,7 +385,7 @@ export default function LiveCallPanel({ compact = false, messageHeight, onStageC
         {/* Messages */}
         <div
           ref={containerRef}
-          style={{ padding: "18px 20px 12px", height: messageHeight ?? (compact ? 320 : 440), overflowY: "auto", scrollbarWidth: "none", display: "flex", flexDirection: "column", gap: 14 }}
+          style={{ padding: compact ? "14px 14px 10px" : "18px 20px 12px", height: messageHeight ?? (compact ? 300 : 440), overflowY: "auto", scrollbarWidth: "none", display: "flex", flexDirection: "column", gap: compact ? 12 : 14 }}
         >
           <style>{`@keyframes typingBounce{0%,60%,100%{transform:translateY(0);opacity:.35}30%{transform:translateY(-5px);opacity:1}}`}</style>
 
@@ -459,7 +459,7 @@ export default function LiveCallPanel({ compact = false, messageHeight, onStageC
         </div>
 
         {/* Footer strip */}
-        <GenerationStrip isActive={isTyping} statusLabel={statusLabel} />
+        <GenerationStrip isActive={isTyping} statusLabel={statusLabel} compact={compact} />
 
         <div className="absolute bottom-0 left-0 right-0 h-px pointer-events-none" style={{ background: "linear-gradient(90deg,transparent,rgba(255,255,255,0.035),transparent)" }} />
       </div>

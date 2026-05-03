@@ -2,9 +2,9 @@ import React from "react";
 import { Building2, MapPin, Globe } from "lucide-react";
 
 const CHANNEL_COLORS = {
-  Web: { bg: "hsl(220 16% 93%)", text: "hsl(220 18% 30%)" },
-  Messenger: { bg: "hsl(214 80% 94%)", text: "hsl(214 72% 38%)" },
-  Viber: { bg: "hsl(270 60% 94%)", text: "hsl(270 55% 40%)" },
+  Web: { background: "hsl(220 16% 93%)", color: "hsl(220 18% 30%)" },
+  Messenger: { background: "hsl(214 80% 94%)", color: "hsl(214 72% 38%)" },
+  Viber: { background: "hsl(270 60% 94%)", color: "hsl(270 55% 40%)" },
 };
 
 export default function BusinessContextCard({ context, update }) {
@@ -12,7 +12,7 @@ export default function BusinessContextCard({ context, update }) {
 
   return (
     <div
-      className="rounded-xl p-4"
+      className="rounded-xl p-3 sm:p-4"
       style={{ background: "white", border: "1px solid hsl(220 16% 89%)" }}
     >
       <p className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">
@@ -42,7 +42,7 @@ export default function BusinessContextCard({ context, update }) {
               <span
                 key={ch}
                 className="text-[10px] font-semibold px-2 py-0.5 rounded-md"
-                style={CHANNEL_COLORS[ch] || { bg: "hsl(220 16% 93%)", text: "hsl(220 18% 30%)" }}
+                style={CHANNEL_COLORS[ch] || { background: "hsl(220 16% 93%)", color: "hsl(220 18% 30%)" }}
               >
                 {ch}
               </span>
@@ -51,7 +51,7 @@ export default function BusinessContextCard({ context, update }) {
         </div>
 
         {/* Language toggle */}
-        <div className="pt-1 flex items-center justify-between">
+        <div className="pt-1 flex flex-col min-[420px]:flex-row min-[420px]:items-center justify-between gap-2">
           <p className="text-[11px] text-muted-foreground">Response language</p>
           <div className="flex rounded-lg overflow-hidden border" style={{ borderColor: "hsl(220 16% 88%)" }}>
             {["burmese", "bilingual"].map((mode) => (

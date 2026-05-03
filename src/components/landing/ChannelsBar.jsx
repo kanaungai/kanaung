@@ -135,8 +135,8 @@ export default function ChannelsBar() {
   const { ref, inView } = useScrollReveal({ margin: "-60px" });
 
   return (
-    <section className="py-16 md:py-20 relative">
-      <div className="max-w-[1200px] mx-auto px-8">
+    <section className="py-12 sm:py-16 md:py-20 relative">
+      <div className="max-w-[1200px] mx-auto px-5 sm:px-8">
 
         {/* Overline */}
         <motion.p
@@ -144,7 +144,7 @@ export default function ChannelsBar() {
           animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 12 }}
           initial={{ opacity: 0, y: 12 }}
           transition={REVEAL.primary}
-          className="text-center text-[10px] font-semibold tracking-[0.16em] uppercase text-muted-foreground/40 mb-10"
+          className="text-center text-[10px] font-semibold tracking-[0.16em] uppercase text-muted-foreground/40 mb-8 sm:mb-10"
         >
           {tx.channels_label}
         </motion.p>
@@ -157,10 +157,10 @@ export default function ChannelsBar() {
           className="relative max-w-2xl mx-auto overflow-hidden"
         >
           {/* Left fade */}
-          <div className="absolute left-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
+          <div className="absolute left-0 top-0 bottom-0 w-10 sm:w-20 z-10 pointer-events-none"
             style={{ background: "linear-gradient(to right, hsl(var(--background)) 0%, transparent 100%)" }} />
           {/* Right fade */}
-          <div className="absolute right-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
+          <div className="absolute right-0 top-0 bottom-0 w-10 sm:w-20 z-10 pointer-events-none"
             style={{ background: "linear-gradient(to left, hsl(var(--background)) 0%, transparent 100%)" }} />
 
           <div className="flex">

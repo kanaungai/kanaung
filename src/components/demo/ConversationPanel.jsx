@@ -63,7 +63,7 @@ export default function ConversationPanel({ context, inventory, showroom, kb }) 
       <ConversationHeader />
       <MessageThread messages={messages} isGenerating={isGenerating} />
       <div
-        className="flex-shrink-0 border-t px-4 py-3"
+        className="flex-shrink-0 border-t px-3 sm:px-4 py-3"
         style={{ borderColor: "hsl(220 16% 89%)", background: "white" }}
       >
         <p className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">
@@ -78,7 +78,7 @@ export default function ConversationPanel({ context, inventory, showroom, kb }) 
             onKeyDown={handleKeyDown}
             placeholder={isGenerating ? "AI is responding..." : "Type a customer message and press Enter…"}
             disabled={isGenerating}
-            className="flex-1 text-[12px] bg-secondary/50 border rounded-lg px-3 py-2 focus:outline-none focus:ring-1 transition-all disabled:opacity-50"
+            className="min-w-0 flex-1 text-[12px] bg-secondary/50 border rounded-lg px-3 py-2 focus:outline-none focus:ring-1 transition-all disabled:opacity-50"
             style={{ borderColor: "hsl(220 16% 88%)", color: "hsl(220 18% 18%)" }}
           />
           <button

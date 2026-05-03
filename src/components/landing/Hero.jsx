@@ -15,8 +15,7 @@ const PROOF_PILLS = [
 export default function Hero() {
   return (
     <section
-      className="relative overflow-hidden"
-      style={{ minHeight: "100vh", display: "flex", alignItems: "center", paddingTop: 88, paddingBottom: 64 }}
+      className="relative overflow-hidden pt-24 pb-14 sm:pt-28 sm:pb-20 lg:min-h-screen lg:flex lg:items-center"
     >
       {/* Base warm off-white */}
       <div className="absolute inset-0 pointer-events-none" style={{ background: "hsl(36 18% 97%)" }} />
@@ -47,8 +46,8 @@ export default function Hero() {
       {/* Right ruby tint behind demo */}
       <div className="absolute pointer-events-none" style={{ top: "-10%", right: "-8%", width: "60%", height: "120%", background: "radial-gradient(ellipse at 65% 50%, hsl(352 38% 94% / 0.5) 0%, transparent 52%)" }} />
 
-      <div className="relative w-full max-w-[1280px] mx-auto px-8 xl:px-10">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(300px,0.82fr)_minmax(620px,1.18fr)] lg:gap-5 xl:gap-8">
+      <div className="relative w-full max-w-[1280px] mx-auto px-5 sm:px-8 xl:px-10">
+        <div className="grid grid-cols-1 items-center gap-10 sm:gap-12 lg:grid-cols-[minmax(300px,0.82fr)_minmax(620px,1.18fr)] lg:gap-5 xl:gap-8">
 
           {/* ── LEFT ── */}
           <motion.div
@@ -77,7 +76,7 @@ export default function Hero() {
             {/* Headline */}
             <h1
               className="font-sora font-extrabold text-foreground"
-              style={{ fontSize: "clamp(36px, 3.8vw, 54px)", lineHeight: 1.02, letterSpacing: "-0.046em" }}
+              style={{ fontSize: "clamp(34px, 3.8vw, 54px)", lineHeight: 1.04, letterSpacing: 0 }}
             >
               The AI customer service agent built for Myanmar.
             </h1>
@@ -85,7 +84,7 @@ export default function Hero() {
             {/* Subheading */}
             <p
               className="font-inter font-normal mt-6"
-              style={{ fontSize: 14.5, lineHeight: 1.82, color: "hsl(220 12% 44%)", maxWidth: 380, letterSpacing: "0.002em" }}
+              style={{ fontSize: 14.5, lineHeight: 1.82, color: "hsl(220 12% 44%)", maxWidth: 420, letterSpacing: "0.002em" }}
             >
               Kanaung helps Myanmar businesses answer customers across web, Messenger, and Viber using their own product data, pricing, and policies.
             </p>
@@ -94,7 +93,7 @@ export default function Hero() {
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <button
                 onClick={openCalendly}
-                className="inline-flex items-center justify-center gap-2 font-inter font-semibold tracking-[-0.01em] transition-all duration-200"
+                className="inline-flex w-full sm:w-auto items-center justify-center gap-2 font-inter font-semibold tracking-[-0.01em] transition-all duration-200"
                 style={{
                   fontSize: 13.5, height: 44, paddingLeft: 22, paddingRight: 22,
                   borderRadius: 8, background: "hsl(220 25% 8%)", color: "white",
@@ -114,8 +113,8 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.44 }}
-              className="mt-8 grid grid-cols-2 gap-2"
-              style={{ maxWidth: 360 }}
+              className="mt-8 grid grid-cols-1 min-[380px]:grid-cols-2 gap-2"
+              style={{ maxWidth: 380 }}
             >
               {PROOF_PILLS.map((label) => (
                 <span

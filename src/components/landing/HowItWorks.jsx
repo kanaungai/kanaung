@@ -17,7 +17,7 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section id="how-it-works" className="py-24 md:py-36 bg-[hsl(220_25%_6%)] relative overflow-hidden">
+    <section id="how-it-works" className="py-20 sm:py-24 md:py-36 bg-[hsl(220_25%_6%)] relative overflow-hidden">
 
       {/* Subtle depth glow */}
       <div
@@ -25,7 +25,7 @@ export default function HowItWorks() {
         style={{ width: 600, height: 500, background: "hsl(210 80% 55% / 0.04)", filter: "blur(140px)", borderRadius: "50%" }}
       />
 
-      <div className="relative max-w-[1200px] mx-auto px-8">
+      <div className="relative max-w-[1200px] mx-auto px-5 sm:px-8">
 
         {/* ── Header ── */}
         <motion.div
@@ -33,12 +33,12 @@ export default function HowItWorks() {
           animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 18 }}
           initial={{ opacity: 0, y: 18 }}
           transition={REVEAL.primary}
-          className="mb-20 md:mb-28"
+          className="mb-14 sm:mb-20 md:mb-28"
         >
           <p className="text-[10px] font-semibold tracking-[0.16em] uppercase mb-6 font-inter" style={{ color: "rgba(255,255,255,0.28)" }}>
             {tx.hiw_eyebrow}
           </p>
-          <div className="w-full h-px mb-10" style={{ background: "rgba(255,255,255,0.07)" }} />
+          <div className="w-full h-px mb-8 sm:mb-10" style={{ background: "rgba(255,255,255,0.07)" }} />
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
             <h2 className="font-sora text-[30px] md:text-[48px] xl:text-[56px] font-extrabold tracking-[-0.05em] leading-[0.97] text-white">
               {tx.hiw_h2}
@@ -63,17 +63,15 @@ export default function HowItWorks() {
               animate={{ opacity: stepsVisible ? 1 : 0, y: stepsVisible ? 0 : 16 }}
               initial={{ opacity: 0, y: 16 }}
               transition={{ ...REVEAL.primary, delay: i * 0.12 }}
-              className="relative flex flex-col"
-              style={{
-                paddingRight: i < 2 ? "clamp(28px, 4vw, 60px)" : 0,
-                paddingLeft: i > 0 ? "clamp(28px, 4vw, 60px)" : 0,
-                borderLeft: i > 0 ? "1px solid rgba(255,255,255,0.07)" : "none",
-                paddingTop: "0",
-              }}
+              className={`relative flex flex-col py-8 first:pt-0 last:pb-0 md:py-0 ${
+                i > 0 ? "border-t border-white/[0.07] md:border-t-0 md:border-l md:border-white/[0.07]" : ""
+              } ${i < 2 ? "md:pr-[clamp(28px,4vw,60px)]" : ""} ${
+                i > 0 ? "md:pl-[clamp(28px,4vw,60px)]" : ""
+              }`}
             >
               {/* Step number */}
               <span
-                className="font-inter text-[11px] font-semibold tracking-[0.14em] uppercase mb-8 block"
+                className="font-inter text-[11px] font-semibold tracking-[0.14em] uppercase mb-5 sm:mb-8 block"
                 style={{ color: "rgba(255,255,255,0.18)" }}
               >
                 {step.number}
@@ -97,7 +95,7 @@ export default function HowItWorks() {
 
               {/* Bottom label */}
               <div
-                className="mt-10 pt-6 flex items-center gap-2"
+                className="mt-8 sm:mt-10 pt-5 sm:pt-6 flex items-center gap-2"
                 style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
               >
                 {/* Subtle progress dot — filled for all previous, hollow for next */}

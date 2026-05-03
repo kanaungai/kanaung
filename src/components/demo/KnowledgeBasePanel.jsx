@@ -55,8 +55,8 @@ export default function KnowledgeBasePanel({ kb, setKb }) {
   const update = (key, val) => setKb((p) => ({ ...p, [key]: val }));
 
   return (
-    <div className="rounded-xl p-4" style={{ background: "white", border: "1px solid hsl(220 16% 89%)" }}>
-      <div className="flex items-center gap-2 mb-3">
+    <div className="rounded-xl p-3 sm:p-4" style={{ background: "white", border: "1px solid hsl(220 16% 89%)" }}>
+      <div className="flex flex-wrap items-center gap-2 mb-3">
         <BookOpen className="w-3.5 h-3.5 text-muted-foreground" />
         <p className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground">
           Knowledge Base
@@ -64,7 +64,7 @@ export default function KnowledgeBasePanel({ kb, setKb }) {
         <span className="ml-1 text-[9px] font-medium px-1.5 py-0.5 rounded" style={{ background: "hsl(214 80% 94%)", color: "hsl(214 72% 38%)" }}>
           Policy &amp; Reasoning
         </span>
-        <span className="ml-auto text-[9px] font-medium px-1.5 py-0.5 rounded" style={{ background: "hsl(220 16% 93%)", color: "hsl(220 12% 52%)" }}>
+        <span className="ml-0 sm:ml-auto text-[9px] font-medium px-1.5 py-0.5 rounded" style={{ background: "hsl(220 16% 93%)", color: "hsl(220 12% 52%)" }}>
           Hover to edit
         </span>
       </div>

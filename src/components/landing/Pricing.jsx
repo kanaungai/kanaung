@@ -15,7 +15,7 @@ function TierRow({ index, name, tier, tagline, price, period, features, inherits
       animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : 12 }}
       initial={{ opacity: 0, y: 12 }}
       transition={{ ...REVEAL.primary, delay }}
-      className="grid md:grid-cols-[80px_1.15fr_1.35fr_auto] gap-6 md:gap-10 items-start py-12 border-b border-foreground/[0.07] relative"
+      className="grid md:grid-cols-[80px_1.15fr_1.35fr_auto] gap-6 md:gap-10 items-start py-10 sm:py-12 border-b border-foreground/[0.07] relative"
     >
       {/* Row index */}
       <div className="hidden md:block pt-1">
@@ -69,7 +69,7 @@ function TierRow({ index, name, tier, tagline, price, period, features, inherits
       </div>
 
       {/* Price + CTA */}
-      <div className="flex md:flex-col items-center md:items-end justify-between md:justify-start gap-5 md:gap-4 md:min-w-[160px]">
+      <div className="flex flex-col min-[420px]:flex-row md:flex-col items-start min-[420px]:items-center md:items-end justify-between md:justify-start gap-4 min-[420px]:gap-5 md:gap-4 md:min-w-[160px]">
         <div className="flex items-baseline gap-1">
           <span className="font-sora text-[30px] font-bold tracking-[-0.04em] leading-none text-foreground">
             {price}
@@ -80,7 +80,7 @@ function TierRow({ index, name, tier, tagline, price, period, features, inherits
         </div>
         <button
           onClick={openCalendly}
-          className={`group inline-flex items-center justify-center gap-1.5 text-[12.5px] font-semibold font-inter px-4 h-[36px] rounded-lg transition-all duration-200 whitespace-nowrap ${
+          className={`group inline-flex w-full min-[420px]:w-auto items-center justify-center gap-1.5 text-[12.5px] font-semibold font-inter px-4 h-[38px] min-[420px]:h-[36px] rounded-lg transition-all duration-200 whitespace-nowrap ${
             isPrimary ? "" : isMuted ? "" : ""
           }`}
           style={
@@ -156,8 +156,8 @@ export default function Pricing() {
   ];
 
   return (
-    <section id="pricing" className="py-24 md:py-36 relative">
-      <div className="max-w-[1200px] mx-auto px-8">
+    <section id="pricing" className="py-20 sm:py-24 md:py-36 relative">
+      <div className="max-w-[1200px] mx-auto px-5 sm:px-8">
 
         {/* ── Header ── */}
         <motion.div
@@ -165,12 +165,12 @@ export default function Pricing() {
           animate={{ opacity: headerVisible ? 1 : 0, y: headerVisible ? 0 : 18 }}
           initial={{ opacity: 0, y: 18 }}
           transition={REVEAL.primary}
-          className="mb-16 md:mb-20"
+          className="mb-12 sm:mb-16 md:mb-20"
         >
           <p className="text-[10px] font-semibold tracking-[0.16em] uppercase text-muted-foreground/60 mb-6 font-inter">
             {tx.price_eyebrow}
           </p>
-          <div className="w-full h-px bg-foreground/8 mb-10" />
+          <div className="w-full h-px bg-foreground/8 mb-8 sm:mb-10" />
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
             <h2 className="font-sora text-[30px] md:text-[48px] xl:text-[56px] font-extrabold tracking-[-0.05em] leading-[0.97] text-foreground">
               {tx.price_h2}

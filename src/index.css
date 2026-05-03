@@ -91,8 +91,34 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 .font-sora {
   font-family: var(--font-sora);
+}
+
+body {
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+@media (max-width: 767px) {
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+
+  .font-sora {
+    letter-spacing: 0 !important;
+  }
 }

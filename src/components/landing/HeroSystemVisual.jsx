@@ -401,9 +401,9 @@ function MobileSystemVisual() {
 
   return (
     <div className="lg:hidden">
-      <LiveCallPanel compact onStageChange={setSystemStage} />
+      <LiveCallPanel compact messageHeight={300} onStageChange={setSystemStage} />
       <HeroMetricsStrip className="mt-4" delay={0.62} stage={systemStage} />
-      <div className="-mx-8 mt-4 flex gap-3 overflow-x-auto px-8 pb-2 [scrollbar-width:none]">
+      <div className="-mx-5 sm:-mx-8 mt-4 flex gap-3 overflow-x-auto px-5 sm:px-8 pb-2 [scrollbar-width:none]">
         <KnowledgeBaseCard className="w-[204px] shrink-0" delay={0.18} />
         <SourceInspectionCard className="w-[220px] shrink-0" delay={0.24} />
         <LiveChannelCard className="w-[220px] shrink-0" delay={0.3} />

@@ -14,7 +14,7 @@ export default function FinalCTA() {
   return (
     <section
       id="final-cta"
-      className="relative pt-28 md:pt-36 pb-0 overflow-hidden"
+      className="relative pt-20 sm:pt-28 md:pt-36 pb-0 overflow-hidden"
       style={{ background: "hsl(220 25% 5%)" }}
     >
       {/* Restrained glow — top-left behind headline */}
@@ -30,10 +30,10 @@ export default function FinalCTA() {
         }}
       />
 
-      <div className="relative max-w-[1200px] mx-auto px-8">
+      <div className="relative max-w-[1200px] mx-auto px-5 sm:px-8">
 
         {/* Top hairline */}
-        <div className="w-full h-px mb-16 md:mb-20" style={{ background: "rgba(255,255,255,0.08)" }} />
+        <div className="w-full h-px mb-12 sm:mb-16 md:mb-20" style={{ background: "rgba(255,255,255,0.08)" }} />
 
         {/* ── Split layout ── */}
         <motion.div
@@ -41,7 +41,7 @@ export default function FinalCTA() {
           animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 24 }}
           initial={{ opacity: 0, y: 24 }}
           transition={REVEAL.primary}
-          className="grid md:grid-cols-[1fr_1.1fr] gap-12 md:gap-20 items-end pb-24 md:pb-32"
+          className="grid md:grid-cols-[1fr_1.1fr] gap-10 sm:gap-12 md:gap-20 items-end pb-20 sm:pb-24 md:pb-32"
         >
 
           {/* ── Left: headline block ── */}
@@ -79,7 +79,7 @@ export default function FinalCTA() {
               {/* Primary */}
               <button
                 onClick={openCalendly}
-                className="group inline-flex items-center gap-2.5 font-sora font-bold text-[13.5px] tracking-[-0.01em] px-7 py-3.5 rounded-full transition-all duration-200"
+                className="group inline-flex w-full sm:w-auto items-center justify-center gap-2.5 font-sora font-bold text-[13.5px] tracking-[-0.01em] px-7 py-3.5 rounded-full transition-all duration-200"
                 style={{
                   background: "white",
                   color: "hsl(220 25% 8%)",
@@ -94,7 +94,7 @@ export default function FinalCTA() {
               {/* Secondary */}
               <button
                 onClick={openCalendly}
-                className="inline-flex items-center gap-2 text-[13px] font-medium font-inter tracking-[-0.005em] transition-colors duration-200"
+                className="inline-flex w-full sm:w-auto items-center justify-center gap-2 text-[13px] font-medium font-inter tracking-[-0.005em] transition-colors duration-200"
                 style={{ color: "rgba(255,255,255,0.38)" }}
                 onMouseEnter={e => e.currentTarget.style.color = "rgba(255,255,255,0.65)"}
                 onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.38)"}
