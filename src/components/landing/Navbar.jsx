@@ -92,7 +92,7 @@ export default function Navbar() {
             
             <span>{lang === "en" ? "မြန်မာ" : "EN"}</span>
           </button>
-          <a href="#" className="text-[13px] font-medium transition-colors tracking-[-0.01em]" style={{ color: "hsl(220 18% 32%)" }}>
+          <a href="https://app.kanaungai.com" className="text-[13px] font-medium transition-colors tracking-[-0.01em]" style={{ color: "hsl(220 18% 32%)" }}>
             {tx.nav_signin}
           </a>
           <button
